@@ -1,0 +1,76 @@
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'add_to_cart' id=item.id %}" method="post">
+        {% csrf_token %}
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <div>
+                            <p>{{ item.name }}<br></p><br>                   
+                            <p>{{ item.price }}<br></p><br> 
+                            <p>{{ item.manufacturer }}<br></p><br>
+                        </div>
+                    </td>
+                    <td>
+                        <!-- Other item details can go here -->
+                    <!-- </td> -->
+                <!-- </tr> -->
+            <!-- </table> -->
+        <!-- </div> -->
+        <!-- <button type="submit">Add to Cart</button> -->
+    <!-- </form> -->
+<!-- </body> -->
+<!-- </html> --> -->
+
+<!-- cart1.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart</title>
+</head>
+<body>
+    <h1>Add to Cart</h1>
+    
+    <h2>{{ item.name }}</h2>
+    <p>Price: ${{ item.price }}</p>
+    
+    <form method="POST" action="{% url 'add_to_cart' item.id %}">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+    
+    <p>User: {{ datas.username }}</p>
+</body>
+</html>
+
+
+
+<!-- def user_booking(request,id):
+    user = Customer.objects.get(login_id=request.user.id)
+    package = Packages.objects.get(id=id)
+    if request.method == "POST":
+        adult = int(request.POST['adult'])
+        children = int(request.POST['children'])
+        date = request.POST['date']
+        total_people = adult + children
+        total_amount = (adult * package.price_adult) + (children * package.price_children)
+        User_booking = Booking.objects.create(user_id=user,package_id=package,booking_amount=total_amount,
+                                              booking_day=date,total_no=total_people) -->

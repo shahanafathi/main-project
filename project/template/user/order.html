@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .cart, .order-summary {
+            width: 45%;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item, .order-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cart">
+            <h2>order</h2>
+            {% if order_item %}
+                {% for item in order_item %}
+                    <div class="cart-item">
+                        <p>{{ item.medicine_id.name }}</p>
+                        <p>{{ item.medicine_id.quantity }} </p>
+                        <p>{{ item.medicine_id.price }}</p>
+
+                    </div>
+                  
+                {% endfor %}
+                
+            {% else %}
+                <p>Your cart is empty.</p>
+            {% endif %}
+
+            <div class="total-amount">
+                <p>Total Amount: ₹{{ total_amounts }}</p> 
+            <button type="submit"><a href="{% url 'order_view'  %}" >payment</button></a>
+        </div>
+        </div>
+       
+    </div>
+</body>
+</html>

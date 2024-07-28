@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+</head>
+<body>
+    <h1>User List</h1> 
+        <label for="name"><b>name</b></label><br>
+        <p>{{ data.first_name }}<br></p>
+        <label for="Email"><b>Email</b></label><br>
+       <p>{{data.email}}<br></p>
+        <label for="Address"><b>Address</b></label><br>
+        <p>{{ data.address }}<br></p>
+        <label for="age"><b>Age</b></label><br>
+        <p>{{ data.age }}<br></p>
+      
+        <label for="username"><b>Username</b></label><br>
+        <p>{{data.username}}<br></p>
+        <label for="DOB"><b>DOB</b></label><br>
+        <p>{{ data.dob }}<br></p>
+        <label for="Phonenumber"><b>Phonenumber</b></label><br>
+        <p>{{data.phone_number}}<br></p>
+        
+    </div>
+    <a href="{% url 'edit_pharm' %}"><button type="submit">submit</button></a>
+</body>
+</html>

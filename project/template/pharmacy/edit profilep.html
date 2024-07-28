@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- id=datas.id -->
+    <form action="{% url 'edit_pharm'  %}" method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        <h3>Edit Profile</h3>
+        <div class="row d-flex align-items-center ">
+            <div class=" col-sm-6  " style=" padding-right:1px;padding-left:0px;">
+                  <label for="name"><b>Name</b></label><br>
+                  <input type="text" placeholder="Name" name="Name" value="{{datas.first_name}}"  ><br>
+
+                  <label for="Email"><b>Email</b></label><br>
+                  <input type="email" placeholder="Email" name="Email" value="{{ datas.email }}"><br>
+
+                  <label for="Address"><b>Address</b></label><br>
+                  <textarea id="Address" name="Address" rows="3" cols="18" >{{datas.Address}}</textarea><br>
+
+                  <label for="Age"><b>Age</b></label><br>
+                  <input type="number" placeholder="Age" name='age' value="{{datas.age}}"><br>
+
+        
+                <label for="UserName"><b>UserName</b></label><br>
+                <input type="text" placeholder="UserName" name="UserName" value="{{datas.username}}" ><br>
+               
+               
+                
+                <label for="DOB"><b>DOB</b></label><br>
+                <input type="date" placeholder="DOB" name="DOB" value="{{datas.DOB|date:'Y-m-d'}}"><br>
+
+                <label for="Phone number"><b>Phone number</b></label><br>
+                <input type="tel" placeholder="Phone number"  name='Phonenumber' value="{{datas.Phonenumber}}"><br>
+                
+              </div>
+              <div>
+              <button type="submit">Update</button>
+              </div>
+      </div>
+         </form>  
+       
+</body>
+</html>

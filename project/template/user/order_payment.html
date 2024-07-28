@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                <tr>
+                    <td>{{ item.medicine_id.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.medicine_id.price }}</td>
+                    <td>${{ item.total_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="total">Total:{{ total_amounts }}</p>
+        
+        <a href="{% url 'order_item' %}">Back</a>
+    </div>
+</body>
+</html>

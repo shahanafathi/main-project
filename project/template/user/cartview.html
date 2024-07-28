@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <!-- Add any required CSS here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ff1a1a;
+        }
+
+        .empty-cart {
+            text-align: center;
+            margin: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Cart</h1>
+    
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+                
+                    <tr>
+                        
+                        {% for items in cart_items %}
+                        <td>{{ items.medicine_id.name }}</td>
+                        <td>
+                            <input type="number" placeholder="" name="quatity" value="{{ items.medicine_id.quantity }}"><br>
+                            <!-- {{ items.medicine_id.quantity }} -->
+                              
+                        </td> 
+                        <td>{{ items.medicine_id.price }}</td> 
+                        <td>
+                            
+                            <a href="{% url 'remove_cart' id=items.id %}"><button type="submit">remove</button></a>
+                            
+                        </td><br>
+                        {% endfor %}
+
+                    </tr>
+                    
+        </table>
+        
+        <form action="{% url 'order_item' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="remove-link">Place Order</button>
+        </form>
+ {% else %}
+  {% endif %}  
+  
+  <div>
+      <p>{{ message }}</p>
+  </div>
+
+ 
+
+
+</body>
+</html>
