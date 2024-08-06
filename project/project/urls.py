@@ -46,8 +46,10 @@ urlpatterns = [
 
     path('order_item', views.order_item, name='order_item'),
     path('order_view', views.order_view, name='order_view'),
-    # path('remove_order/<int:id>', views.remove_order, name='remove_order'),
-    # path('remove_order/<int:id>/', views.remove_order, name='remove_order'),
+    # path('status/<int:id>', views.remove_order, name='remove_order'),
+    path('admin', views.admin, name='admin'),
+    path('add_category',views. add_category, name='add_category'),
+     path('view_Category',views. view_Category, name='view_Category'),
     
     
     ###Epharmacyuser

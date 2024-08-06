@@ -32,10 +32,11 @@ class medicine(models.Model):
     strength=models.IntegerField(null=True, blank=True)
     Image=models.FileField(null=True,blank=True)
     
-    
-    # def __str__(self):
-    #     return self.name
-    
+class Category(models.Model):
+    category_name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True, blank=True)
+    # medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)  
+  
 class cart(models.Model):
     medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
     user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
@@ -57,7 +58,7 @@ class order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(null=True, blank=True, max_length=100, default='Pending')
     quantity = models.IntegerField(null=True, blank=True)
-    payment_status = models.CharField(max_length=100, default='Pending')
+    payment_status = models.CharField(max_length=100, default='booked')
     total_amount = models.IntegerField(null=True, blank=True)
     # def __str__(self):
     #     return self.name

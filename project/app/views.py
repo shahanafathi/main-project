@@ -3,7 +3,7 @@ from django.http.response import HttpResponse
 from django.contrib.auth.models import auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout
-from .models import CustomeUser,medicine,cart,order,wishlist
+from .models import CustomeUser,medicine,cart,order,wishlist,Category
 # from django.shortcuts import get
 
 
@@ -17,43 +17,45 @@ def index(request):
 def home(request):
       return render(request,'home.html')
 # ***************main login******
-        
+
 def Login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
+    if request.method == "POST":
+        Username = request.POST['username']
+        Password = request.POST['password']
+        admin_user = auth.authenticate(request,username=Username,password=Password)
+        if admin_user is not None and admin_user.is_staff:
+            auth.login(request,admin_user)
+            # return redirect('/admin/')  # Redirect to the admin dashboard
+            return redirect(admin)
         
-        if user is not None:
-            login(request, user)
-            if user.is_staff:
-                return redirect('/admin/')  # Redirect to the admin dashboard
+        data = auth.authenticate(username=Username,password=Password)
+        if data is not None:
+            auth.login(request,data)
+            if data.usertype == "user" :
+             return redirect(user_home)
+            if data.usertype == "pharmacy" and data.status == "approved":
+                return redirect(pharm_home)
+            if data.usertype == "pharmacy" and data.status == "pending":
+                return HttpResponse("Can't login without approval of admin.Either wait for 1 day or register again")   
+            # elif data.usertype == "deliver" and data.status == "pending":
+            #     return HttpResponse("Can't login without approval of admin.Either wait for 1 day or register again")
+            # elif data.usertype == "deliver" and data.status == "accept":
+            #     return redirect(deliver_profile)
+            
             else:
-                if user.usertype == "user":
-                    return redirect(user_home)  # Redirect to the user profile
-                elif user.usertype == "pharmacy":
-                    return redirect(pharm_home)# Redirect to the pharmacy profile
-                elif user.usertype == "delivery":
-                    # return HttpResponse('sucess')
-                    return redirect(deliver_profile)
-                # elif user.usertype == "admin":
-                #     return redirect('/admin/')  # Redirect to the admin dashboard
-                else:
-                    return HttpResponse("error")
-        else:
-            context = {
-                'message': "Invalid credentials"
-            }
-            return render(request, 'login.html', context)
+                context ={
+                    'message': "Invalid credentials"
+                    }
+                return render(request, 'login.html', context)
+
+    # Render the login form for GET requests
     else:
-        return render(request, 'login.html')
+      return render(request, 'login.html')
+
 
 def logout(request):
     auth.logout(request)
     return redirect(Login)
-
-
-
 
 
 
@@ -143,52 +145,50 @@ def user_medicine(request,id):
     return render(request, 'user/user_medicine.html', {'medicines': medicines})
 
 #########  user cart#######
-# def add_to_cart(request,id):
-#     datas=CustomeUser.objects.get(id=request.user.id)
-#     # print(datas)
+# def add_to_cart(request, id):
+#     datas = CustomeUser.objects.get(id=request.user.id)
 #     medicine_item = medicine.objects.get(id=id)
 #     cart_items = cart.objects.all()
-  
-    
-#     if cart.objects.filter(medicine_id=medicine_item,user_id=datas).exists():
-#              return render(request,'user/user_home.html',{'message':'already exists in the cart','cart_items': cart_items})
+#     if cart.objects.filter(medicine_id=medicine_item, user_id=datas).exists():
+#         return render(request, 'user/cartview.html', {'message': 'This item already exists in your cart', 'cart_items': cart_items})
 #     else:
-#                 cart_add=cart.objects.create(medicine_id=medicine_item,user_id=datas)
-#                 cart_add.save()
-#                 return redirect(cart_view)
-        # return render(request, 'user/cartview.html',{'item':medicine_item,'datas':datas})
-        # return HttpResponse('sucess')
-    # else:
-    #     return render(request, 'user/cart.html',{'item':medicine_item,'datas':datas})
-
-# def add_to_cart(request,id):
-#     datas=CustomeUser.objects.get(id=request.user.id)
-#     medicine_item = medicine.objects.get(id=id)
-#     if cart.objects.filter(medicine_id=medicine_item,user_id=datas).exists():
-#             return render(request,'user/user_home.html',{'message':'already exists in the cart','cart_items': cart_items})
-#     else:
-#         cart_add=cart.objects.create(medicine_id=medicine_item,user_id=datas)
+#         cart_add = cart.objects.create(medicine_id=medicine_item, user_id=datas)
 #         cart_add.save()
-        
-#         return render(request, 'user/cart1.html',{'item':cart_add,'datas':datas})
+#         return redirect('cart_view') 
     
+# def cart_view(request):
+#     # cart_items = cart.objects.filter(user_id=request.user.id)
+#     cart_items = cart.objects.all()
+#     # print(cart_items)
+#     return render(request, 'user/cartview.html', {'cart_items': cart_items})
 
 def add_to_cart(request, id):
-    datas = CustomeUser.objects.get(id=request.user.id)
+    user = CustomeUser.objects.get(id=request.user.id)
     medicine_item = medicine.objects.get(id=id)
-    cart_items = cart.objects.all()
-    if cart.objects.filter(medicine_id=medicine_item, user_id=datas).exists():
-        return render(request, 'user/cartview.html', {'message': 'This item already exists in your cart', 'cart_items': cart_items})
+    cart_items = cart.objects.filter(user_id=user)  # Filter by current user
+
+    # Check if the medicine is already in the cart
+    if cart.objects.filter(medicine_id=medicine_item, user_id=user).exists():
+        return render(request, 'user/cartview.html', {
+            'message': 'This item already exists in your cart',
+            'cart_items': cart_items
+        })
     else:
-        cart_add = cart.objects.create(medicine_id=medicine_item, user_id=datas)
-        cart_add.save()
-        return redirect('cart_view') 
-    
+        # Add the medicine to the cart
+        cart.objects.create(medicine_id=medicine_item, user_id=user)
+        return redirect('cart_view')  # Redirect to cart view
+
 def cart_view(request):
-    # cart_items = cart.objects.filter(user_id=request.user.id)
-    cart_items = cart.objects.all()
-    # print(cart_items)
+    user = request.user
+    cart_items = cart.objects.filter(user_id=user)  # Filter cart items by current user
     return render(request, 'user/cartview.html', {'cart_items': cart_items})
+
+def remove_cart(request, id):
+    user = request.user
+    # Delete the specific cart item for the current user
+    cart.objects.filter(id=id, user_id=user).delete()
+    return redirect('cart_view')  # Redirect to cart view
+
 
 def remove_cart(request,id):
    
@@ -219,35 +219,50 @@ def remove_wishlist(request,id):
     wishlist_del.delete()
     return redirect( wishlist_view)
 ######## order list####
+# def order_item(request):
+#     datas=CustomeUser.objects.get(id=request.user.id)
+#     cart_item = cart.objects.filter(user_id=datas)
+#     var=order.objects.filter(user_id=datas)
+#     Ttl_amounts=0
+    
+#     for item in cart_item:
+#         total_amt= item.medicine_id.price*item.medicine_id.quantity
+#         Ttl_amounts += total_amt
+#         order_item=order.objects.create(user_id=datas,medicine_id=item.medicine_id,total_amount=total_amt, quantity=item.quantity)
+#         order_item.save()
+#         # return redirect( order_view)
+#         return render(request,'user/order.html', {'order_item': cart_item,'total_amounts':Ttl_amounts})
+
+
 def order_item(request):
     datas=CustomeUser.objects.get(id=request.user.id)
     cart_item = cart.objects.filter(user_id=datas)
-    var=order.objects.filter(user_id=datas)
-    Ttl_amounts=0
+    
     
     for item in cart_item:
-        total_amt= item.medicine_id.price*item.medicine_id.quantity
-        Ttl_amounts += total_amt
-        order_item=order.objects.create(user_id=datas,medicine_id=item.medicine_id,total_amount=total_amt, quantity=item.quantity)
+
+        order_item=order.objects.create(user_id=datas,medicine_id=item.medicine_id)
         order_item.save()
-        # return redirect( order_view)
-        return render(request,'user/order.html', {'order_item': cart_item,'total_amounts':Ttl_amounts})
+        cart_item.delete()
+        return redirect(cart_view)
+#         return render(request,'user/order.html', {'order_item': cart_item,'total_amounts':Ttl_amounts})
 
 
 def order_view(request):
     datas = CustomeUser.objects.get(id=request.user.id)
     order_items = order.objects.filter(user_id=datas)
+    # order_items = order.objects.all()order_items
     # total_amounts = sum(item.total_amount for item in order_items)  # Calculate total for display
-    return render(request, 'user/order.html', {'order_items': order_items})
-    # return render(request, 'user/order.html', {'order_items': order_items})
+    # return render(request, 'user/order1.html', {'order_items': order_items})
+    return render(request, 'user/order1.html', {'order_items': order_items})
 # 
-def remove_order(request,id):
-    datas = CustomeUser.objects.get(id=request.user.id)
+# def remove_order(request,id):
+#     datas = CustomeUser.objects.get(id=request.user.id)
 
-    order_del = order.objects.get(id=id)
-    order_del.delete()
-    # return redirect( order_item)
-    return render(request,'user/order.html')
+#     order_del = order.objects.get(id=id)
+#     order_del.delete()
+#     # return redirect( order_item)
+#     return render(request,'user/order.html')
 
 # def remove_order(request, order_id):
 #     user_data = CustomeUser.objects.get(id=request.user.id)
@@ -256,8 +271,28 @@ def remove_order(request,id):
 #     return render(request, 'user/order2.html')
     
 #        #***********pharmacy**********
-       
-       
+
+def view_Category(request):
+        categories = Category.objects.all()
+        return render(request, 'pharmacy/ctgory.html', {'categories': categories})
+        
+def add_category(request):
+    if request.method == "POST":
+        ctgry_name = request.POST['category_name']
+        if not Category.objects.filter(category_name=ctgry_name).exists():
+            Category.objects.create(category_name=ctgry_name)
+            message = "Category added successfully."
+        else:
+            message = "Category already exists."
+        return render(request, 'pharmacy/categery.html', context={'add': message})
+    else:
+        return render(request,'pharmacy/categery.html')
+
+
+
+
+
+        
 def pharm_register(request):
     if request.method == 'POST':
             name = request.POST['name']
@@ -362,26 +397,9 @@ def pharmacy_vieworder(request):
     pharmacy_medicines = medicine.objects.filter(pharmacy_id=pharmacy_user)
     orders = order.objects.filter(medicine_id__in=pharmacy_medicines)
     return render(request, 'pharmacy/userorder_get.html', {'orders': orders, 'pharmacy_user': pharmacy_user})
-# # def search_medicine(request):
-#     if request.method=='POST':
-#         Search=request.POST['search']
-#         user = medicine.objects.filter(usertype='pharmacy',name__icontains=Search)
-#         return render(request,'pharmacy/homep.html',{'users': user})
-#     else:
-#         return redirect(pharm_home)
+# 
 
-def update_order_status(request, order_id):
-    if request.method == 'POST':
-        try:
-            order = order.objects.get(id=order_id)
-            new_status = request.POST.get('status')
-            order.status = new_status
-            order.save()
-            messages.success(request, f"Order {order_id} status updated to {new_status}.")
-        except order.DoesNotExist:
-            messages.error(request, "Order not found.")
-    
-    return redirect('pharmacy_orders')
+#         return redirect(pharm_home)
 
 #*****************delivery**********
 def delivery_Register(request):
@@ -414,3 +432,73 @@ def deliver_profile(request):
     data=CustomeUser.objects.get(id=request.user.id)
     return render(request,'delivery/delivery_profile.html',{'data':data})
        
+       
+       
+def admin(request):
+    data = CustomeUser.objects.filter(status="pending")
+    print(data)
+    return render(request,'admin/admin_status.html',{'data':data})
+
+
+def admin_status(request,id):
+    # data1= CustomeUser.objects.get(id=data.pharmacy_id) 
+    data= CustomeUser.objects.get(id=id) 
+    if request.method == "POST":
+        status=request.POST['status']
+        try:
+            if status =="accept":
+                    data.status = status
+                    data.save()
+                    return redirect(Login)
+                
+            elif status =="reject":
+                    data.status = status
+                    data.save()
+                    return redirect(Login)
+            else:
+                  return HttpResponse("error")
+        except Exception as e:
+            return HttpResponse({e})
+            
+    else:
+            return redirect(admin)
+
+
+
+# def admin(request):
+#     # Fetch users with a status of "pending"
+#     data = CustomeUser.objects.filter(status="pending")
+#     # Render the admin status page with the pending users
+#     return render(request, 'admin/admin_status.html', {'data': data})
+
+# def admin_status(request, id):
+#     # Fetch the user with the given ID
+#     data = CustomeUser.objects.get(id=id)
+
+#     if request.method == "POST":
+#         # Get the status from the POST request
+#         status = request.POST['status']
+
+#         try:
+#             # Check if status is either "accept" or "reject"
+#             if status == "accept":
+#                 # Update the user's status to "accept"
+#                 data.status = status
+#                 data.save()
+#                 # Redirect to the login view after updating the status
+#                 return redirect(Login)
+#             elif status == "reject":
+#                 # Update the user's status to "reject"
+#                 data.status = status
+#                 data.save()
+#                 # Redirect to the login view after updating the status
+#                 return redirect(Login)
+#             else:
+#                 # Return an error response if the status is invalid
+#                 return HttpResponse("error")
+#         except Exception as e:
+#             # Handle any exceptions and return an error message
+#             return HttpResponse({e})
+#     else:
+#         # Redirect to the admin view if the request method is not POST
+#         return redirect(admin)

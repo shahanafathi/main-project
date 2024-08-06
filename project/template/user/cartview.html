@@ -85,7 +85,7 @@
                     <tr>
                         
                         {% for items in cart_items %}
-                        <td>{{ items.medicine_id.name }}</td>
+                        <td>{{ items.cart_id.name }}</td>
                         <td>
                             <input type="number" placeholder="" name="quatity" value="{{ items.medicine_id.quantity }}"><br>
                             <!-- {{ items.medicine_id.quantity }} -->

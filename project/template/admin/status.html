@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Pending Users</h1>
+    <ul>
+        {% for i in data %}
+            <li>
+                {{ i.username }} - {{ user.email }}
+                <a href="{% url 'admin_status' id=i.id %}">Review Status</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
