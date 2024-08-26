@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Order</title>
+</head>
+<body>
+    <h2>Create an Order</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="pharmacy_id">Pharmacy:</label>
+        <select name="pharmacy_id" required>
+            {% for pharmacy in pharmacies %}
+            <option value="{{ pharmacy.id }}">{{ pharmacy.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="total_amount">Total Amount:</label>
+        <input type="number" name="total_amount" required><br>
+        <label for="payment_method">Payment Method:</label>
+        <select name="payment_method" required>
+            <option value="Online">Online</option>
+            <option value="COD">Cash on Delivery</option>
+        </select><br>
+        <button type="submit">Place Order</button>
+    </form>
+</body>
+</html>

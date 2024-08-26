@@ -14,6 +14,7 @@ class CustomeUser(AbstractUser):
     license=models.FileField(null=True,blank=True)
     Image=models.FileField(null=True,blank=True)
     certification = models.FileField(null=True, blank=True)
+    contact_name = models.CharField(max_length=255, null=True, blank=True)
     # def __str__(self):
     #     return self.first_name
 
@@ -31,6 +32,7 @@ class medicine(models.Model):
     genericname=models.CharField(null=True, blank=True, max_length=100)
     strength=models.IntegerField(null=True, blank=True)
     Image=models.FileField(null=True,blank=True)
+    
     
 class Category(models.Model):
     category_name = models.CharField(max_length=100, unique=True)
@@ -56,14 +58,44 @@ class order(models.Model):
     cart_id = models.ForeignKey(cart, on_delete=models.CASCADE, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
     order_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(null=True, blank=True, max_length=100, default='Pending')
+    PAYMENT_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('CONFIRMED', 'Confirmed'),
+        ('FAILED', 'Failed'),
+    ]
+    status = models.CharField(null=True, blank=True, max_length=100,choices=PAYMENT_STATUS_CHOICES,
+        default='PENDING')
     quantity = models.IntegerField(null=True, blank=True)
     payment_status = models.CharField(max_length=100, default='booked')
     total_amount = models.IntegerField(null=True, blank=True)
+    delivery_address=models.CharField(max_length=255)
+    
     # def __str__(self):
     #     return self.name
-
-
+class order_review(models.Model):   
+    medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
+    review = models.CharField(null=True,blank=True,max_length=100)
+    rating = models.PositiveIntegerField(default=5)  # Rating out of 5
+    Image=models.FileField(null=True,blank=True)
+    review_date = models.DateTimeField(auto_now_add=True)
+class CompanyOrder(models.Model):
+    company_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=[
+        ('pending', 'Pending'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled')
+    ], default='pending')
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)    
+    order_id = models.ForeignKey(order,on_delete=models.CASCADE)
+    medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    # unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    
+    
 class prescription(models.Model):
     name=models.CharField(null=True, blank=True, max_length=100)
     age = models.IntegerField(null=True, blank=True)
@@ -75,3 +107,6 @@ class prescription(models.Model):
     Dosage=models.CharField(max_length=50)
     prescription_file = models.FileField()
     quantity_prescribed = models.IntegerField()
+
+    # def total_price(self):
+    #     return self.quantity * self.unit_price

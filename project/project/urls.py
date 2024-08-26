@@ -46,35 +46,63 @@ urlpatterns = [
 
     path('order_item', views.order_item, name='order_item'),
     path('order_view', views.order_view, name='order_view'),
+    path('payment_page/', views.payment_page, name='payment_page'),
+    path('process_payment/', views.process_payment, name='process_payment'),
+    path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
+    # path('order_confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),
+    # path('order/<int:order_id>/review/', views.order_review, name='order_review'),
     # path('status/<int:id>', views.remove_order, name='remove_order'),
     path('admin', views.admin, name='admin'),
     path('add_category',views. add_category, name='add_category'),
-     path('view_Category',views. view_Category, name='view_Category'),
+    path('view_Category',views. view_Category, name='view_Category'),
     
     
-    ###Epharmacyuser
+    
+    ###pharmacyuser
     path('pharm_register',views.pharm_register,name='pharm_register'),
     path('pharm_profile',views.pharm_profile,name='pharm_profile'),
     path('edit_pharm',views.edit_pharm,name='edit_pharm'),
     path('pharm_home',views.pharm_home,name='pharm_home'),
     path('add_medicine', views.add_medicine, name='add_medicine'),
     path('edit_medicine/<int:id>', views.edit_medicine, name='edit_medicine'),
-     path('medicine_view/<int:id>', views.medicine_view, name='medicine_view'),
+    path('medicine_view/<int:id>', views.medicine_view, name='medicine_view'),
     path('delete_med/<int:id>',views.delete_med,name='delete_med'),
     # path('search_medicine',views.search_medicine,name='search_medicine'),
     path('user_medicine/<int:id>',views.user_medicine,name='user_medicine'),
     path('pharmacy_vieworder', views.pharmacy_vieworder, name='pharmacy_vieworder'),
-    
+    path('pharmacy_viewcompany', views.pharmacy_viewcompany, name='pharmacy_viewcompany'),
+    path('pharmacy_history', views.pharmacy_history, name='pharmacy_history'),
+     path('pharmacy_userhistory', views.pharmacy_userhistory, name='pharmacy_userhistory'),
+   
 
     
  
  
  ##### delivery###
  
- path('delivery_Register',views.delivery_Register,name='delivery_Register'),
+  path('delivery_Register',views.delivery_Register,name='delivery_Register'),
   path('deliver_profile',views.deliver_profile,name='deliver_profile'),
- 
+  path('deliver_home', views.deliver_home, name='deliver_home'),
+  path('delivr_order_user', views.delivr_order_user, name='delivr_order_user '),
+#   path('history', views.history, name='history '),
+#   path('delivery_review', views.delivery_review, name='delivery_review '),
 
+ ##### doctor###
+ 
+  path('doctor_Register',views.doctor_Register,name='doctor_Register'),
+  path('doctor_profile',views.doctor_profile,name='doctor_profile'),
+  path('doctor_edit', views.doctor_edit, name='doctor_edit'),
+  path('doctor_home', views.doctor_home, name='doctor_home '),
+#   path('history', views.history, name='history '),
+#   path('delivery_review', views.delivery_review, name='delivery_review '),
+
+
+ ##### company###
+ 
+  path('company_Register',views.company_Register,name='company_Register'),
+  path('company_profile',views.company_profile,name='company_profile'),
+  path('company_edit', views.company_edit, name='company_edit'),
+#   path('doctor_home', views.doctor_home, name='doctor_home '),
 ]
 
 

@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Orders for Your Pharmacy</h2>
+
+        {% if Orders %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Amount</th>
+                        <th>Order Date</th>
+                        <th>Actions</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Orders %}
+                    <tr>
+                        <td>{{ i.user_id.id }}</td>
+                        <td>{{ i.user_id.username }}</td>
+                        <td>{{ i.user_id.total_amount }}</td>
+                        <td>{{ i.order_date }}</td>
+                        <td> <a href=""><button type="submit">View</button></a></td>
+                        <td> <a href=""><button type="submit">Check</button></a>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

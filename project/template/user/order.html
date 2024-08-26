@@ -43,7 +43,8 @@
 
             <div class="total-amount">
                 <p>Total Amount: ₹{{ total_amounts }}</p> 
-            <button type="submit"><a href="{% url 'order_view'  %}" >payment</button></a>
+            <!-- <button type="submit"><a href="order_view" >payment</button></a> -->
+             <button type="submit"><a href="{% url 'process_payment'  %}" >payment</button></a>
         </div>
         </div>
        
