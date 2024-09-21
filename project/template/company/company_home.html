@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Home</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ company_user.company_name }}</h1>
+    </header>
+
+    <section>
+        <h2>Company Details</h2>
+        <ul>
+            <li><strong>Company Name:</strong> {{ company_user.company_name }}</li>
+            <li><strong>Email:</strong> {{ company_user.email }}</li>
+            <li><strong>Phone Number:</strong> {{ company_userr.phone_number }}</li>
+            <li><strong>Address:</strong> {{ company_user.address }}</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Manage Products</h2>
+        <ul>
+            <li><a href="">View Orders</a></li>
+            <li><a href="">Edit Profile</a></li>
+           
+        </ul>
+    </section>
+
+    <section>
+        <h2>Account Management</h2>
+        <ul>
+            <li><a href="{% url 'company_profile' %}">View Profile</a></li>
+            <li><a href="{% url 'company_profile' %}">Edit Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </section>
+</body>
+</html>

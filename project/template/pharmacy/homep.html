@@ -76,7 +76,6 @@
                     </svg></a>
                   </li> -->
                   <!-- <li class="nav-item">
-                    <a class="nav-link" href="{% url 'pharmacy_vieworder' %}">order</a>
                   </li> -->
                   <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_category' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
@@ -182,7 +181,7 @@
     </div>
   </div>
   <h5 class="card-title"  style="text-align: center;">
-  <a  href="{% url 'view_Category' %}">Stoke<br></a></h5>
+  <a  href="{% url 'view_Category' %}">stock<br></a></h5>
   </div>
   </div>
 
@@ -196,10 +195,37 @@
       </div>
     </div>
     <h5 class="card-title"  style="text-align: center;">
-    <a  href="{% url 'pharmacy_history' %}">history<br></a></h5>
+    <a  href="">history<br></a></h5>
     </div>
     </div>
 
+    <div class="full_card">
+      <div>
+      <div class="rdx">
+       
+        <div class="card text-bg-light">
+          <img src="{% static 'pharmacy/history-icon34.png' %}" class="card-img" alt="..." >
+          
+        </div>
+      </div>
+      <h5 class="card-title"  style="text-align: center;">
+      <a  href="{% url 'place_order' %}">company place order<br></a></h5>
+      </div>
+      </div>
+      
+      <div class="full_card">
+        <div>
+        <div class="rdx">
+         
+          <div class="card text-bg-light">
+            <img src="{% static 'pharmacy/history-icon34.png' %}" class="card-img" alt="..." >
+            
+          </div>
+        </div>
+        <h5 class="card-title"  style="text-align: center;">
+        <a  href="{% url 'cmpy_order_confirmation' %}">conform<br></a></h5>
+        </div>
+        </div>
 
 </div>
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'upload_prescription' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+    
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age">
+    
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address">
+    
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description">
+    
+        <label for="medicine_id">Medicine:</label>
+        <select name="medicine_id" id="medicine_id">
+            {% for medicine in medicines %}
+                <option value="{{ medicine.id }}">{{ medicine.name }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="dosage">Dosage:</label>
+        <input type="text" name="dosage" id="dosage" required>
+    
+        <label for="quantity_prescribed">Quantity Prescribed:</label>
+        <input type="number" name="quantity_prescribed" id="quantity_prescribed" required>
+    
+        <label for="prescription_file">Upload Prescription:</label>
+        <input type="file" name="prescription_file" id="prescription_file" required>
+    
+        <button type="submit">Upload</button>
+    </form>
+    
+</body>
+</html>

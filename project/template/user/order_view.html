@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4a4a4;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .no-orders {
+            text-align: center;
+            margin: 20px;
+            font-size: 1.2em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Order History</h1>
+
+    {% if order_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Medicine Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Review</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.medicine_id.name }}</td>
+                <td>{{ item.medicine_id.quantity }}</td>
+                <td>{{ item.medicine_id.price }}</td>
+                <td>
+                            
+                    <a href="{% url 'remove_orderview' id=item.id %}"><button type="submit">remove</button></a>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="no-orders">
+        <p>No order history available.</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Order History</h1>
+
+{% if order_items %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Medicine Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Review</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.medicine_id.name }}</td>
+            <td>{{ item.medicine_id.quantity }}</td>
+            <td>{{ item.medicine_id.price }}</td>
+    <td>
+            <div class="star-rating">
+            <input type="radio" name="star-{{ item.id }}" id="star5-{{ item.id }}" value="5" {% if item.review.rating == 5 %} checked {% endif %}><label for="star5-{{ item.id }}">★</label>
+            <input type="radio" name="star-{{ item.id }}" id="star4-{{ item.id }}" value="4" {% if item.review.rating == 4 %} checked {% endif %}><label for="star4-{{ item.id }}">★</label>
+            <input type="radio" name="star-{{ item.id }}" id="star3-{{ item.id }}" value="3" {% if item.review.rating == 3 %} checked {% endif %}><label for="star3-{{ item.id }}">★</label>
+            <input type="radio" name="star-{{ item.id }}" id="star2-{{ item.id }}" value="2" {% if item.review.rating == 2 %} checked {% endif %}><label for="star2-{{ item.id }}">★</label>
+            <input type="radio" name="star-{{ item.id }}" id="star1-{{ item.id }}" value="1" {% if item.review.rating == 1 %} checked {% endif %}><label for="star1-{{ item.id }}">★</label>
+        </div>
+
+                Review Button triggers Modal -->
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal-{{ item.id }}">
+                    Write Review
+                </button> -->
+
+                <!-- Modal -->
+                <!-- <div class="modal fade" id="reviewModal-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="post" enctype="multipart/form-data" action="{% url 'save_review' %}">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="medicine" value="{{ item.medicine_id.id }}">
+                                    <div class="form-group">
+                                        <label for="reviewText">Review</label>
+                                        <textarea class="form-control" id="reviewText" name="review_text" rows="3" placeholder="Write your review here"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewImage">Upload Image</label>
+                                        <input type="file" class="form-control-file" id="reviewImage" name="review_image">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="no-orders">
+    <p>No order history available.</p>
+</div>
+{% endif %}
+
+</body>
+</html> -->

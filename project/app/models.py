@@ -44,7 +44,7 @@ class cart(models.Model):
     user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
     added_date = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=True, blank=True, unique=True)
- 
+    
 class wishlist(models.Model):
     medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
     user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
@@ -76,25 +76,11 @@ class order_review(models.Model):
     medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
     user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
     review = models.CharField(null=True,blank=True,max_length=100)
-    rating = models.PositiveIntegerField(default=5)  # Rating out of 5
+    rating = models.PositiveIntegerField(default=5)  
     Image=models.FileField(null=True,blank=True)
     review_date = models.DateTimeField(auto_now_add=True)
-class CompanyOrder(models.Model):
-    company_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
-    order_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=[
-        ('pending', 'Pending'),
-        ('shipped', 'Shipped'),
-        ('delivered', 'Delivered'),
-        ('cancelled', 'Cancelled')
-    ], default='pending')
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)    
-    order_id = models.ForeignKey(order,on_delete=models.CASCADE)
-    medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    # unit_price = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    
+    # order=models.ForeignKey(order, on_delete=models.CASCADE)
+    cart_id = models.ForeignKey(cart, on_delete=models.CASCADE, null=True, blank=True)
     
 class prescription(models.Model):
     name=models.CharField(null=True, blank=True, max_length=100)
@@ -110,3 +96,37 @@ class prescription(models.Model):
 
     # def total_price(self):
     #     return self.quantity * self.unit_price
+    
+# class company_product(models.Model):
+#     company_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
+#     product_name = models.CharField(max_length=255)
+#     description = models.TextField()
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     stock_quantity = models.IntegerField()
+    
+    
+class CompanyOrder(models.Model):
+    company_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=[
+        ('pending', 'Pending'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled')
+    ], default='pending')
+       
+    medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True, blank=True, unique=True)
+# class PharmacyOrderToCompany(models.Model):
+#     pharmacy_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)  # Assuming the pharmacy is represented by a user model
+#     company_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
+#     order_date = models.DateTimeField(auto_now_add=True)
+#     total_amount = models.DecimalField(max_digits=10,)
+#     status = models.CharField(max_length=50, choices=[('Pending', 'Pending'), ('Shipped', 'Shipped'), ('Delivered', 'Delivered')])
+
+# class PharmacyOrderToCompanyDetail(models.Model):
+#     order = models.ForeignKey(PharmacyOrderToCompany, related_name='order_details', on_delete=models.CASCADE)
+#     product_id = models.ForeignKey(company_product, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField()
+#     price = models.IntegerField(null=True, blank=True, unique=True)
+#     quantity = models.IntegerField(null=True, blank=True, unique=True)

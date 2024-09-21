@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #28a745;
+            margin-top: 50px;
+        }
+
+        p {
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .success-message {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            border-radius: 8px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #28a745;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-message">
+        <h1>Thank you for your order!</h1>
+        <p>Your order has been successfully confirmed and will be delivered soon.</p>
+        <p>Please keep the cash ready for the delivery.</p>
+        <a href="{% url 'home' %}">Go Back to Home</a>
+    </div>
+
+</body>
+</html>

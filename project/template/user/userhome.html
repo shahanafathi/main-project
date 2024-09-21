@@ -1,286 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<!-- <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f1f9fc;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
+    <style>
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      width:100%;
+      background-color:#F8F0E5;
+  }
+  
+  .container-fluid {
+      background-color: #102C57;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 10px;
+  }
 
-.container-fluid {
-  background-color: #153c3e;
-  width: 97%;
-  height: 50px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 20px;
-}
+  .navbar ul {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
 
-.navbar ul {
+  .navbar li {
+      margin-right:30px;
+  }
+
+  .navbar a {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+  }
+
+  .navbar a svg {
+      margin-left: 10px;
+  }
+
+  h1 {
+      color: #1e362a;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      align-items: center;
+    
+  }
+
+  p {
+      color: #1e362a;
+      font-size: large;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+  }
+
+  input[type="search"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 900px;
+      height: 50px;
+      margin: 30px 0;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+      width: 100px;
+      height: 50px;
+      border-radius: 20px;
+      background-color: #ffffff;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      cursor: pointer;
+  }
+
+  .search {
+      background-color:  #102C57;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .medicine-list {
+      width: 80%;
+      margin: 0 auto;
+  }
+
+  .medicine {
+      background-color: #ffffff;
+      padding: 20px;
+      margin: 20px 0;
+
+      border-radius: 8px;
+  }
+
+  .medicine h3 {
+      margin: 0 0 10px 0;
+      color: #153c3e;
+  }
+
+  .medicine p {
+      margin: 0px 0;
+  }
+
+  .medicine button {
+      background-color: #383838;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+  }
+
+  .medicine button:hover {
+      background-color: #000000;
+  }
+
+
+
+
+  .container-fluid2 {
+    background-color:#dbc9b6;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .navbar1 ul {
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
-}
+  }
 
-.navbar li {
-    margin-right: 20px;
-}
+  .navbar1 li {
+    margin-right:30px;
+  }
 
-.navbar a {
+  .navbar1 a {
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: rgb(15, 10, 10);
     font-weight: bold;
     display: flex;
     align-items: center;
-}
+  }
 
-.navbar a svg {
-    margin-left: 5px;
-}
+  .navbar1 a svg {
+    margin-left: 10px;
+  }
+  table{
+  display:flex;
+  }
 
-h1 {
-    color: #1e362a;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.navbar{
-  padding-bottom: 0%;
-  padding-top: 0%;
-  color: white;
-}
-
-ul{ 
-  display: flex;
-  margin-left:850px; 
-  font-size: medium;
-  color: white;
-
-}
-li{
-  
-  margin-right:50px; 
-  list-style-type: none;
-  color: white;
-  padding: 5px;
-  
-}
-h1{
-
-margin-left: 20px;
-color:#1e362a;
-margin-top:20px;
-margin-bottom:20px;
-text-align: center;
-
-
-}
-a{
-  text-decoration: none; 
-  color: white;
-  font-weight:bold;
-}
-
-p{
-color:#1e362a;
-font-size:large;
-font-weight: bold;
-margin-top:20px;
-margin-bottom:20px;
-margin-left: 10px;
-text-align: center;
-}
-input[type="search"]{
-padding:10px;
-border-top-color:black ;
-border-left-color: black;
-border-right-color:black ;
-border-radius: 5px;
-color: rgb(0, 0, 0);
-width:900px;
-height: 50px;
-margin-top: 30px;
-margin-bottom:30px;
-margin-left: 100px;
-background-color:#ffffff;
-}
-input[type="submit"]{
-width: 100px; 
-text-align: center;
-align-items: center;
-height: 30px;
-border-radius:20px;
-background-color: #dddbdb;
-}
-.search {
-background-color: #fefefe;
-height: 100px;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-table{
-justify-content: center;
-width:1000px;
-margin-top:30px;
-margin-left:30px ;
-
-}
-th{
-margin-left:10px;
-padding-right:100px;
-text-align: left;
-}
-td{
-padding-top:20px;
-margin-right:170px;
-
-}
-.search{
-background-color: #fefefe;
-height: 100px;
-
-} 
-</style> -->
-     <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #f1f9fc;
-          margin: 0;
-          padding: 0;
-          color: #333;
-          width:100%;
-      }
-
-      .container-fluid {
-          background-color: #153c3e;
-          width: 100%;
-          height: 50px;
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          padding: 0 10px;
-      }
-
-      .navbar ul {
-          display: flex;
-          list-style: none;
-          padding: 0;
-          margin: 0;
-      }
-
-      .navbar li {
-          margin-right:30px;
-      }
-
-      .navbar a {
-          text-decoration: none;
-          color: rgb(255, 255, 255);
-          font-weight: bold;
-          display: flex;
-          align-items: center;
-      }
-
-      .navbar a svg {
-          margin-left: 10px;
-      }
-
-      h1 {
-          color: #1e362a;
-          margin-top: 20px;
-          margin-bottom: 20px;
-          text-align: center;
-          align-items: center;
         
-      }
-
-      p {
-          color: #1e362a;
-          font-size: large;
-          font-weight: bold;
-          margin-top: 20px;
-          margin-bottom: 20px;
-          text-align: center;
-      }
-
-      input[type="search"] {
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          width: 900px;
-          height: 50px;
-          margin: 30px 0;
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          box-sizing: border-box;
-      }
-
-      input[type="submit"] {
-          width: 100px;
-          height: 50px;
-          border-radius: 20px;
-          background-color: #ffffff;
-          display: block;
-          margin: 20px auto;
-          text-align: center;
-          cursor: pointer;
-      }
-
-      .search {
-          background-color: hsla(177, 96%, 9%, 0.582);
-          height: 100px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
-
-      .medicine-list {
-          width: 80%;
-          margin: 0 auto;
-      }
-
-      .medicine {
-          background-color: #ffffff;
-          padding: 20px;
-          margin: 20px 0;
-
-          border-radius: 8px;
-      }
-
-      .medicine h3 {
-          margin: 0 0 10px 0;
-          color: #153c3e;
-      }
-
-      .medicine p {
-          margin: 0px 0;
-      }
-
-      .medicine button {
-          background-color: #383838;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          cursor: pointer;
-          border-radius: 5px;
-          font-size: 16px;
-      }
-
-      .medicine button:hover {
-          background-color: #000000;
-      }
-  </style> 
+        
+      </style> 
 </head>
 <body>
+
     <div>
         <nav class="navbar ">
             <div class="container-fluid">
@@ -288,12 +186,7 @@ height: 100px;
                   <li >
                     <a  href="{% url 'user_home' %}">Home</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Medicines</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'order_view'  %}">history</a>
-                  </li>
+                  
                   <li class="nav-item">
                     <a class="nav-link" href="">Pharmacy</a>
                   </li>
@@ -324,6 +217,38 @@ height: 100px;
             </div>
   
   <div>
+
+    <div class="middlenav">
+      <nav class="navbar1 ">
+        <div class="container-fluid2">
+            <ul>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'upload_prescription'%}">prescription</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'order_view'  %}">history</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'order_view'  %}">Category </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="{% url 'order_view'  %}">payment</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'order_view'  %}"> address</a>
+              </li>
+              <li class="nav-item"></li>
+                <a class="nav-link" href="{% url 'order_view'  %}">help</a>
+              </li>
+              <!-- <li class="nav-item"></li>
+                <a class="nav-link" href="{% url 'order_view'  %}">membership</a>
+              </li> -->
+            </ul>
+          </div>
+        </nav>
+
+    </div>
     <form action="{% url 'search_medicines' %}" method="POST">
      {% csrf_token %}
       <div class="search">    
@@ -332,30 +257,150 @@ height: 100px;
       </div>
     </form>
     <table>
-      <tr>
-          <th>image</th>
-          <th>name</th>
-          <th>qty</th>
-          <th>View</th>
-      </tr>
       <div class="medicine-list">
-        <h2>Your Medicines</h2>
-        {% for medicine in medicines %}
-        <div class="medicine">
-          <div> 
-           </div>
-            <h3>{{ medicine.name }}</h3>
-            <p>{{ medicine.description }}</p>
-            <p>Price: {{ medicine.price }}</p>
-            <p>Quantity: {{ medicine.quantity }}</p>
-           
-            <button type="submit"><a href="{% url 'add_to_cart' id=medicine.id %}" >Add to cart</button></a>
-            <a href="{% url 'user_medicine' id=medicine.id %}"><button type="submit">view</button></a>
-           
-          <!-- </table>      -->
-    {% endfor %}
-  </div>
-        
+        <h2>Pick your Product</h2>
+      </div>
+      {% for medicine in medicines %}
+      <div class="display">
+      <div class="card" style="width: 15rem;">
+        <img src="{% static 'img/med1.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h3 class="card-title">{{ medicine.name }}</h3>
+          <p class="card-text">{{ medicine.description }}</p>
+          <p class="card-text">{{ medicine.price }}</p>
+          <p class="card-text">{{ medicine.quantity }}</p>
+          <div>
+          <button type="submit"><a href="{% url 'add_to_cart' id=medicine.id %}" >Add to cart</button></a>
+          <a href="{% url 'user_medicine' id=medicine.id %}" class="btn btn-primary"><button type="submit">view</button></a>
+        </div>
+        </div>
+      </div>
+        </div>
+        {% endfor %} 
+    </table>
+    
+    <style>
+      .display {
+        display:inline-flex;
+        gap: 10px;
+        margin-top: 10px;
+        margin-right:10px;
+    }
 
+
+      .medicine-list {
+        
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    
+    .medicine-list h2 {
+        width: 100%;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .card {
+        width: 10rem;
+        border: 1px solid #e0e0e0;
+        
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .card-body {
+        padding: 16px;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #151514;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+    
+    .card-text {
+        font-size: 1rem;
+        color:  #403d3d;
+        margin-bottom: 16px;
+    }
+    
+    .card-text:last-of-type {
+        font-weight: bold;
+        color: #000000;
+    }
+    
+    button {
+        background-color: #04051b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #06082e;
+    }
+    
+    button a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    button a:hover {
+        text-decoration: underline;
+    }
+    
+    .btn-primary {
+        background-color: #000000;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-left: 10px;
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background-color: #000000;
+    }
+    
+    a.btn-primary button {
+        padding: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        border: none;
+        cursor: pointer;
+        outline: inherit;
+    }
+    
+    
+    </style>
 </body>
 </html>

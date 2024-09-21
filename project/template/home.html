@@ -17,14 +17,24 @@
     color: white;
   }
   .container-fluid{
-    background-color:#153c3e;
+    background-color:#fa9b4c;
     width: 100%;
     height: 50px; 
     align-content:center;
     margin-left:0px;
    
   }
+  .class1{
+    background-color: #1a0e05;
+  }
   
+  body{
+    background-image: url("{% static 'img/1.jpg' %}");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height:fit-content;
+  }
   ul{ 
     display: flex;
     margin-left:850px; 
@@ -33,7 +43,9 @@
 
 }
 li{
-    
+    justify-content: center;
+    align-content:center;
+    margin-top: 10px;
     margin-right:50px; 
     list-style-type: none;
     color: white;
@@ -56,11 +68,28 @@ a{
     font-weight:bold;
 }
 .container-fluid1{
-  background-color:#b9d2cd;
+  
   width: 100%;
   height: 690px; 
   align-content:center;
+  justify-content: center;
   margin-left:0px;
+}
+.btn{
+  background-color:#fa9b4c;
+  color: #fafafa;
+ 
+  border-top:black;
+  border-right:black;
+  border-bottom:black;
+  border-left:black;
+}
+.discount{
+  height:200px;
+  width:100%;
+  background-color: #259392;
+  margin-top: 15px;
+  
 }
 p{
   color:#1e362a;
@@ -73,15 +102,15 @@ p{
 button {
   padding: auto;
   width: 100px; 
-  justify-content: center;
-  align-content:center;
+  justify-items: center;
+  align-items:center;
+ margin-left: 580px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 25px;
   border-bottom:2px;
   text-align: center;
   background-color: #02101c;
-  margin-left:650px;
  
 }
 
@@ -92,9 +121,15 @@ button {
 <nav class="navbar ">
   <div class="container-fluid">
     <ul>
+      <li >
+        <a  href="#">Home</a>
+      </li>
+      <li >
+        <a  href="#">About</a>
+      </li>
       <li class="nav-item">
         <div class="dropdown">
-          <a class="btn btn-secondary dropdown-toggle"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="btn  dropdown-toggle"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Register
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -109,10 +144,15 @@ button {
         </ul>
       </div>
         </nav>
-            <!-- <div>
-              <img src="{% static 'images/home1.png' %}">
-            </div> -->
+
+        <!-- <div class="class1">
+          <div class="discount">
+            <img src="{% static 'images/home1.png' %}">
+          </div>
+        </div> -->
+            
             <div class="container-fluid1 ">
+             
               <h1>Welcome to Pharmacy Management System</h1>
               <p>Your Trusted Partner in Health and Wellness</p>
               <button type="submit"><a href="{% url 'Login' %}" >Login</button></a>

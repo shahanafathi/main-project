@@ -107,8 +107,9 @@
                 {% for item in cart_items %}
                 <tr>
                     <td>{{ item.medicine_id.name }}</td>
-                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.medicine_id.quantity }}</td>
                     <td>${{ item.medicine_id.price }}</td>
+                    <td>${{total}}</td>
             
                 </tr>
                 {% endfor %}

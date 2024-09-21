@@ -31,7 +31,9 @@ urlpatterns = [
     path('search_medicines', views.search_medicines, name='search_medicines'),
     path('userprofile',views.userprofile,name='userprofile'),
     path('edit_profile',views.edit_profile,name='edit_profile'),
-    
+    #####prescription######
+    path('upload_prescription',views.upload_prescription, name='upload_prescription'),
+    path('prescription_success',views.prescription_success, name='prescription_success'),
     ####### user_cart ########
     path('add_to_cart/<int:id>', views.add_to_cart, name='add_to_cart'),
     path('cart_view', views.cart_view, name='cart_view'),
@@ -48,6 +50,7 @@ urlpatterns = [
     path('order_view', views.order_view, name='order_view'),
     path('payment_page/', views.payment_page, name='payment_page'),
     path('process_payment/', views.process_payment, name='process_payment'),
+    # path('Debitcard', views.Debitcard, name='Debitcard'),
     path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
     # path('order_confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),
     # path('order/<int:order_id>/review/', views.order_review, name='order_review'),
@@ -55,8 +58,19 @@ urlpatterns = [
     path('admin', views.admin, name='admin'),
     path('add_category',views. add_category, name='add_category'),
     path('view_Category',views. view_Category, name='view_Category'),
+    path('remove_orderview<int:id>/', views.remove_orderview, name='remove_orderview'),
+    ######cardsystem####
     
+    path('Debitcard', views.Debitcard, name='Debitcard'),
+    path('order_confirmation1', views.order_confirmation1, name='order_confirmation1'),
     
+    #######cash on delivery#####
+    path('cash_on_delivery', views.cash_on_delivery, name='cash_on_delivery'),
+    path('order_confirmation1/<int:order_id>/', views.order_confirmation1, name='order_confirmation1'),
+    path('order_history', views.order_history, name='order_history'),
+    path('payment_page', views.payment_page, name='payment_page'),
+    # path('order_review<int:id>', views.order_review, name='order_review'),
+     path('save_review', views.save_review, name='save_review'),
     
     ###pharmacyuser
     path('pharm_register',views.pharm_register,name='pharm_register'),
@@ -70,10 +84,11 @@ urlpatterns = [
     # path('search_medicine',views.search_medicine,name='search_medicine'),
     path('user_medicine/<int:id>',views.user_medicine,name='user_medicine'),
     path('pharmacy_vieworder', views.pharmacy_vieworder, name='pharmacy_vieworder'),
-    path('pharmacy_viewcompany', views.pharmacy_viewcompany, name='pharmacy_viewcompany'),
-    path('pharmacy_history', views.pharmacy_history, name='pharmacy_history'),
-     path('pharmacy_userhistory', views.pharmacy_userhistory, name='pharmacy_userhistory'),
-   
+    # path('pharmacy_viewcompany', views.pharmacy_viewcompany, name='pharmacy_viewcompany'),
+    # path('pharmacy_history', views.pharmacy_history, name='pharmacy_history'),
+    #  path('pharmacy_userhistory', views.pharmacy_userhistory, name='pharmacy_userhistory'),
+    path('place-order', views.place_order, name='place_order'),
+    path('cmpy_order_confirmation', views.cmpy_order_confirmation, name='cmpy_order_confirmation'),
 
     
  
@@ -102,7 +117,13 @@ urlpatterns = [
   path('company_Register',views.company_Register,name='company_Register'),
   path('company_profile',views.company_profile,name='company_profile'),
   path('company_edit', views.company_edit, name='company_edit'),
-#   path('doctor_home', views.doctor_home, name='doctor_home '),
+  path('company_home', views.company_home, name='company_home '),
+
+##########admin########
+# path('adminhome', views.adminhome, name='adminhome'),
+
+
+
 ]
 
 
