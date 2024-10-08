@@ -15,26 +15,19 @@
     padding-bottom: 0%;
     padding-top: 0%;
     color: white;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
   }
   .container-fluid{
-    background-color:#fa9b4c;
+    background-color: #102C57;
     width: 100%;
     height: 50px; 
     align-content:center;
     margin-left:0px;
    
   }
-  .class1{
-    background-color: #1a0e05;
-  }
-  
-  body{
-    background-image: url("{% static 'img/1.jpg' %}");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height:fit-content;
-  }
+
   ul{ 
     display: flex;
     margin-left:850px; 
@@ -43,7 +36,7 @@
 
 }
 li{
-    justify-content: center;
+ 
     align-content:center;
     margin-top: 10px;
     margin-right:50px; 
@@ -64,69 +57,27 @@ h1{
 }
 a{
     text-decoration: none; 
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight:bold;
 }
-.container-fluid1{
-  
-  width: 100%;
-  height: 690px; 
-  align-content:center;
-  justify-content: center;
-  margin-left:0px;
-}
-.btn{
-  background-color:#fa9b4c;
-  color: #fafafa;
- 
-  border-top:black;
-  border-right:black;
-  border-bottom:black;
-  border-left:black;
-}
-.discount{
-  height:200px;
-  width:100%;
-  background-color: #259392;
-  margin-top: 15px;
-  
-}
-p{
-  color:#1e362a;
-  font-size:large;
-  font-weight: bold;
-  margin-top:20px;
-  margin-bottom:20px;
-  text-align: center;
-}
-button {
-  padding: auto;
-  width: 100px; 
-  justify-items: center;
-  align-items:center;
- margin-left: 580px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  border-bottom:2px;
-  text-align: center;
-  background-color: #02101c;
- 
-}
-
 </style>
 </head>
 <body>
   
-<nav class="navbar ">
+<nav class="navbar " style="z-index: index;">
   <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'images/8.png' %}" alt="" width="30" height="24">
+        DAYAMED
+      </a>
+  
     <ul>
+      
       <li >
-        <a  href="#">Home</a>
+        <a  href="{% url 'home' %}">Home</a>
       </li>
-      <li >
-        <a  href="#">About</a>
-      </li>
+      
+
       <li class="nav-item">
         <div class="dropdown">
           <a class="btn  dropdown-toggle"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,26 +87,90 @@ button {
             <a class="dropdown-item" href="{% url 'user_register' %}">Custumer</a>
             <a class="dropdown-item" href="{% url 'pharm_register' %}">Pharmacy</a>
             <a class="dropdown-item" href="{% url 'delivery_Register' %}">delivery</a>
-            <a class="dropdown-item" href="{% url 'doctor_Register' %}">Doctor</a>
             <a class="dropdown-item" href="{% url 'company_Register' %}">company</a>
           </div>
         </div>
       </li>
         </ul>
       </div>
-        </nav>
-
-        <!-- <div class="class1">
-          <div class="discount">
-            <img src="{% static 'images/home1.png' %}">
-          </div>
-        </div> -->
-            
+  </nav>
+<!-- <nav class="navbar navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24">
+    </a>
+  </div>
+</nav> -->
+        
+  {% block content %}
+  {% load static %}
             <div class="container-fluid1 ">
              
               <h1>Welcome to Pharmacy Management System</h1>
               <p>Your Trusted Partner in Health and Wellness</p>
               <button type="submit"><a href="{% url 'Login' %}" >Login</button></a>
+
+              
+              <style>
+                
+  body{
+    background-image: url("{% static 'img/1.jpg' %}");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height:fit-content;
+  }
+  .container-fluid1{
+  
+    width: 100%;
+    height: 690px; 
+    align-content:center;
+    justify-content: center;
+    margin-left:0px;
+  }
+  .btn{
+    background-color: #102C57;
+    color: #fafafa;
+   
+    border-top:black;
+    border-right:black;
+    border-bottom:black;
+    border-left:black;
+  }
+  .discount{
+    height:200px;
+    width:100%;
+    background-color: #259392;
+    margin-top: 15px;
+    
+  }
+  p{
+    color:#1e362a;
+    font-size:large;
+    font-weight: bold;
+    margin-top:20px;
+    margin-bottom:20px;
+    text-align: center;
+  }
+  button {
+    padding: auto;
+    width: 100px; 
+    justify-items: center;
+    align-items:center;
+    margin-left: 750px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    border-bottom:2px;
+    text-align: center;
+    background-color: #02101c;
+   
+  }
+  
+
+
+  </style>
+      {% endblock %}
               
 </body>
 </html>

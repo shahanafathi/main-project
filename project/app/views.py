@@ -3,6 +3,7 @@ from django.http.response import HttpResponse
 from django.contrib.auth.models import auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.storage import FileSystemStorage
 from .models import CustomeUser,medicine,cart,order,wishlist,Category,prescription,CompanyOrder
 # from django.shortcuts import get
 
@@ -16,7 +17,7 @@ def index(request):
      return redirect(home)
 def home(request):
       return render(request,'home.html')
-# ***************main login******
+# ***************main login****** 
 
 # def Login(request):
 #     if request.method == 'POST':
@@ -55,8 +56,7 @@ def home(request):
 #             return render(request, 'login.html', context)
 #     else:
 #         return render(request, 'login.html')
-      
-        
+    
 
 
 def Login(request):
@@ -66,7 +66,7 @@ def Login(request):
         admin_user = auth.authenticate(request,username=Username,password=Password)
         if admin_user is not None and admin_user.is_staff:
             auth.login(request,admin_user)
-            return redirect('/admin/')  # Redirect to the admin dashboard
+            return redirect('/admin/')  
             # return redirect(admin)
         
         data = auth.authenticate(username=Username,password=Password)
@@ -75,10 +75,14 @@ def Login(request):
             if data.usertype == "user" :
              return redirect(user_home)
          
-            if data.usertype == "pharmacy" and data.status == "approved":
+            elif data.usertype == "pharmacy":
                 return redirect(pharm_home)
-            if data.usertype == "pharmacy" and data.status == "pending":
-                return HttpResponse("Can't login without approval of admin.Either wait for 1 day or register again")   
+            
+            # if data.usertype == "pharmacy" and data.status == "approved":
+            #     return redirect(pharm_home)
+            
+            # if data.usertype == "pharmacy" and data.status == "pending":
+            #     return HttpResponse("Can't login without approval of admin.Either wait for 1 day or register again")   
             
             if data.usertype == "company" and data.status == "approved":
                 return redirect(company_home)
@@ -94,7 +98,7 @@ def Login(request):
                     }
                 return render(request, 'login.html', context)
 
-    # Render the login form for GET requests
+    #
     else:
       return render(request, 'login.html')
 
@@ -104,9 +108,6 @@ def Login(request):
 def logout(request):
     auth.logout(request)
     return redirect(Login)
-
-
-
 #*************user**************
 
 def user_register(request):
@@ -129,7 +130,9 @@ def user_register(request):
             Confirmpassword=request.POST['Confirmpassword']
             if password!=Confirmpassword:
              return render(request,'user/register.html',{'error':'password not matching'})
-            data=CustomeUser.objects.create_user(first_name=name,email=email,address=address,age=age,phone_number=phoneno,dob=DOB,password=password,username=username,usertype='user')
+            Image=request.FILES['Image']
+            print("image :   ",Image)
+            data=CustomeUser.objects.create_user(first_name=name,Image=Image,email=email,address=address,age=age,phone_number=phoneno,dob=DOB,password=password,username=username,usertype='user')
             data.save()
             # return HttpResponse('sucess')
             return render(request,'login.html')
@@ -147,153 +150,162 @@ def edit_profile(request):
     if request.method=='POST':
         data.first_name=request.POST['Name']
         data.age=request.POST['age']
-        data.Phonenumber=request.POST['Phonenumber']
-        data.DOB=request.POST['DOB']
-        data.Address=request.POST['Address']
+        data.phone_number=request.POST['Phonenumber']
+        data.dob=request.POST['DOB']
+        data.address=request.POST['Address']
         data.email=request.POST['Email']  
         data.username=request.POST['UserName']
+        if 'Image' in request.FILES:
+            data.Image = request.FILES['Image']
         data.save()
         return redirect(userprofile)
     else:
         return render(request,'user/editprofile.html',{'datas':data})
        
-   
+##################################
+
+
 def user_home(request):
     medicines = medicine.objects.all()
-    reviews = order.objects.all()
-    return render(request, 'user/userhome.html', {'medicines': medicines, 'reviews': reviews})
+    # reviews = order.objects.all()
+    pharmacies = CustomeUser.objects.filter(usertype="pharmacy")
+    category = Category.objects.all()
+    return render(request, 'user/userhome.html', {'medicines': medicines,'catogary':category,'pharmacies':pharmacies})
+
 
     
-def search_medicines(request):
-    if request.method=='POST':
-        Search=request.POST['search']
-        data = medicine.objects.filter(name__icontains=Search)
-        return render(request,'user/userhome.html',{'datas': data,'search': Search})
-    else:
-        return redirect(user_home)
+    
+# def search_phrmplace(request):
+#     if request.method == 'POST':
+#         # search_query = request.POST.get('search', '')
+#         search_query = request.POST.get('search')
+#         pharmarcy= CustomeUser.objects.filter(address__icontains=search_query,usertype="pharmacy")
+#         return render(request, 'user/userhome.html', {'pharmarcy': pharmarcy,'search_query': search_query})
+#     else: 
 
-# def search_medicines(request):
-#     if request.method=='POST':
-#         Search=request.POST.get('search','')
-#         data = medicine.objects.filter(name__icontains=Search)
-#         return render(request,'user/userhome.html',{'datas': data,'search': Search})
-#     else:
-#         # return redirect(user_home)
-#             return render(request,'user/userhome.html',{'datas': data,'search': Search})
-  
-  
-def search_medicines(request):
+#         return render(request, 'user/userhome.html', {'pharmarcy':CustomeUser.objects.all()})
+    
+
+def search_phrmplace(request):
+    if request.method == 'POST':
+        # search_query = request.POST.get('search', '')
+        search_query = request.POST.get('search')
+        pharmarcy= CustomeUser.objects.filter(address__icontains=search_query,usertype="pharmacy")
+        return render(request, 'user/userhome.html', {'pharmarcy': pharmarcy,'search_query': search_query})
+    else: 
+          pharmacies = CustomeUser.objects.filter(usertype="pharmacy")
+          return render(request, 'user/userhome.html', {'pharmarcy':CustomeUser.objects.all(),'pharmarcy':pharmacies})
+    
+    
+    
+    
+# def search_phrmplace(request):
+#     if request.method == 'POST':
+#         search_query = request.POST.get('search', '')  # Default to empty string if no search query
+#         pharmacies = CustomeUser.objects.filter(address__icontains=search_query, usertype="pharmacy")
+#         return render(request, 'user/userhome.html', {'pharmarcy': pharmacies, 'search_query': search_query})
+#     else: 
+#         pharmacies = CustomeUser.objects.filter(usertype="pharmacy")  # Fetch all pharmacies for GET request
+#         return render(request, 'user/userhome.html', {'pharmarcy': pharmacies})
+
+    
+#######################EACH PHARMACY >>CLICK ON VIEW>>>VIEW --MEDICINE I IT   that page #######
+
+def category_dropdown(request):
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        category_select = request.POST.get('category')
+        print(category_select)
+        medicines = medicine.objects.filter(category_name=category_select)
+        return render(request, 'user/medicine_pharmacy.html', {'medicines': medicines, 'category_select': category_select,'categories':categories})
+        
+    else: 
+        return render(request, 'user/medicine_pharmacy.html', {'medicines': medicine.objects.all()})
+    
+
+
+def search_medicines(request,id):
+    pharmacy=CustomeUser.objects.get(id=id)
     if request.method == 'POST':
         search_query = request.POST.get('search', '')
-        medicines = medicine.objects.filter(name__icontains=search_query)
-        return render(request, 'user/userhome.html', {'medicines': medicines, 'search_query': search_query})
+        medicines = medicine.objects.filter(name__icontains=search_query,pharmacy_id=pharmacy)
+        context = {'medicines': medicines,
+                   'search_query': search_query,
+                   'pharmacy':pharmacy}
+        return render(request, 'user/medicine_pharmacy.html', context)
     else: 
-        return render(request, 'user/userhome.html', {'medicines': medicine.objects.all()})
+        return render(request, 'user/medicine_pharmacy.html', {'medicines': medicine.objects.all()})
   
+def medicine_view(request,id):
+    # medicines = medicine.objects.get()
+    medicine1 = medicine.objects.get(id=id)
+    return render(request, 'user/medicinuser_view.html',{'medicine': medicine1})
+
 def user_medicine(request,id):
-    medicines = medicine.objects.get(id=id)
-    return render(request, 'user/user_medicine.html', {'medicines': medicines})
+    medicines = medicine.objects.filter(pharmacy_id=id)
+    pharmacy = CustomeUser.objects.get(id=id)
+    return render(request, 'user/medicine_pharmacy.html', {'medicines': medicines,'pharmacy':pharmacy})
 
-########prescription######:
-# def create_prescription(request):
-#     if request.method == 'POST':
-#         age = request.POST.get('age')
-#         address = request.POST.get('address')
-#         description = request.POST.get('description')
-#         medicine_id = request.POST.get('medicine')
-#         dosage = request.POST.get('dosage')
-#         quantity_prescribed = request.POST.get('quantity_prescribed')
-#         medicine = medicine.objects.get(id=medicine_id)
-#         data=prescription.objects.create(customer=request.user.id,age=age,address=address,description=description,medicine=medicine,dosage=dosage,quantity_prescribed=quantity_prescribed)
+# def usermedicine_view(request):
+#     medicines = medicine.objects.all()
+#     return render(request, 'pharmacy/viewmedicine.html',{'medicines': medicines})
 
-# def upload_prescription(request):
-#     if request.method == 'POST':
-#         prescription_file = request.FILES.get('prescription_file')
-#         prescription.objects.create(
-#             customer=request.user,
-#             prescription_file=prescription_file
-#         )
-#         return redirect('prescription_success')
-#     return render(request, 'prescription/upload_prescription.html')
 
-def prescription_success(request):
-    return render(request, 'prescription/prescription_success.html')
-
-def upload_prescription(request):
+def upload_prescription(request,id):
+    data=CustomeUser.objects.get(id=request.user.id)
+    pharmacy=CustomeUser.objects.get(id=id)
     if request.method == 'POST':
-        prescription_file = request.FILES.get('prescription_file')
         name = request.POST.get('name')
         age = request.POST.get('age')
         address = request.POST.get('address')
-        description = request.POST.get('description')
-        dosage = request.POST.get('dosage')
-        quantity_prescribed = request.POST.get('quantity_prescribed')
-        medicine_id = request.POST.get('medicine_id')  # Assuming medicine is passed as an ID
-        prescriptions=prescription.objects.create(user_id=request.user,name=name,age=age,prescription_file=prescription_file,address=address,description=description,medicine_id_id=medicine_id,dosage=osage,quantity_prescribed=quantity_prescribed)
+        prescription_file=request.FILES['prescription_file']
+        prescriptions=prescription.objects.create(user_id=data,name=name,age=age,
+                                                  prescription_file=prescription_file,
+                                                  address=address,
+                                                  pharmancy_id=pharmacy,
+                                                  )
         prescriptions.save()
-        return redirect('user/prescription_success')
+        # return redirect('user/prescription_success')
+        # return HttpResponse('success')
+        return render(request, 'user/prescription_success.html',{'data':data,'pharmacy':pharmacy,'prescriptions':prescriptions})
+        
+
+        
     else:
-        return render(request, 'user/upload_prescription.html')
+        return render(request, 'user/upload_prescription.html',{'data':data,'pharmacy':pharmacy})
 
 
+
+
+def help_page(request):
+    return render(request, 'user/help.html')
+# def user_pharmacy_upload(request,id):
+#     user= CustomeUser.objects.get(id=request.user.id)
+#     # pharmacy=CustomeUser.objects.get(id=id)
+#     return render(request, 'user/medicinepharmacy.html',{'user':user})
 
 
 
 
 #########  user cart#######
-# def add_to_cart(request, id):
-#     datas = CustomeUser.objects.get(id=request.user.id)
-#     medicine_item = medicine.objects.get(id=id)
-#     cart_items = cart.objects.all()
-#     if cart.objects.filter(medicine_id=medicine_item, user_id=datas).exists():
-#         return render(request, 'user/cartview.html', {'message': 'This item already exists in your cart', 'cart_items': cart_items})
-#     else:
-#         cart_add = cart.objects.create(medicine_id=medicine_item, user_id=datas)
-#         cart_add.save()
-#         return redirect('cart_view') 
-    
-# def cart_view(request):
-#     user = request.user
-#     cart_items = cart.objects.filter(user_id=user)  # Filter cart items by current user
-#     return render(request, 'user/cartview.html', {'cart_items': cart_items})
-#####@###########
-
 def add_to_cart(request, id):
-    user = request.user
+    datas = CustomeUser.objects.get(id=request.user.id)
     medicine_item = medicine.objects.get(id=id)
-    cart_items = cart.objects.filter(user_id=user)  # Get all cart items for the user
-    
-    # Get quantity from the form
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity'))
-
-        # Check if the selected quantity exceeds stock
-        if quantity > medicine_item.quantity:
-            messages.error(request, 'Selected quantity exceeds available stock.')
-            return render(request, 'user/cartview.html', {'cart_items': cart_items})
-
-        # Check if the item already exists in the cart
-        if cart.objects.filter(medicine_id=medicine_item, user_id=user).exists():
-            messages.error(request, 'This item already exists in your cart.')
-            return render(request, 'user/cartview.html', {'cart_items': cart_items})
-        
-        # Add the item to the cart with the selected quantity
-        cart_add = cart.objects.create(medicine_id=medicine_item, user_id=user, quantity=quantity)
+    cart_items = cart.objects.all()
+    if cart.objects.filter(medicine_id=medicine_item, user_id=datas).exists():
+        return render(request, 'user/cartview.html', {'message': 'This item already exists in your cart', 'cart_items': cart_items})
+    else:
+        cart_add = cart.objects.create(medicine_id=medicine_item, user_id=datas)
         cart_add.save()
-
-        return redirect('cart_view')
-
-    return render(request, 'user/cartview.html', {'medicine': medicine_item})
-
+        return redirect('cart_view') 
+    
 def cart_view(request):
-    user = request.user
+    user =CustomeUser.objects.get(id=request.user.id)
     cart_items = cart.objects.filter(user_id=user)  # Filter cart items by current user
     return render(request, 'user/cartview.html', {'cart_items': cart_items})
 
 
-
 def remove_cart(request,id):
-   
     cart_del =  cart.objects.get(id=id)
     cart_del.delete()
     return redirect(cart_view)
@@ -314,7 +326,7 @@ def add_to_wishlist(request, id):
 def wishlist_view(request):
     wishlist_items = wishlist.objects.filter(user_id=request.user.id)
     # wishlist_items = wishlist.objects.all()
-    # print(wishlist_items)
+
     return render(request,'user/wishlist1.html', {'wishlist': wishlist_items})
 
 def remove_wishlist(request,id):
@@ -323,33 +335,85 @@ def remove_wishlist(request,id):
     return redirect( wishlist_view)
 
 ######## order list####
-
 def order_item(request):
-    datas=CustomeUser.objects.get(id=request.user.id)
-    cart_item = cart.objects.filter(user_id=datas)
-    # selected_quantity = item.medicine_id.quantity
-    # var=order.objects.filter(user_id=datas)
-    Ttl_amounts=0
-    
-    for item in cart_item:
-       
-        total_amt=(item.medicine_id.price*item.medicine_id.quantity )
-        Ttl_amounts += total_amt
-        order_item=order.objects.create(user_id=datas,medicine_id=item.medicine_id,total_amount=total_amt, quantity=item.quantity)
-        order_item.save()
-        # return redirect( order_view)
-        # return redirect(process_payment)
-    return render(request,'user/order.html', {'order_item':cart_item,'total_amounts':Ttl_amounts})
+    datas = CustomeUser.objects.get(id=request.user.id)
+    cart_items = cart.objects.filter(user_id=datas)
+    Ttl_amounts = 0
+
+    if request.method == 'POST':
+        for item in cart_items:
+            # Retrieve the selected quantity from the POST request
+            quantity_key = f'quantity_{item.id}'
+            selected_quantity_str = request.POST.get(quantity_key)
+
+            # Check if the quantity is provided and valid
+            if selected_quantity_str and selected_quantity_str.isdigit():
+                selected_quantity = int(selected_quantity_str)
+            else:
+                selected_quantity = 1  # Assign a default value if not provided or invalid
+
+            # Update the item quantity with the selected quantity
+            item.quantity = selected_quantity
+            item.save()
+
+            # Calculate the total amount for the selected quantity
+            total_amt = item.medicine_id.price * selected_quantity
+            Ttl_amounts += total_amt
+
+        # Creating the order
+            order_item = order.objects.create(
+                user_id=datas,
+                medicine_id=item.medicine_id,
+                total_amount=Ttl_amounts,
+                quantity=selected_quantity  
+            )
+            order_item.save()
+
+        return render(request, 'user/order.html', {'order_item': cart_items, 'total_amounts': Ttl_amounts})
+
+    return render(request, 'user/order.html', {'order_item': cart_items, 'total_amounts': Ttl_amounts})
+
+
 # ########################
+
+# def payment_page(request):
+#     # Retrieve the current user
+#     user = CustomeUser.objects.get(id=request.user.id)
+    
+#     # Get the cart items for the user
+#     cart_items = cart.objects.filter(user_id=user)
+    
+#     # Initialize total amounts
+#     Ttl_amounts = 0
+
+#     # Iterate over the cart items to calculate the total price
+#     for item in cart_items:
+#         # Retrieve the quantity from the POST request (if provided)
+#         quantity_key = f'quantity_{item.id}'
+#         selected_quantity_str = request.POST.get(quantity_key)
+        
+#         # Validate the quantity, if not provided or invalid, set default to 1
+#         if selected_quantity_str and selected_quantity_str.isdigit():
+#             selected_quantity = int(selected_quantity_str)
+#         else:
+#             selected_quantity = 1  # Default value if not provided
+
+#         # Calculate the total amount for this item
+#         total_amt = item.medicine_id.price * selected_quantity
+#         Ttl_amounts += total_amt  # Accumulate the total amounts
+
+#     # Render the template with the updated cart items and total price
+#     return render(request, 'user/payment1.html', {'cart_items': cart_items,'total_price': Ttl_amounts,})
+
 
 def payment_page(request):
     # user = request.user
     user = CustomeUser.objects.get(id=request.user.id)
-    cart_items = cart.objects.filter(user_id=user)
+    order_item= cart.objects.filter(user_id=user)
     Ttl_amounts=0
    
     # total=order.objects.filter()
-    for item in cart_items:
+    for item in order_item:
         
         total_amt=(item.medicine_id.price*item.medicine_id.quantity)
         print(total_amt)
@@ -357,7 +421,7 @@ def payment_page(request):
         # order_item=order.objects.create(user_id=user,medicine_id=item.medicine_id,total_amount=total_amt, quantity=item.quantity)
         # order_item.save()
         # total_prices = item.medicine_id.price * item.medicine_id.quantity 
-    return render(request, 'user/payment1.html', {'cart_items': cart_items,'total_price':Ttl_amounts,'total':total_amt})
+        return render(request, 'user/payment1.html', {'order_item': order_item,'total_price':Ttl_amounts,'total':total_amt})
 def process_payment(request):
     if request.method == 'POST':
         
@@ -397,59 +461,10 @@ def remove_orderview(request,id):
     order_del.delete()
     return redirect(order_view)
 
-def order_review(request,id):
-    datas = CustomeUser.objects.get(id=request.user.id)
-    order_item = order.objects.get(id=id, user_id=datas)
-
-    # Check if a review already exists
-    exst_review = order_review.objects.filter(user_id=datas, order_id=order_item).exists()
+def pharmacy_user(request,id):
+    user= CustomeUser.objects.get(id=request.user.id)
+    pharmacy=CustomeUser.objects.get(id=id)
     
-    if exst_review:
-        return HttpResponse("You have already reviewed this order.")
-
-    if request.method == "POST":
-        review_text = request.POST.get("review")
-        rating = request.POST.get("rating", 5)  # Default rating to 5 if not provided
-        image = request.FILES.get('image')
-
-        # Create a new review
-        order_review.objects.create(
-            user_id=datas,
-            medicine_id=order_item.medicine_id,
-            review=review_text,
-            rating=rating,
-            Image=image,
-        )
-        
-        return redirect('order_view')
-
-    return render(request, 'user/order_review.html', {'order_item': order_item})
-
-def save_review(request):
-    if request.method == 'POST':
-        medicine_id = request.POST.get('medicine')
-        rating = request.POST.get('rating')
-        review_text = request.POST.get('review_text')
-        review_image = request.FILES.get('review_image')
-
-        if medicine_id and rating and review_text:
-            try:
-                medicine = medicine.objects.get(id=medicine_id)
-                review = order(
-                    medicine=medicine,
-                    rating=rating,
-                    review_text=review_text,
-                    review_image=review_image
-                )
-                review.save()
-                messages.success(request, "Review submitted successfully!")
-            except medicine.DoesNotExist:
-                messages.error(request, "Invalid medicine ID.")
-        else:
-            messages.error(request, "Please provide all required fields.")
-    
-    return redirect('user_home')  # Redirect to the order histo
-
 
 ####debitt card system######
 def Debitcard(request):
@@ -462,13 +477,6 @@ def Debitcard(request):
     
     else:
         return render(request, 'user/Debit_card.html')
-
-
-
-def order_confirmation1(request):
-    # Logic to handle order confirmation
-    return render(request, 'user/order_confirmation.html')
-
 
 def cash_on_delivery(request):
     user = CustomeUser.objects.get(id=request.user.id)
@@ -493,88 +501,18 @@ def cash_on_delivery(request):
             order_item.save()
 
         cart_items.delete()  
-        return redirect('order_confirmation')
+        return redirect('order_confirmation1')
 
     return render(request, 'user/cash_on_delivery.html', {'cart_items': cart_items})
 
 
 
 
-def order_history(request):
-    # Retrieve all orders for the current logged-in user
-    orders = order.objects.filter(user_id=request.user.id).order_by('order_date')
-
-    # Check if all orders are still pending
-    pending_orders = orders.filter(status='Pending')
-    confirmed_orders = orders.filter(status='Confirmed')
-
-    # If all orders are pending, show the modal and do not open the history page
-    if pending_orders.exists() and not confirmed_orders.exists():
-        # Render a page or show a modal that says "Order is still pending"
-        return render(request, 'user/pending_orders_modal.html')
-
-    # If there are confirmed orders, proceed to the order history page
-    context = {
-        'confirmed_orders': confirmed_orders,
-        'pending_orders': pending_orders,  # If you want to display pending orders separately
-    }
-    return render(request, 'user/order_history.html', context)
-
-
-
-def order_review(request, order_id):
-    datas = CustomeUser.objects.get(id=request.user.id)
-    order_item = order.objects.get(id=order_id, user_id=datas)
-
-    # Check if a review already exists
-    exst_review = order_review.objects.filter(user_id=datas, order_id=order_item).exists()
-    
-    if exst_review:
-        return HttpResponse("You have already reviewed this order.")
-
-    if request.method == "POST":
-        review_text = request.POST.get("review")
-        rating = request.POST.get("rating", 5)  # Default rating to 5 if not provided
-        image = request.FILES.get('image')
-
-        # Create a new review
-        order_review.objects.create(
-            user_id=datas,
-            medicine_id=order_item.medicine_id,
-            review=review_text,
-            rating=rating,
-            Image=image,
-        )
-        
-        return redirect('order_view')
-
-    return render(request, 'user/order_review.html', {'order_item': order_item})
 
 
 
 #   #***********pharmacy**********
 
-def view_Category(request):
-        categories = Category.objects.all()
-        return render(request, 'pharmacy/ctgory.html', {'categories': categories})
-        
-def add_category(request):
-    if request.method == "POST":
-        ctgry_name = request.POST['category_name']
-        if not Category.objects.filter(category_name=ctgry_name).exists():
-            Category.objects.create(category_name=ctgry_name)
-            message = "Category added successfully."
-        else:
-            message = "Category already exists."
-        return render(request, 'pharmacy/categery.html', context={'add': message})
-    else:
-        return render(request,'pharmacy/categery.html')
-
-
-
-
-
-        
 def pharm_register(request):
     if request.method == 'POST':
             name = request.POST['name']
@@ -593,7 +531,9 @@ def pharm_register(request):
             Confirmpassword=request.POST['Confirmpassword']
             if password!=Confirmpassword:
              return render(request,'pharmacy/registerp.html',{'error':'password not matching'})
-            data=CustomeUser.objects.create_user(first_name=name,email=email,address=address,phone_number=phoneno,password=password,username=username,usertype='pharmacy')
+            Image=request.FILES['Image']
+            print(Image)
+            data=CustomeUser.objects.create_user(first_name=name,email=email,Image=Image,address=address,phone_number=phoneno,password=password,username=username,usertype='pharmacy')
             data.save()
             return render(request,'login.html')
     else:
@@ -612,56 +552,53 @@ def edit_pharm(request):
     data=CustomeUser.objects.get(id=request.user.id)
     if request.method=='POST':
         data.first_name=request.POST['Name']
-        data.age=request.POST['age']
-        data.Phone_number=request.POST['Phonenumber']
-        data.dob=request.POST['DOB']
+        data.phone_number=request.POST['Phonenumber']
         data.address=request.POST['Address']
         data.email=request.POST['Email']  
         data.username=request.POST['UserName']
+        if 'Image' in request.FILES:
+            data.Image = request.FILES['Image']
+    
         data.save()
         return redirect(pharm_home)
     else:
-        return render(request,'pharmacy/edit profilep.html',{'datas':data})
+        return render(request,'pharmacy/edit_profilep.html',{'datas':data})
     
-    
-    
-# def pharm_home(request):
-# #       return render(request,'pharmacy/homep.html')
-#     medicines = medicine.objects.filter(pharmacy_id=request.user)
-#     return render(request, 'pharmacy/homep.html', {'medicines': medicines})
-
 def pharm_home(request):
     company= CustomeUser.objects.filter(usertype='company').count()
     Orders = order.objects.all().count()
-    # medicines = medicine.objects.filter(pharmacy_id=request.user)
+    medicines = medicine.objects.all().count()
     # return render(request, 'pharmacy/homep.html',{'company':company,'Orders':Orders} )
-    return render(request, 'pharmacy/homep.html',{'company':company,'Orders':Orders} )
-
-# def pharmacy_order(request):
-#     data=CustomeUser.objects.get(id=request.pharmacy.id)
-#     o
-
+    return render(request, 'pharmacy/homep.html',{'company':company,'Orders':Orders,'medicines':medicines} )
 
 
 
 def add_medicine(request):
+    data =CustomeUser.objects.get(id=request.user.id)
+    datas = Category.objects.all()
     if request.method == 'POST':
         name = request.POST['medicineName']
         price = request.POST['pricePerUnit']
         description = request.POST['description']
         manufacturer = request.POST['manufacturer']
+        category = request.POST['category']
+        categoryid = Category.objects.get(id=category)
         quantity = request.POST['quantity']
         expiry_date = request.POST['expiryDate']
-        brandname=request.POST['brandName']
-        genericName=request.POST['genericName']
         strength=request.POST['strength']
-        medicine_data = medicine.objects.create( pharmacy_id=request.user,name=name,price=price,strength=strength,brandname=brandname,genericname=genericName,description=description,manufacturer=manufacturer,quantity=quantity,expiry_date=expiry_date)
+        Image=request.FILES['Image']
+        medicine_data = medicine.objects.create( pharmacy_id=data,name=name,Image=Image,price=price,strength=strength,description=description,manufacturer=manufacturer,quantity=quantity,category_name=categoryid.category_name,expiry_date=expiry_date)
         medicine_data.save()
         return redirect(pharm_home)
         # return HttpResponse ('medicine_view')
     else:
-        return render(request, 'pharmacy/medicine.html')
+        return render(request, 'pharmacy/medicine.html',{'datas': datas})
         # return HttpResponse('sucessfuly')
+# def catgry(request,id):
+#     data=medicine.objects.filter(category_name=id)
+#     return render(request, 'pharmacy/view_medicine.html',{'data': data})
+        
+
 
 def edit_medicine(request,id):
     data=medicine.objects.get(id=id)
@@ -672,61 +609,40 @@ def edit_medicine(request,id):
         data.manufacturer = request.POST['manufacturer']
         data.quantity = request.POST['quantity']
         data.expiry_date = request.POST['expiryDate']
-        data.brandname=request.POST['brandName']
-        data.genericName=request.POST['genericName']
         data.strength=request.POST['strength']
+        if 'Image' in request.FILES:
+            data.Image = request.FILES['Image']
         data.save()
         return redirect(pharm_home)
     else:
         return render(request,'pharmacy/edit_medicine.html',{'datas':data})
+    
+    
 def delete_med(request,id):   
     medicines = medicine.objects.get(id=id)
     medicines.delete()
-    return redirect(pharm_home)
+    return redirect(medicine_viewss)
    
-def medicine_view(request,id):
+   
+   
+def medicine_viewss(request,id):
     medicines = medicine.objects.get(id=id)
+    print("image : ",medicines.Image)
     return render(request, 'pharmacy/viewmedicine.html',{'medicines': medicines})
 
-# def order_product(request):
-#     pharmacy=CustomeUser.objects.get(id=request.user.id)
-#     company_order = order.objects.filter(pharmacy_id=pharmacy)
-    
-# def create_company_order(request):
-#     companies = company.objects.all()
-#     medicines = medicine.objects.all()
-    
-#     if request.method == 'POST':
-#         company_id = request.POST.get('company')
-#         expected_delivery_date = request.POST.get('expected_delivery_date')
-#         company =
-        
-#         order = CompanyOrder.objects.create(
-#             company=company,
-#             expected_delivery_date=expected_delivery_date,
-#             order_date=timezone.now()
-#         )
-        
-#         medicine_ids = request.POST.getlist('medicines')
-#         quantities = request.POST.getlist('quantities')
-#         unit_prices = request.POST.getlist('unit_prices')
-        
-#         for i in range(len(medicine_ids)):
-#             medicine = get_object_or_404(Medicine, id=medicine_ids[i])
-#             quantity = int(quantities[i])
-#             unit_price = float(unit_prices[i])
-            
-#             CompanyOrderItem.objects.create(
-#                 order=order,
-#                 medicine=medicine,
-#                 quantity=quantity,
-#                 unit_price=unit_price
-#             )
-        
-#         return redirect('company_order_list')
-    
-#     return render(request, 'company_orders/create_order.html', {'companies': companies, 'medicines': medicines})
+def medicine_viewpharma(request):
+    medicines = medicine.objects.filter(pharmacy_id=request.user.id)
+    return render(request, 'pharmacy/med1.html',{'medicines': medicines})
 
+# def search_catagery(request):
+#     if request.method == 'POST':
+#         search_query = request.POST.get('search', '')
+#         medicines = medicine.objects.filter(name__icontains=search_query)
+#         return render(request, 'user/userhome.html', {'medicines': medicines, 'search_query': search_query})
+#     else: 
+#         return render(request, 'user/userhome.html', {'medicines': medicine.objects.all()})
+  
+########user>>>order all>>pharmacy seen ########
 
 def pharmacy_vieworder(request):
     pharmacy_user = CustomeUser.objects.get(id=request.user.id)
@@ -734,39 +650,49 @@ def pharmacy_vieworder(request):
     # Orders = order.objects.filter(medicine_id=pharmacy_medicines)
     Orders = order.objects.all()
     return render(request, 'pharmacy/userorder_get.html', {'Orders': Orders, 'pharmacy_user': pharmacy_medicines})
-# 
+
+def userorder_view(request,id):
+    data =  order.objects.filter(id=id)
+    medicine_list = []
+    for i in data:
+        medicine_list.append(i.medicine_id)
+    return render(request,'pharmacy/viewone_order.html',{'data':data,'medicine_list':medicine_list})
+def pharmacy_userhistory(request):
+    #  data1=CustomeUser.objects.get(user_id=request.user.id)
+     data=order.objects.all()
+#     data= order.objects.all()
+     return render (request,'pharmacy/user_history.html',{'data':data})
+# def pharmacy_history(request):
+#     data1=CustomeUser.objects.get(user_id=request.user.id)
+#     data= order.objects.all()
+#     return render (request,)
+
+def pharmacy_history(request):
+    return render(request,'pharmacy/historypage1.html')
+
+def pharmacy_prescription(request):
+    prescp=prescription.objects.all()
+    return render(request,'')
+    
+# def stock(request):
+#     pharmacy_user = CustomeUser.objects.get(id=request.user.id)
+#     pharmacy_medicines = medicine.objects.filter(pharmacy_id=pharmacy_user)
+#     data=Category.objects.all()
+#     return render(request, 'pharmacy/stock_check.html', {'pharmacy_user': pharmacy_medicines,'data':data})
+
+# def search_medicines(request):
+#     if request.method == 'POST':
+#         search_query = request.POST.get('search', '')
+#         medicines = medicine.objects.filter(name__icontains=search_query)
+#         return render(request, 'pharmacy/.html', {'medicines': medicines, 'search_query': search_query})
+#     else: 
+#         return render(request, 'user/userhome.html', {'medicines': medicine.objects.all()})
+
+
+
+
 
 #######user order#$#####3
-def place_order(request):
-    if request.method == 'POST':
-        # Retrieve form data from the POST request
-        product_id = request.POST['product']
-        company_id = request.POST['company']
-        quantity = int(request.POST['quantity'])
-
-        # Fetch the product and company without using get_object_or_404
-        product = medicine.objects.get(id=product_id)
-        company = CustomeUser.objects.get(id=company_id)
-        # pharmacy_id = CustomeUser.objects.get(id=id)
-        # Create and save the order
-        order = CompanyOrder.objects.create(product=product,company_id=company,customer=request.user,quantity=quantity)
-        order.save()
-
-        # Display a success message to the user
-        messages.success(request, 'Your order has been placed successfully!')
-
-        # Redirect to an order confirmation page
-        return redirect('order_confirmation')
-
-    else:
-        # If it's a GET request, display the form
-        products = medicine.objects.all()  # Fetch available products
-        companies = CustomeUser.objects.all()  # Fetch available companies
-
-        return render(request, 'pharmacy/place_order.html', {'products': products, 'companies': companies})
-
-def cmpy_order_confirmation(request):
-    return render(request, 'pharmacy/cmpy_order_confirmation.html')
 
 #*****************delivery**********
 def delivery_Register(request):
@@ -810,74 +736,6 @@ def delivr_order_user(request):
     Orders = order.objects.all()
     return render(request,'delivery/user_order.html',{'Orders': Orders})
 
-#####lst cheyn
-
-# def history(request):
-#     return HttpResponse("sucess")
-# def delivery_review(request):
-#     return HttpResponse("sucess review")
-
-########doctor#######
-def doctor_Register(request):
-    if request.method == 'POST':
-            name = request.POST['name']
-            email = request.POST['Email']
-            if CustomeUser.objects.filter(email=email).exists():
-             return render(request,'doctor/doc_register.html',{'error':'email already exists'})
-            address = request.POST['Address']
-            phoneno = request.POST['Phonenumber']
-            if CustomeUser.objects.filter(phone_number=phoneno).exists():
-             return render(request,'doctor/doc_register.html',{'error':'username already exists'})
-            username = request.POST['UserName']
-            if CustomeUser.objects.filter(username=username).exists():
-             return render(request,'doctor/doc_register.html',{'error':'username already exists'})
-            password = request.POST['Password']
-            Confirmpassword=request.POST['Confirmpassword']
-            if password!=Confirmpassword:
-             return render(request,'doctor/doc_register.html',{'error':'password not matching'})
-            # image=request.FILES['Image']
-            Certification=request.FILES['Certification']
-            data=CustomeUser.objects.create_user(first_name=name,email=email,certification=Certification,address=address,phone_number=phoneno,password=password,username=username,usertype='doctor')
-            data.save()
-            return render(request,'login.html')
-    else:
-           return render(request,'doctor/doc_register.html')
-       
-def doctor_profile(request):
-    user=CustomeUser.objects.get(id=request.user.id)
-    return render(request,'doctor/doctor_profilm.html',{'data':user})
-
-
-
-def doctor_edit(request):
-    data=CustomeUser.objects.get(id=request.user.id)
-    if request.method=='POST':
-        data.first_name=request.POST['Name']
-        data.age=request.POST['age']
-        data.phone_number=request.POST['Phonenumber']
-        data.dob=request.POST['DOB']
-        data.address=request.POST['Address']
-        data.email=request.POST['Email']  
-        data.username=request.POST['UserName']
-        data.save()
-        return redirect(pharm_home)
-    else:
-        return render(request,'doctor/doctor_editprofile.html',{'datas':data})
-    
-    
-    
-def doctor_home(request):
-    data=order.objects.filter(id=request.user.id)
-    # pharmacy_user = CustomeUser.objects.get(id=request.user.id)
-    # return render(request,'user/delivery_order.html',{'pharmacy_user':pharmacy_user})
-    return render(request,'doctor/doctor_home.html',{'data':data})
-    # return render(request, 'doctor/doctor_home.html', {'medicines': medicines})
-
-
-
-
-
-
 ####admin####
        
 def admin(request):
@@ -911,50 +769,6 @@ def admin_status(request,id):
 
 
 
-# def admin(request):
-#     # Fetch users with a status of "pending"
-#     data = CustomeUser.objects.filter(status="pending")
-#     # Render the admin status page with the pending users
-#     return render(request, 'admin/admin_home.html', {'data': data})
-
-# def admin_status(request, id):
-#     # Fetch the user with the given ID
-#     data = CustomeUser.objects.get(id=id)
-
-#     if request.method == "POST":
-#         # Get the status from the POST request
-#         status = request.POST['status']
-
-#         try:
-#             # Check if status is either "accept" or "reject"
-#             if status == "accept":
-#                 # Update the user's status to "accept"
-#                 data.status = status
-#                 data.save()
-#                 # Redirect to the login view after updating the status
-#                 return redirect(Login)
-#             elif status == "reject":
-#                 # Update the user's status to "reject"
-#                 data.status = status
-#                 data.save()
-#                 # Redirect to the login view after updating the status
-#                 return redirect(Login)
-#             else:
-#                 # Return an error response if the status is invalid
-#                 return HttpResponse("error")
-#         except Exception as e:
-#             # Handle any exceptions and return an error message
-#             return HttpResponse({e})
-#     else:
-#         # Redirect to the admin view if the request method is not POST
-#         return redirect(admin)
-
-# def adminhome (request):
-#     return render(request,'pharmacy/homep.html')
-# #     medicines = medicine.objects.filter(pharmacy_id=request.user)
-#     return render(request, 'pharmacy/homep.html', {'medicines': medicines})
-
-    
 ########company#######
 def company_Register(request):
     if request.method == 'POST':
@@ -1018,3 +832,4 @@ def company_home(request):
     
     # Render the doctor_home.html template with user data
     return render(request, 'company/company_home.html', {'company_user': company_user})
+

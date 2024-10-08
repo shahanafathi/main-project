@@ -16,6 +16,7 @@
         <label for="product">Select Product:</label>
         <select id="product" name="product" required>
             {% for product in products %}
+         
                 <option value="{{ product.id }}">{{ product.name }} - ${{ product.price }}</option>
             {% endfor %}
         </select>
@@ -25,7 +26,7 @@
         <label for="company">Select Company:</label>
         <select id="company" name="company" required>
             {% for company in companies %}
-                <option value="{{ company.id }}">{{ company.company_name }}</option>
+                <option value="{{ company.id }}">{{ <company-id></company-id>.company_name }}</option>
             {% endfor %}
         </select>
         <br><br>

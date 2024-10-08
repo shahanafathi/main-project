@@ -32,18 +32,17 @@ class medicine(models.Model):
     genericname=models.CharField(null=True, blank=True, max_length=100)
     strength=models.IntegerField(null=True, blank=True)
     Image=models.FileField(null=True,blank=True)
-    
+    category_name=models.CharField(max_length=100,null=True, blank=True)
     
 class Category(models.Model):
     category_name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(null=True, blank=True)
-    # medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)  
-  
+    def __str__(self):
+        return self.category_name
 class cart(models.Model):
     medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
     user_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
     added_date = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(null=True, blank=True, unique=True)
+    quantity = models.IntegerField(null=True, blank=True)
     
 class wishlist(models.Model):
     medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
@@ -87,12 +86,11 @@ class prescription(models.Model):
     age = models.IntegerField(null=True, blank=True)
     address=models.CharField(null=True,blank=True,max_length=100)
     Date = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(null=True, blank=True, max_length=100)
-    user_id=models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
-    medicine_id = models.ForeignKey(medicine, on_delete=models.CASCADE)
-    Dosage=models.CharField(max_length=50)
-    prescription_file = models.FileField()
-    quantity_prescribed = models.IntegerField()
+    user_id=models.ForeignKey(CustomeUser, on_delete=models.CASCADE,related_name='prescriptions_as_user')
+    pharmancy_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE,related_name='prescriptions_as_pharmacy')
+    prescription_file = models.FileField(null=True,blank=True)
+ 
+    
 
     # def total_price(self):
     #     return self.quantity * self.unit_price

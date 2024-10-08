@@ -1,9 +1,12 @@
-a<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation</title>
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h1>Order Confirmed!</h1>
+        <p>Your order has been successfully placed and is being processed.</p>
+        <p>Thank you for shopping with us!</p>
+        <a href="{% url 'order_view' %}" class="button">order status</a>
+    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,13 +51,4 @@ a<!DOCTYPE html>
             background-color: #45a049;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Order Confirmed!</h1>
-        <p>Your order has been successfully placed and is being processed.</p>
-        <p>Thank you for shopping with us!</p>
-        <a href="{% url 'order_view' %}" class="button">order status</a>
-    </div>
-</body>
-</html>
+    {% endblock %}

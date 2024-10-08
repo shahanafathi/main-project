@@ -24,13 +24,10 @@
    <label for="status"><b>status</b></label><br>
    <p>{{ medicines.status }}<br></p><br>
 
-   <label for="brandname"><b>brandname</b></label><br>
-   <p>{{ medicines.brandname }}<br></p><br>
-
-   <label for="genericname"><b>genericname</b></label><br>
-   <p>{{ medicines.genericname }}<br></p><br>
-
    <label for="strength"><b>strength</b></label><br>
    <p>{{ medicines.strength }}<br></p><br>
+<div> 
+      <img src="{{medicines.Image.url}}" alt="medicine" style="width: 90px;height: 100px;border-radius: 30px;margin-top:80px;margin-left:300px;">
+     </div>
 
 {% endblock %}

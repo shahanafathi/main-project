@@ -1,3 +1,5 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +32,7 @@
                 {% for item in order_item %}
                     <div class="cart-item">
                         <p>{{ item.medicine_id.name }}</p>
-                        <p>{{ item.medicine_id.quantity }} </p>
+                        <p>{{ item.quantity }} </p>
                         <p>{{ item.medicine_id.price }}</p>
 
                     </div>
@@ -49,5 +51,72 @@
         </div>
        
     </div>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .cart {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            color: #555;
+        }
+        
+        .cart-item p {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .total-amount {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #070e29;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        button:hover {
+            background-color: #0e1920;
+        }
+        
+    </style>
 </body>
 </html>
+{% endblock %}

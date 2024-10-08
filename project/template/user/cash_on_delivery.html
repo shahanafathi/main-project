@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cash on Delivery - MedConnect</title>
-    <link rel="stylesheet" href="#">
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h2>Cash on Delivery - Order Confirmation</h2>
+        
+        <p>Thank you for your order!</p>
+        <p>Order Number: {{ order.order_number }}</p>
+        
+        <div class="order-details">
+            <h3>Order Details</h3>
+            <ul>
+                <li><strong>Name:</strong> {{ item.first_name }}</li>
+                <li><strong>Delivery Address:</strong> {{ order.delivery_address }}</li>
+                <li><strong>Phone:</strong> {{ order.phone_number }}</li>
+                <li><strong>Total Amount:</strong> ₹{{ order.total_amount }}</li>
+                <li><strong>Payment Method:</strong> Cash on Delivery</li>
+            </ul>
+        </div>
+
+        <div class="confirmation-message">
+            <p>Your order will be confirmed once the payment is received by the delivery personnel. Please keep the exact amount ready for a smoother transaction.</p>
+            <p>We will notify you once your order is confirmed and ready for delivery.</p>
+        </div>
+
+    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,32 +107,4 @@
             color: #155724;
         }
     </style>
-
-</head>
-<body>
-    <div class="container">
-        <h2>Cash on Delivery - Order Confirmation</h2>
-        
-        <p>Thank you for your order!</p>
-        <p>Order Number: {{ order.order_number }}</p>
-        
-        <div class="order-details">
-            <h3>Order Details</h3>
-            <ul>
-                <li><strong>Name:</strong> {{ order.customer_name }}</li>
-                <li><strong>Delivery Address:</strong> {{ order.delivery_address }}</li>
-                <li><strong>Phone:</strong> {{ order.phone_number }}</li>
-                <li><strong>Total Amount:</strong> ₹{{ order.total_amount }}</li>
-                <li><strong>Payment Method:</strong> Cash on Delivery</li>
-            </ul>
-        </div>
-
-        <div class="confirmation-message">
-            <p>Your order will be confirmed once the payment is received by the delivery personnel. Please keep the exact amount ready for a smoother transaction.</p>
-            <p>We will notify you once your order is confirmed and ready for delivery.</p>
-        </div>
-
-        <a href="{% url 'order_history' %}" class="btn btn-primary">View Order History</a>
-    </div>
-</body>
-</html>
+    {% endblock %}

@@ -1,10 +1,19 @@
-<!-- payment_page.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Payment Method</title>
+<!-- 
+
+    <h1>Select Payment Method</h1>
+
+    <div class="payment-options">
+        <div class="payment-option">
+            <a href="{% url 'cash_on_delivery' %}">Cash on Delivery</a>
+        </div>
+        <div class="payment-option">
+            <a href="#">Debit Card</a>
+        </div>
+        <div class="payment-option">
+            <a href="#">Online Payment</a>
+        </div>
+     
+    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,23 +54,5 @@
             background-color: #0056b3;
         }
     </style>
-</head>
-<body>
 
-    <h1>Select Payment Method</h1>
-
-    <div class="payment-options">
-        <div class="payment-option">
-            <a href="{% url 'cash_on_delivery' %}">Cash on Delivery</a>
-        </div>
-        <div class="payment-option">
-            <a href="#">Debit Card</a>
-        </div>
-        <div class="payment-option">
-            <a href="#">Online Payment</a>
-        </div>
-        <!-- Add more payment options as needed -->
-    </div>
-
-</body>
-</html>
+    {% endblock %} -->

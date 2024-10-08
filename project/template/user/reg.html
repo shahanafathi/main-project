@@ -1,0 +1,26 @@
+<div class="container" style="justify-content:center; background-color:#c4dddd; width:100%;height:700px; border-radius:10px;text-align:center;padding-top:10px;font-size:lager;padding-right:5px">
+   
+        <form action="{% url 'user_register'  %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">                  
+            <h3>Register</h3>
+            <div class=" col-sm-6  " style=" padding-right:1px;padding-left:0px;">
+                <input type="text" placeholder="Name" name="name" required><br>
+                <textarea type="text" name="Address" rows="4" cols="50"></textarea required><br>
+                <input type="date" placeholder="DOB" id="DOB" name='DOB' required><br>
+                <input type="text" placeholder="UserName" name="UserName" required ><br>
+                <input type="Password" placeholder="Password" name="Password" ><br>
+            </div>
+            <div class="col-sm-6 " style="width:auto" required>
+                <input type="Email" placeholder="Email" name="Email" required><br>
+                <input type="number" placeholder="Phone number" pattern="[0-9]{10}" name='Phonenumber' required><br>
+                <input type="number" placeholder="Age" name='Age' required><br>
+                <input type="password" placeholder="Confirmpassword" name="Confirmpassword" ><br>
+            </div>
+                            
+                <button type="submit">Register</button>
+                 <p>Already Have an account? <a href="{% url 'Login' %}">Login</a></p> 
+                </div> 
+                </form>  
+    
+</div> 
