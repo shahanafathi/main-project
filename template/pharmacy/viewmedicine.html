@@ -1,0 +1,33 @@
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
+   <h1> medicine</h1> 
+  
+   <label for="name"><b>name</b></label><br>
+   <p>{{ medicines.name }}<br></p><br>
+
+   <label for="price"><b>price</b></label><br>
+   <p>{{ medicines.price }}<br></p><br>
+
+   <label for="description"><b>description</b></label><br>
+   <p>{{ medicines.description }}<br></p><br>
+
+   <label for="manufacturer"><b>manufacturer</b></label><br>
+   <p>{{ medicines.manufacturer }}<br></p><br>
+
+   <label for="quantity"><b>quantity</b></label><br>
+   <p>{{ medicines.quantity }}<br></p><br>
+
+   <label for="expiry_date"><b>expiry_date</b></label><br>
+   <p>{{ medicines.expiry_date }}<br></p><br>
+
+   <label for="status"><b>status</b></label><br>
+   <p>{{ medicines.status }}<br></p><br>
+
+   <label for="strength"><b>strength</b></label><br>
+   <p>{{ medicines.strength }}<br></p><br>
+<div> 
+      <img src="{{medicines.Image.url}}" alt="medicine" style="width: 90px;height: 100px;border-radius: 30px;margin-top:80px;margin-left:300px;">
+     </div>
+
+{% endblock %}

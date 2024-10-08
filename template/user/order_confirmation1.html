@@ -1,0 +1,112 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .confirmation-container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status-confirmed {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-pending, .status-failed {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your purchase!</p>
+        <p>Your order has been placed successfully.</p>
+
+        <div class="order-details">
+            <h3>Order Details</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.medicine_items.all %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.cart_set.get(order=order).quantity }}</td>
+                        <td>${{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p>Total Price: ${{ order.total_price }}</p>
+            <p>
+                Payment Status:
+                {% if order.payment_status == 'CONFIRMED' %}
+                    <span class="status-confirmed">{{ order.payment_status }}</span>
+                {% elif order.payment_status == 'PENDING' %}
+                    <span class="status-pending">{{ order.payment_status }}</span>
+                {% else %}
+                    <span class="status-failed">{{ order.payment_status }}</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</body>
+</html> -->

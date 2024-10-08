@@ -1,0 +1,110 @@
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h2>Cash on Delivery - Order Confirmation</h2>
+        
+        <p>Thank you for your order!</p>
+        <p>Order Number: {{ order.order_number }}</p>
+        
+        <div class="order-details">
+            <h3>Order Details</h3>
+            <ul>
+                <li><strong>Name:</strong> {{ item.first_name }}</li>
+                <li><strong>Delivery Address:</strong> {{ order.delivery_address }}</li>
+                <li><strong>Phone:</strong> {{ order.phone_number }}</li>
+                <li><strong>Total Amount:</strong> ₹{{ order.total_amount }}</li>
+                <li><strong>Payment Method:</strong> Cash on Delivery</li>
+            </ul>
+        </div>
+
+        <div class="confirmation-message">
+            <p>Your order will be confirmed once the payment is received by the delivery personnel. Please keep the exact amount ready for a smoother transaction.</p>
+            <p>We will notify you once your order is confirmed and ready for delivery.</p>
+        </div>
+
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .order-details {
+            text-align: left;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .order-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .order-details li {
+            margin-bottom: 10px;
+        }
+        
+        .order-details strong {
+            color: #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #218838;
+        }
+        
+        .confirmation-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e2f7e2;
+            border-radius: 8px;
+            border: 1px solid #c3e6c3;
+            color: #155724;
+        }
+    </style>
+    {% endblock %}

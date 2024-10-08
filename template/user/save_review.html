@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data" action="{% url 'save_review' %}">
+        {% csrf_token %}
+        <input type="hidden" name="medicine" value="{{ item.medicine_id.id }}">
+        <div class="star-rating">
+            <input type="radio" name="rating" id="star5-{{ item.id }}" value="5"><label for="star5-{{ item.id }}">★</label>
+            <input type="radio" name="rating" id="star4-{{ item.id }}" value="4"><label for="star4-{{ item.id }}">★</label>
+            <input type="radio" name="rating" id="star3-{{ item.id }}" value="3"><label for="star3-{{ item.id }}">★</label>
+            <input type="radio" name="rating" id="star2-{{ item.id }}" value="2"><label for="star2-{{ item.id }}">★</label>
+            <input type="radio" name="rating" id="star1-{{ item.id }}" value="1"><label for="star1-{{ item.id }}">★</label>
+        </div>
+        <div class="form-group">
+            <label for="reviewText">Review</label>
+            <textarea class="form-control" id="reviewText" name="review_text" rows="3" placeholder="Write your review here"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="reviewImage">Upload Image</label>
+            <input type="file" class="form-control-file" id="reviewImage" name="review_image">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </div>
+    </form>
+    
+</body>
+</html>

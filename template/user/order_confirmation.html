@@ -1,0 +1,54 @@
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h1>Order Confirmed!</h1>
+        <p>Your order has been successfully placed and is being processed.</p>
+        <p>Thank you for shopping with us!</p>
+        <a href="{% url 'order_view' %}" class="button">order status</a>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    {% endblock %}

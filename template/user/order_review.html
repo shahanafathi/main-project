@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .review-form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .rating label {
+            font-size: 20px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label:hover, .rating input:checked ~ label {
+            color: gold;
+        }
+
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .review-rating {
+            color: gold;
+            font-size: 18px;
+        }
+
+        .review-date {
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Leave a Review for Your Order</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="review-form">
+        {% csrf_token %}
+        
+        <label for="review">Your Review</label>
+        <textarea id="review" name="review" placeholder="Write your review here..." required></textarea>
+
+        <label for="rating">Rating</label>
+        <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">&#9733;</label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">&#9733;</label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">&#9733;</label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">&#9733;</label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">&#9733;</label>
+        </div>
+
+        <label for="image">Upload Image (optional)</label>
+        <input type="file" id="image" name="image">
+
+        <button type="submit" class="submit-btn">Submit Review</button>
+    </form>
+
+    <hr>
+
+    <h2>Your Previous Reviews</h2>
+
+    <div class="review-list">
+        {% for review in reviews %}
+        <div class="review-item">
+            <div class="review-text">{{ review.text }}</div>
+            <div class="review-rating">Rating: {{ review.rating }} &#9733;</div>
+            <div class="review-date">Reviewed on {{ review.review_date }}</div>
+        </div>
+        {% empty %}
+        <p>You have not left any reviews yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Pending - MedConnect</title>
+    <link rel="stylesheet" href="#">
+    <style>
+        .modal-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Modal Content */
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+        
+        /* Primary Button */
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-container">
+        <div class="modal-content">
+            <h2>Your Order is Still Pending</h2>
+            <p>Your order is currently pending. Please wait for the admin to confirm your order. You will be notified once the order is confirmed.</p>
+            <a href="{% url 'home' %}" class="btn-primary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+<div class="help-content">
+    <h4>Need Help?</h4>
+    <p>If you're unsure how to proceed or need assistance, here's what you can do:</p>
+    <ul>
+        <li>Check the pharmacy's policy regarding prescription uploads and supported file formats.</li>
+        <li>Ensure your file is in the correct format (<strong>PDF, JPG, PNG</strong>).</li>
+        <li>For medication orders, ensure you have filled out all required fields correctly.</li>
+        <li>Contact customer service at <strong>+123-456-7890</strong> or email us at <strong>support@pharmacy.com</strong> for further help.</li>
+    </ul>
+    <p>For more information, visit our <a href="/faq">FAQ page</a> or <a href="/contact-us">Contact Us</a>.</p>
+</div>
+
+<style>
+    .help-button {
+        display: block;
+        margin: 20px 0;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .help-content {
+        background-color: #f8f8f8;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .help-content h4 {
+        color: #007bff;
+    }
+
+    .help-content p, .help-content ul {
+        color: #333;
+    }
+
+    .help-content ul {
+        list-style-type: disc;
+        margin-left: 20px;
+    }
+
+    .help-content a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .help-content a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

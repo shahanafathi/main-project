@@ -1,0 +1,73 @@
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+
+    <div class="full_card">
+        <div>
+        <div class="rdx">
+         
+          <div class="card text-bg-light">
+            <img src="{% static 'pharmacy/-history-icon1.jpg' %}" class="card-img" alt="..." >
+            
+          </div>
+        </div>
+        <h5 class="card-title"  style="text-align: center;">
+        <a  href="{% url 'pharmacy_userhistory' %}">Customer History<br></a></h5>
+        </div>
+        </div>
+
+        <div class="full_card">
+            <div>
+            <div class="rdx">
+             
+              <div class="card text-bg-light">
+                <img src="{% static 'pharmacy/-history-icon2.jpg' %}" class="card-img" alt="..." >
+                
+              </div>
+            </div>
+            <h5 class="card-title"  style="text-align: center;">
+            <a  href="">company History<br></a></h5>
+            </div>
+            </div>
+    
+
+
+</div>
+<style>
+  .container{
+    background-color: aliceblue;
+    width: 700px;
+    height: 600px;
+    border-radius:15px;
+    margin-top:20px;
+    margin-left:450px;
+    align-items: center;
+    justify-content: center;
+  }
+  .full_card{
+    display: inline-flex;
+  }
+  .card-img{
+    width:250px;
+    height: 250px;
+  }
+  .card-title{
+    text-align:justify;
+    color: black;
+    
+    
+  }
+  .card{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    background-color: rgb(193, 212, 241);
+    margin-right:10px;
+    margin-top: 20px;
+    width: 18rem;
+    height:300px;
+    margin-left:25px;
+}
+</style>
+{% endblock %}

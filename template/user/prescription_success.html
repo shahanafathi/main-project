@@ -1,0 +1,52 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
+<div class="container">
+    <h2>Prescription Uploaded Successfully!</h2>
+
+    <h3>Prescription Details:</h3>
+    <p><strong>Name:</strong> {{ data.first_name }}</p>
+    <p><strong>Age:</strong> {{ data.age }}</p>
+    <p><strong>Address:</strong> {{ data.address }}</p>
+    <p><strong>Pharmacy:</strong> {{ pharmacy.first_name }}</p>
+
+    <h3>Uploaded Prescription:</h3>
+    <div>
+        {% if prescriptions.prescription_file %}
+            <img src="{{prescriptions.prescription_file.url }}" alt="Prescription Image" style="max-width: 100%; border: 2px solid #ccc; border-radius: 10px;">
+        {% else %}
+            <p>No prescription file uploaded.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'upload_prescription' id=pharmacy.id %}">Upload Another Prescription</a>
+</div>
+
+<style>
+    .container {
+        width: 600px;
+        background-color: #f8f8f8;
+        padding: 20px;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #0a111f;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    a:hover {
+        background-color: #c2cbf4;
+        color: #000;
+    }
+</style>
+{% endblock %}

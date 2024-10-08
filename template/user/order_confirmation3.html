@@ -1,0 +1,84 @@
+<!-- order_confirmation.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+
+        .order-details {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .order-details h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .order-details p {
+            color: #333;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+
+        .confirm-button {
+            text-decoration: none;
+            color: white;
+            background-color: #28a745;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .confirm-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Order Confirmation</h1>
+
+    <div class="order-details">
+        <h2>Order Summary</h2>
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        
+        <h2>Items:</h2>
+        <ul>
+            {% for item in order.orderitem_set.all %}
+                <li>{{ item.medicine.name }} - {{ item.quantity }} pcs - ₹{{ item.medicine.price }}</li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Total Amount:</strong> ₹{{ order.get_total_cost }}</p>
+
+        <form method="POST" action="{% url 'order_confirmation' order.id %}">
+            {% csrf_token %}
+            <button type="submit" class="confirm-button">Confirm Order</button>
+        </form>
+    </div>
+
+</body>
+</html> -->

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <div class="medicine-list">
+            <h2>Your Medicines</h2>
+            <thead>
+          <!-- <tr>
+              <th>image</th>
+              <th>name</th>
+              <th>qty</th>
+              <th>View</th>
+              <th>review</th> -->
+          <!-- </tr> -->
+        </thead>
+          </div>
+            {% for medicine in medicines %}
+            <div class="medicine"> 
+               
+                <h3>{{ medicine.name }}</h3>
+                <p>{{ medicine.description }}</p>
+                <p>Price: {{ medicine.price }}</p>
+                <p>Quantity: {{ medicine.quantity }}</p>
+        <!-- {% for review in reviews %} -->
+                <!-- <p>{{ review.review_text }}</p>
+                <p>Rating: {{ review.rating }}</p> -->
+       <!-- {% endfor %} -->
+                <button type="submit"><a href="{% url 'add_to_cart' id=medicine.id %}" >Add to cart</button></a>
+                <a href="{% url 'user_medicine' id=medicine.id %}"><button type="submit">view</button></a>
+              </div>
+
+    </table>
+</body>
+</html>

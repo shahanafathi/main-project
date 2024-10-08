@@ -1,0 +1,45 @@
+{% extends 'user/medicine_pharmacy.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart View</title>
+</head>
+<body>
+    <h1>My wishlist</h1>
+    {% if wishlist %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in wishlist %}
+                    <tr>
+                        <td>{{ i.medicine_id.name }}</td>
+                        <td>{{ i.medicine_id.quantity }}</td> 
+                        <td>{{ i.medicine_id.price }}</td> 
+                        <td>
+                            <a href="{% url 'remove_wishlist' id=i.id %}"><button type="submit">remove</button></a>
+                           
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</body>
+</html>
+
+ 
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <h2> User History </h2>
+    {% if History1 %}
+    <table>
+        <thead>
+            <tr>
+                <th> ID</th>
+                <th>Customer</th>
+                <th>Total Amount</th>
+                <th>Order Date</th>
+                <th>Actions</th>
+               
+            </tr>
+            <hr>
+        </thead>
+        <div class="box">
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ i.user_id }}</td>
+                <td>{{ i.user_id.username }}</td>
+                <td>{{ i.user_id.total_amount }}</td>
+                <td>{{ i.order_date }}</td>
+                <td> <a href=""><button type="submit">View</button></a></td>
+               <hr>
+            </tr>
+            {% endfor %}
+         </tbody>>
+        </div>
+
+    </table>
+    {% else %}
+    <p>No History found.</p>
+    {% endif %}
+
+</div>
+
+
+
+<style>
+.box{
+border-top: 2px;
+border-bottom: 2px;
+border-color:black;
+background-color: antiquewhite;
+}
+</style>
+{% endblock %}
