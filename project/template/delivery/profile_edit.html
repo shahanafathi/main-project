@@ -1,0 +1,166 @@
+{% extends 'delivery/delivery_home.html' %}
+{% block content %}
+{% load static %}
+<div class="profile-container">
+    <form action="{% url 'edit_delivery'  %}" method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        <div class="profile-header">
+            <!-- <img src="" alt="Profile Image" class="profile-img"> -->
+            <h2>{{ data1.name}}</h2>
+        </div>
+        
+        <div class="profile-details ">
+            <div class=" col-sm-6  " style=" padding-right:1px;padding-left:0px;">
+                  <label for="name"><b>Name</b></label>
+                  <input type="text" placeholder="Name" name="Name" value="{{data1.name}}"  ><br>
+
+                  <label for="Email"><b>Email</b></label>
+                  <input type="email" placeholder="Email" name="Email" value="{{ data1.email }}"><br>
+
+                  <label for="Address"><b>Address</b></label>
+                  <textarea id="Address" name="Address" rows="4" cols="35" >{{data1.address}}</textarea><br>
+
+                  
+                  <label for="Licence">Licence</label>
+                  <input type="file" name="Licence" accept="image/*">
+
+            </div>
+        <div class="col-sm-6" style=" padding-right:1px;padding-left:0px; margin-left:15px"> 
+                <label for="UserName"><b>UserName</b></label>
+                <input type="text" placeholder="UserName" name="UserName" value="{{data.username}}" ><br>
+               
+                <label for="Phone number"><b>Phone number</b></label>
+                <input type="tel" placeholder="Phone number"  name='Phonenumber' value="{{data1.phonenumber}}"><br>
+                
+
+                <label for="Image">Profile</label>
+                  <input type="file" name="Image" accept="image/*">
+              </div>
+        </div>
+              <div class="edit-profile">
+                <button type="submit" class="edit-btn">Update</button>
+              </div>
+           
+            </form> 
+            
+        </div>
+      
+    
+         <style>
+            .profile-container {
+                background-color:whitesmoke;
+                color: rgb(0, 0, 0);
+                width: 700px;
+                padding: 20px;
+                border-radius: 15px;
+                margin: 40px auto;
+                box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+          
+            /* Header Image and Name */
+            .profile-header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+          
+            .profile-img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 15px;
+            }
+          
+            h2 {
+                font-size: 24px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+          
+            /* Profile Details */
+            .profile-details {
+                display: flex;
+                justify-content: space-between;
+                padding: 20px 0;
+            }
+          
+            .profile-column {
+                text-align: left;
+                width: 45%;
+                margin-right: 20px;
+            }
+          
+            label {
+                display: block;
+                font-weight: bold;
+                color: #020202;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+          
+            input {
+                width: 90%;
+                padding: 10px;
+                margin-bottom: 15px;
+                margin-right: 10px;
+                margin-left: 10px;
+                border-radius: 5px;
+                border: none;
+                background-color:transparent;
+                border: 2px solid rgb(2, 2, 2);
+                color: rgb(0, 0, 0);
+                font-size: 14px;
+            }
+          
+            input:focus {
+                outline: none;
+                border: 2px solid  #980303;
+                
+            }
+          
+            /* Edit Button */
+            .edit-profile {
+                margin-top: 20px;
+                text-align:end;
+            }
+          
+            .edit-btn {
+                background-color: #070707;
+                border: none;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            }
+          
+            .edit-btn:hover {
+                background-color: #1f827a;
+            }
+          
+            /* Responsive Styles */
+            @media (max-width: 768px) {
+                .profile-container {
+                    width: 90%;
+                    padding: 20px;
+                }
+          
+                .profile-details {
+                    flex-direction: column;
+                    align-items: center;
+                }
+          
+                .profile-column {
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+            }
+          </style>
+       
+{% endblock %}

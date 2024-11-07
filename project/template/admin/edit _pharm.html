@@ -1,0 +1,118 @@
+{% extends 'admin/home.html' %}
+{% block content %}
+{% load static %}
+    <div class="profile-page">
+    
+        <div class="content">
+          <form action="{% url 'admin_edit_pharmacy' id=data.id %}" method="POST" enctype="multipart/form-data"> 
+              {% csrf_token %}
+      
+          <!-- Profile Image Section -->
+          <div style="display: flex; align-items: center;">
+            <img src="{{ data.Image.url }}" alt="Profile Picture" class="profile-img">
+            <div class="content__title">
+              <input type="text" name="first_name" value="{{ data.first_name }}" class="input-field title">
+              <span class="address"><input type="text" name="address" value="{{ data.address }}" class="input-field"></span>
+            </div>
+          </div>
+      
+          <!-- Description Section -->
+          <div class="content__description">
+            <p>Phone Number - <input type="text" name="phone_number" value="{{ data.phone_number }}" class="input-field"></p>
+            <p>Email - <input type="email" name="email" value="{{ data.email }}" class="input-field"></p>
+            <!-- <p>profile - <input type="file" name="Image" accept="image/*"></p> -->
+            <p>Certificate - <input type="file" name="certificate" accept="image/*"></p>
+
+          </div>
+      
+          <!-- Additional Information -->
+          <ul class="content__list">
+            <li><span class="label">DOB:</span> <input type="date" name="dob" value="{{ data.dob }}" class="input-field"></li>
+            <li><span class="label">Age:</span> <input type="number" name="age" value="{{ data.age }}" class="input-field"></li>
+          </ul>
+          <div class="edit-profile d-flex justify-content-end mt-4  ">
+            <button type="submit" class="edit-btn w-15 border-radius-5">Save</button>
+        </div>
+      </form>
+        </div>
+        
+        <!-- Style Links -->
+        <link rel="stylesheet" href="{% static 'admin/user_view/css/style.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'admin/user_view/css/demo.css' %}"> -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet"> -->
+      </div>
+      <style>
+          body {
+              font-family: 'Open Sans', sans-serif;
+            }
+            
+            .profile-page {
+              max-width: 800px;
+              margin: auto;
+              padding: 20px;
+            }
+            
+            .profile-img {
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+              margin-right: 20px;
+            }
+            
+            .content__title {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 20px;
+            }
+            
+            .title {
+              font-size: 24px;
+              font-weight: 600;
+              border: none;
+              border-bottom: 2px solid #ddd;
+              width: 100%;
+            }
+            
+            .address {
+              margin-top: 8px;
+              font-size: 16px;
+            }
+            
+            .input-field {
+              font-size: 16px;
+              border: none;
+              border-bottom: 1px solid #ddd;
+              padding: 5px;
+              width: 100%;
+              margin-top: 5px;
+              background-color: #f9f9f9;
+            }
+            
+            .input-field:focus {
+              outline: none;
+              border-bottom: 1px solid #4a90e2;
+            }
+            
+            .content__description p {
+              font-size: 16px;
+              margin: 10px 0;
+            }
+            
+            .content__list {
+              list-style: none;
+              padding: 0;
+            }
+            
+            .content__list li {
+              display: flex;
+              justify-content: space-between;
+              padding: 10px 0;
+              font-size: 16px;
+            }
+            
+            .label {
+              font-weight: bold;
+            }
+            
+      </style>
+{% endblock %}

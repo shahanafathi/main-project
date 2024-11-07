@@ -1,10 +1,6 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order List</title>
-</head>
-<body>
+{% extends 'delivery/delivery_home.html' %}
+{% block content %}
+{% load static %}
     <div class="container mt-4">
         <h2>Orders for Your Pharmacy</h2>
 
@@ -37,5 +33,4 @@
             <p>No orders found.</p>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}

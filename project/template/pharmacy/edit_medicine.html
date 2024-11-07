@@ -58,7 +58,7 @@
             <input type="text" id="medicineName" name="medicineName" value="{{datas.name}}" required>
             
             <label for="description">Description</label>
-            <textarea id="description" name="description" rows="4" value="{{datas.description}}" required></textarea>
+            <textarea id="description" name="description" rows="4" value="{{datas.description}}" required> {{datas.description}}</textarea>
             
             <label for="strength">Strength</label>
             <input type="text" id="strength" name="strength"value="{{datas.strength}}" required>   
@@ -70,7 +70,7 @@
             <input type="number" id="pricePerUnit" name="pricePerUnit" value="{{datas.price}}" required>
             
             <label for="expiryDate">Expiry Date</label>
-            <input type="date" id="expiryDate" name="expiryDate" value="{{datas.expiry_date}}" required>
+            <input type="date" id="expiryDate" name="expiryDate" value="{{datas.expiry_date|date:'Y-m-d' }}" required>
             
             <label for="manufacturer">Manufacturer</label>
             <input type="text" id="manufacturer" name="manufacturer" value="{{datas.manufacturer}}" required>

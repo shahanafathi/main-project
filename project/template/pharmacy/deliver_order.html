@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if datas %}
+   <table>
+    <thead>
+        <tr>
+            <th>Slno</th>
+            <th>Customer</th>
+            <th>order</th>
+            <th>Total Amount</th>
+            <th>Order Date</th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in datas %}
+        <tr>
+            <td> {{ forloop.counter }} </td>
+            <td>{{ i..username }}</td>
+            <td>{{ i..total_amount }}</td>
+            <td>{{ i.order_date }}</td>
+        </tr> 
+           
+        {% endfor %}
+    
+    </tbody>
+   </table> 
+</body>
+</html>

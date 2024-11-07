@@ -1,86 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Delivery Home Page</title>
+    
     <style>
-      body{
-        background-color:rgb(255, 255, 255);
-        }
-        .container-fluid {
-          background-color:#F97633;
-          width: 1100;
-          height: 50px;
+      body {
+          background-color: #f4f6f9;
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+
+      .container-fluid {
+          background-color:rgb(202, 26, 26);
+          width: 100%;
+          
+          height: 60px;
           display: flex;
           justify-content: flex-end;
           align-items: center;
-          padding: 0 10px;
+          padding: 0 20px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          position: sticky;
+          top: 0;
+          overflow:hidden;
+
       }
+      
 
       .navbar ul {
           display: flex;
           list-style: none;
           padding: 0;
-          margin: 0;
+          margin-left:20px;
       }
 
       .navbar li {
-          margin-right:30px;
+          margin-right: 50px;
       }
 
       .navbar a {
           text-decoration: none;
-          color: rgb(255, 255, 255);
+          color: #ffffff;
           font-weight: bold;
           display: flex;
           align-items: center;
+          font-size: 18px;
+          transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+          color: #f0b1b1;
       }
 
       .navbar a svg {
-          margin-left: 10px;
+          margin-left: 8px;
       }
 
       h1 {
           color: #1e362a;
-          margin-top: 20px;
+          margin-top: 30px;
           margin-bottom: 20px;
           text-align: center;
-          align-items: center;
-        
+          font-size: 36px;
       }
 
       p {
           color: #1e362a;
-          font-size: large;
+          font-size: 18px;
           font-weight: bold;
-          margin-top: 20px;
-          margin-bottom: 20px;
           text-align: center;
+          margin-bottom: 30px;
       }
-      .card{
-            display:inline-flex;
-            justify-content:center;
-            align-items:center;
-            background-color: antiquewhite;
-            margin-right:10px;
-            margin-top: 20px;
-            width: 18rem;
-            height:250px;
-            margin-left:25px;
-      }
+
       .container {
-        background-color:rgb(254, 254, 223);
-        border-color:black ;
-        border-radius:5px;
-        height: 550px;
-        width:95%;
-        margin-top:30px;
-        margin-left:30px;
-        margin-right:50px;
-        margin-bottom:30px;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          flex-wrap: wrap;
+          margin: 40px auto;
+          padding: 20px;
+          background-color: #fff;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
+          max-width: 1200px;
+      }
 
+      .card {
+          background-color: #fff;
+          width: 280px;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          margin-bottom: 30px;
+          text-align: center;
+          transition: transform 0.3s ease;
+      }
 
+      .card:hover {
+          transform: scale(1.05);
+      }
+
+      .card img {
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          height: 180px;
+          object-fit: cover;
+          width: 100%;
+      }
+
+      .card-body {
+          padding: 20px;
+      }
+
+      .card-title {
+          font-size: 22px;
+          color: #333;
+          margin-bottom: 15px;
+      }
+
+      .btn {
+          text-decoration: none;
+          background-color: #2b3e50;
+          color: #fff;
+          padding: 10px 15px;
+          border-radius: 5px;
+          font-weight: bold;
+          display: inline-block;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+          background-color: #f0b1b1;
+      }
+      .status_button{
+        text-decoration: none;
+        background-color: #04bd3b;
+        color: #000000;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+      }
+      .status_button1{
+        text-decoration: none;
+        background-color: #ec2121;
+        color: #000000;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+      }
+      .picture{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        max-width: 1200px;
+      }
+      .status{
+        justify-content: center;
+        align-items: center;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        max-width: 1200px;
+        text-align: center;
       }
     </style>
 </head>
@@ -89,58 +185,104 @@
     <nav class="navbar ">
         <div class="container-fluid">
             <ul>
-              <li >
-                <a  href="{% url 'deliver_home' %}">Home</a>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
-                </svg></a>
+              <li>
+                <a href="{% url 'deliver_home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'delivery_order_view' %}">order</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'deliver_profile' %}"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                </svg></a>
+                <a class="nav-link" href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+                  </svg>
+                </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'Login' %}"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                </svg></a>
+                <a class="nav-link" href="{% url 'deliver_profile' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                  </svg>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'Login' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                  </svg>
+                </a>
               </li>
             </ul>
           </div>
         </nav>
-        </div>
+    </div>
+  {% block content %}
+    
+    <h1>Welcome {{ request.user.username }}</h1>
+<div class="picture">
+  <img src="{% static 'delivery/free.png' %}" class="card-img-top" alt="Order">
+
+</div>
+
+<div class="status">
+  <label for="Status"><b>Status :</b></label>
+  {% if delivary_user1.status == 'Available' %}
+  <p style="color: rgb(20, 228, 51);">{{ delivary_user1.status }}</p>
+  {% else %}
+  <p style="color: rgb(228, 20, 20);">{{ delivary_user1.status }}</p>
+  {% endif %}
+
+
+  <form action="{% url 'delivery_available' id=delivary_user1.id %}"method="POST">
+    {% csrf_token %}
+    {% if delivary_user1.status == 'pending' %}
+      <button name="status" value="Available" class="status_button">Available</button>
+      <button name="status" value="Not Available" class="status_button1">Not Available</button>
+    {% elif delivary_user1.status == 'Available' %}
+      <button name="status" value="Not Available" class="status_button1">Not Available</button>
+    {% else %}
+      <button name="status" value="Available" class="status_button">Available</button>
+    {% endif %}
+  </form>
+
+</div>
+
     <div class="container">
-      <div class="card" >
-        <img src="..." class="card-img-top" alt="...">
+      <div class="card">
+        <img src="{% static 'delivery/image.png' %}" class="card-img-top" alt="Order">
         <div class="card-body">
-          <h5 class="card-title">Order</h5>
-          <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-          <a href="{% url 'delivr_order_user' %}" class="btn btn-primary">{{ data }}</a>
+          <h5 class="card-title">Orders</h5>
+          <a href="{% url 'delivery_order_view' %}" class="btn btn-primary">View Orders</a>
         </div>
       </div> 
-    
-          <div class="card" >
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">History</h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-              <a href="{% url 'order_view' %}" class="btn btn-primary">{{ data  }}</a>
-            </div>
-          </div>
-          
 
-          <div class="card" >
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">
-                Riview
-              </h5>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-              <a href="" class="btn btn-primary">{{ data }}</a>
-            </div>
-          </div>
+      <div class="card">
+        <img src="{% static 'delivery/image.png' %}" class="card-img-top" alt="History">
+        <div class="card-body">
+          <h5 class="card-title">Delivery History</h5>
+          <a href="{% url 'delivery_order_view' %}" class="btn btn-primary">View History</a>
         </div>
+      </div> 
+
+      <!-- <div class="card">
+        <img src="{% static 'delivery/image.png' %}" class="card-img-top" alt="Profile">
+        <div class="card-body">
+          <h5 class="card-title">Review</h5>
+          <a href="" class="btn btn-primary">review</a>
+        </div>
+      </div>  -->
+
+      <!-- <div class="card">
+        <img src="{% static 'delivery/image.png' %}" class="card-img-top" alt="Profile">
+        <div class="card-body">
+          <h5 class="card-title">wallet</h5>
+          <a href="" class="btn btn-primary">wallet</a>
+        </div>
+      </div>  -->
+
+
+    </div>
+    {% endblock %}
 </body>
 </html>

@@ -1,33 +1,141 @@
+
+
+
+
 {% extends 'pharmacy/homep.html' %}
 {% block content %}
 {% load static %}
-   <h1> medicine</h1> 
-  
-   <label for="name"><b>name</b></label><br>
-   <p>{{ medicines.name }}<br></p><br>
+<h1>Medicine Details</h1>
 
-   <label for="price"><b>price</b></label><br>
-   <p>{{ medicines.price }}<br></p><br>
+<div class="medicine-container">
+    <img src="{{medicines.Image.url}}" alt="medicine image">
+    <div class="medicine-info">
+        <label for="name"><b>Name</b></label>
+        <p>{{ medicines.name }}</p>
 
-   <label for="description"><b>description</b></label><br>
-   <p>{{ medicines.description }}<br></p><br>
+        <label for="price"><b>Price</b></label>
+        <p>{{ medicines.price }}</p>
 
-   <label for="manufacturer"><b>manufacturer</b></label><br>
-   <p>{{ medicines.manufacturer }}<br></p><br>
+        <label for="description"><b>Description</b></label>
+        <p>{{ medicines.description }}</p>
 
-   <label for="quantity"><b>quantity</b></label><br>
-   <p>{{ medicines.quantity }}<br></p><br>
+        <label for="manufacturer"><b>Manufacturer</b></label>
+        <p>{{ medicines.manufacturer }}</p>
 
-   <label for="expiry_date"><b>expiry_date</b></label><br>
-   <p>{{ medicines.expiry_date }}<br></p><br>
+        <label for="quantity"><b>Quantity</b></label>
+        <p>{{ medicines.quantity }}</p>
 
-   <label for="status"><b>status</b></label><br>
-   <p>{{ medicines.status }}<br></p><br>
+        <label for="expiry_date"><b>Expiry Date</b></label>
+        <p>{{ medicines.expiry_date }}</p>
 
-   <label for="strength"><b>strength</b></label><br>
-   <p>{{ medicines.strength }}<br></p><br>
-<div> 
-      <img src="{{medicines.Image.url}}" alt="medicine" style="width: 90px;height: 100px;border-radius: 30px;margin-top:80px;margin-left:300px;">
-     </div>
+        <label for="status"><b>Status</b></label>
+        <p>{{ medicines.status }}</p>
+
+        <label for="strength"><b>Strength</b></label>
+        <p>{{ medicines.strength }}</p>
+    </div>
+
+    <!-- <div class="button-container">
+        <button class="btn">Add to Cart</button>
+    </div> -->
+</div>
+<style>
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+    
+      h1 {
+        text-align: center;
+        font-size: 2em;
+        color: #2c3e50;
+        margin-top: 40px;
+      }
+    
+      .medicine-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 50px auto;
+        width: 50%;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    
+      .medicine-container img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+    
+      .medicine-info {
+        width: 100%;
+        text-align: left;
+      }
+    
+      label {
+        font-size: 1.1em;
+        color: #34495e;
+        font-weight: bold;
+      }
+    
+      p {
+        font-size: 1em;
+        color: #555;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    
+      .button-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+    
+      .btn {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+      }
+    
+      .btn:hover {
+        background-color: #2980b9;
+      }
+    
+      /* Media queries for responsiveness */
+      @media (max-width: 768px) {
+        .medicine-container {
+          width: 80%;
+        }
+    
+        .medicine-container img {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    
+      @media (max-width: 480px) {
+        .medicine-container {
+          width: 95%;
+        }
+    
+        .medicine-container img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    </style>
+    
 
 {% endblock %}

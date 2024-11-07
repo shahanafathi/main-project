@@ -3,33 +3,27 @@
 {% load static %}
 <div class="container">
     <h2> User History </h2>
-    {% if History1 %}
+    {% if history %}
     <table>
-        <thead>
+            {% for i in history %}
             <tr>
-                <th> ID</th>
-                <th>Customer</th>
-                <th>Total Amount</th>
-                <th>Order Date</th>
-                <th>Actions</th>
-               
-            </tr>
-            <hr>
-        </thead>
-        <div class="box">
-        <tbody>
-            {% for i in data %}
-            <tr>
-                <td>{{ i.user_id }}</td>
-                <td>{{ i.user_id.username }}</td>
-                <td>{{ i.user_id.total_amount }}</td>
-                <td>{{ i.order_date }}</td>
-                <td> <a href=""><button type="submit">View</button></a></td>
-               <hr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.order_id.user_id.first_name }}</td> 
+                <td>{{ i.delivery_id.name }}</td>
+                <td>{{ i.order_id.order_date }}</td> 
+                <td>
+                    {% if i.status == 'pending' %}
+                    <p>Not started</p>
+                    {% elif i.status == 'STARTED' %}
+                    <p>Started</p>
+                    {% elif i.status == 'finished' %}
+                    <p>Finished</p>
+                    {% endif %}
+                </td>
+              
             </tr>
             {% endfor %}
-         </tbody>>
-        </div>
+         
 
     </table>
     {% else %}
@@ -41,11 +35,35 @@
 
 
 <style>
-.box{
+.container{
 border-top: 2px;
 border-bottom: 2px;
 border-color:black;
-background-color: antiquewhite;
+background-color: rgb(255, 255, 255);
+}
+table {
+        margin-top:20px;
+        width: 80%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 10px;
+        height: 110px;
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;   
+        color: #000;
+        font-weight: bolder;
+}
+tr {
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+table tr:hover {
+    background-color: #e2e6ea;
+}
+
+
+td {
+    padding: 12px 15px;
+    text-align: center;
 }
 </style>
 {% endblock %}

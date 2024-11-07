@@ -1,0 +1,153 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .image-section, .details-section {
+            padding: 20px;
+        }
+        .image-section img {
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        .thumbnail {
+            width: 50px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .details-section {
+            max-width: 600px;
+            padding-left: 20px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .rating, .price, .delivery-info {
+            margin: 10px 0;
+        }
+        .rating span {
+            color: gold;
+            font-size: 20px;
+        }
+        .price .original-price {
+            text-decoration: line-through;
+            color: grey;
+            margin-right: 10px;
+        }
+        .price .discount-price {
+            color: #E53935;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .variant-section {
+            margin: 20px 0;
+        }
+        .variant {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            display: inline-block;
+        }
+        .actions {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .add-to-cart-btn, .view-cart-btn {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .add-to-cart-btn {
+            background-color: #00897B;
+            color: white;
+        }
+        .view-cart-btn {
+            background-color: #ddd;
+            color: #333;
+        }
+        .middle{
+
+            background-color:white;
+
+        }
+
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Image Section -->
+    <div class="image-section">
+        <img id="bigImage" src="{{ medicine.Image.url }}" alt="Product Image">
+        <div>
+            <img src="{{ medicine.Image.url }}" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image1.url }}" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image2.url }}" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image3.url }}" class="thumbnail" onclick="changeImage(this)">
+        </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details-section">
+        <div class="product-title">{{ medicine.name }} - {{ medicine.description }} - {{ medicine.strength }}</div>
+      
+        
+
+        <!-- Price Section -->
+        <div class="price">
+            <span class="discount-price">{{medicine.price}}</span>
+        </div>
+
+        <!-- Delivery Info -->
+        <div class="delivery-info">
+            Delivery by <strong>Today, 6:00 pm - 10:00 pm</strong>
+        </div>
+
+        
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <a href="{% url 'add_to_cart' id=medicine.id %}"> <button class="">Add To Cart</button></a>
+            <a href="{% url 'add_to_cart' id=medicine.id %}"> <button class="">Buy Now</button></a>
+        </div>
+    </div>
+</div>
+<div>
+    <img src="" alt="" srcset="">
+</div>
+<div class="middle">
+    <h1>Save Big on Your Medication Needs!</h1>
+    <div class="d-flex justify-content-center align-items-center">
+        <h5> 100 % Genuine Medicines</h5>
+        <h5> Trusted Pharmacies</h5>
+        <h5> Delivery to your doorstep</h5>
+        <h5> Store Pick up</h5>
+      </div>
+</div>
+<script>
+    function changeImage(thumbnail) {
+        document.getElementById("bigImage").src = thumbnail.src;
+    }
+</script>
+{% endblock %}

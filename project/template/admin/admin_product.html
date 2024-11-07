@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="medicine" style="display:flex">
+        {% for medicine in medicines %}
+        <div class="display">
+        <div class="card " style="width: 16rem;margin-left:10px;">
+          <img src="{{ medicine.Image.url }}" class="card-img-top" alt="data">
+          <div class="card-body">
+            <a href="{% url 'medicine_view' id=medicine.id %}"><h3 class="card-title">Name: {{ medicine.name }}</h3></a>
+            <!-- <p class="card-text">Description: {{ medicine.description }}</p> -->
+            <p class="card-text">Price: {{ medicine.price }}</p>
+            <p class="card-text">Quantity: {{ medicine.quantity }}</p>
+            <p class="card-text">Category: {{ medicine.category_name }}</p>
+            <div>
+            <a  href="{% url 'add_to_cart' id=medicine.id %}"><button type="submit">Add to Cart</button></a>
+            <a  href="{% url 'add_to_wishlist' id=medicine.id %}"><button type="submit">wishlist</button></a>
+          </div>
+          </div>
+        </div>
+        </div>
+        {% endfor %}
+        </div>    
+        <    
+</body>
+</html>

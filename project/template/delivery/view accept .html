@@ -1,0 +1,131 @@
+{% extends 'delivery/delivery_home.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h2>Order Details</h2>
+        <div class="order-card">
+            <h5>Order ID: {{ order.id }}</h5>
+            <p>Customer Name: {{ order.customer.name }}</p>
+            <p>Delivery Address: {{ order.customer.address }}</p>
+            <p>Order Date: {{ order.order_date }}</p>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Medicine</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.medicine.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+           
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background-color: #98c2ef;
+            color: white;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        th {
+            font-size: 1.2em;
+        }
+        
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background-color: #98c2ef;
+        }
+        
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Button Styles */
+        button {
+            padding: 8px 16px;
+            background-color: #0e1a27;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0f0f0f;
+        }
+        
+        .remove-link {
+            background-color: #110b0b;
+        }
+        
+        .remove-link:hover {
+            background-color: #150606;
+        }
+        
+        /* Message Styles */
+        h1 {
+          color: #1e362a;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          text-align: center;
+          align-items: center;
+        
+        }
+        
+        p {
+          color: #1e362a;
+          font-size: large;
+          font-weight: bold;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          text-align: center;
+            color: #555;
+        }
+    </style>
+{% endblock %}
