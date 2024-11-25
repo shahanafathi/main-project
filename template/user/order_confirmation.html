@@ -1,17 +1,21 @@
-{% extends 'user/medicine_pharmacy.html' %}
+{% extends 'user/userhome.html' %}
 {% block content %}
 {% load static %}
     <div class="container">
+        <div>
+            <img src="{% static 'user\check.png' %}" alt="" srcset="" width="100px" height="100px">
+            <h1>Cure Nest</h1>
+        </div>
         <h1>Order Confirmed!</h1>
         <p>Your order has been successfully placed and is being processed.</p>
         <p>Thank you for shopping with us!</p>
-        <a href="{% url 'order_view' %}" class="button">order status</a>
+        <a href="{% url 'order_history' %}" class="button">order status</a>
     </div>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
+            margin: 0; 
             padding: 0;
         }
 

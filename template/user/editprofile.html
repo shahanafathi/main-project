@@ -1,156 +1,106 @@
-{% extends 'user/medicine_pharmacy.html' %}
+{% extends 'user/userhome.html' %}
 {% block content %}
-  <div class="profile-container">
-    <h2>Edit Profile</h2>
-    <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data"> 
-        {% csrf_token %}
-        <div class="profile-header">
-            <img src="" alt="Profile Image" class="profile-img">
-            <h2>{{ data.first_name }}'s Profile</h2>
-        </div>
-        <div class="profile-details">
-            <div class="profile-column">
-                <label for="name"><b>Name</b></label>
-                <input type="text" placeholder="Name" name="Name" value="{{datas.first_name}}">
-
-                <label for="Email"><b>Email</b></label>
-                <input type="email" placeholder="Email" name="Email" value="{{ datas.email }}">
-
-                <label for="Address"><b>Address</b></label>
-                <textarea id="Address" name="Address" rows="3">{{datas.address}}</textarea>
-
-                <label for="Age"><b>Age</b></label>
-                <input type="number" placeholder="Age" name='age' value="{{datas.age}}">
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>edit profile form - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    				                
+   
+.avatar{
+width:200px;
+height:200px;
+}				              
+    </style>
+</head>
+<body>
+<div class="container bootstrap snippets bootdey">
+    <!-- <h1 class="text-dark">Edit Profile</h1> -->
+      <hr>
+	<div class="row">
+      <!-- left column -->
+      
+      
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+       
+        <h3>Personal info</h3>
+        
+        <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="text-center">
+              <img src="{{datas.Image.url}}" class="avatar img-circle img-thumbnail" alt="avatar" >
+              <h6></h6>
+              
+              <input type="file" name="Image" class="form-control" style="width: fit-content;margin: auto;">
             </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="Name" type="text" value="{{datas.first_name}}">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Address:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="Address" type="text" value="{{datas.address}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+ 
+              <input class="form-control" name="Email" type="text" value="{{ datas.email }}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Phone number:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="Phonenumber" type="text" value="{{datas.phone_number}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Age:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="age" type="text" value="{{datas.age}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Username:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="UserName" type="text" value="{{datas.username}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Dob:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="DOB" type="text" value="{{ datas.dob|date:'Y-m-d' }}">
+            </div>
+          </div>
+          <div class="form-group">
             
-            <div class="profile-column">
-                <label for="UserName"><b>UserName</b></label>
-                <input type="text" placeholder="UserName" name="UserName" value="{{datas.username}}">
-
-                <label for="DOB"><b>DOB</b></label>
-                <input type="date" placeholder="DOB" name="DOB" value="{{datas.dob|date:'d-m-y'}}">
-
-                <label for="Phone number"><b>Phone number</b></label>
-                <input type="tel" placeholder="Phone number" name="Phonenumber" value="{{datas.phone_number}}">
+            <div class="col-lg-8">
+              <input class="form-control"  type="submit" style="width: fit-content;margin: auto;background-color: rgb(1, 1, 251);color: white;font-weight: bold;">
             </div>
-        </div>
-        <div class="edit-profile">
-            <button type="submit" class="edit-btn">Update</button>
-        </div>
-    </form>
+          </div>
+          
+        </form>
+      </div>
+  </div>
 </div>
-<style>
-  .profile-container {
-    background-color: #1e3d73;
-    color: white;
-    width: 600px;
-    padding: 20px;
-    border-radius: 15px;
-    margin: 40px auto;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* Header Image and Name */
-.profile-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-}
-
-h2 {
-    font-size: 24px;
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-/* Profile Details */
-.profile-details {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 0;
-}
-
-.profile-column {
-    text-align: left;
-    width: 45%;
-    margin-right: 20px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    color: #d3e0f2;
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: none;
-    background-color: #3a507f;
-    color: white;
-    font-size: 14px;
-}
-
-input:focus, textarea:focus {
-    outline: none;
-    border: 2px solid #29a19c;
-    background-color: #3a507f;
-}
-
-/* Edit Button */
-.edit-profile {
-    margin-top: 20px;
-    text-align: end;
-}
-
-.edit-btn {
-    background-color: #29a19c;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.edit-btn:hover {
-    background-color: #1f827a;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .profile-container {
-        width: 90%;
-        padding: 20px;
-    }
-
-    .profile-details {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-column {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-}
-
-</style>  
+<hr>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
 {% endblock %}

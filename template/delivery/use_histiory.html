@@ -1,0 +1,40 @@
+{% extends 'delivery/delivery_home.html' %}
+{% block content %}
+{% load static %}
+    <div class="container mt-4">
+        <h2>Pharmacy Orders  history</h2>
+
+        {% if Orders %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl:no</th>
+                        <th>Customer</th>
+                        <th>
+                            place
+                        </th>
+                        <th>Total Amount</th>
+                        <th>Order Date</th>
+                        <th>deliverd</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Orders %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.user_id.username }}</td>
+                        <td>{{ i.user_id.address }}</td>
+
+                        <td>{{ i.user_id.total_amount }}</td>
+                        <td>{{ i.order_date }}</td>
+                        <td>{{ i.delivery_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No history found.</p>
+        {% endif %}
+    </div>
+{%  endblock %}

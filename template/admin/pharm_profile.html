@@ -1,0 +1,63 @@
+
+  {% extends 'admin/home.html' %}
+  {% load static %}
+  {% block content %}
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="author" content="CodeHim">
+      <title> Dashboard Profile Page Theme Color CSS Vanilla JS Example </title>
+      <!-- Style CSS -->
+      <link rel="stylesheet" href="{% static 'admin/user_view/css/style.css' %}">
+      <!-- Demo CSS (No need to include it into your project) -->
+   </head>
+   <body>
+    
+      <!--$%adsense%$-->
+      <main class="cd__main">
+         <!-- Start DEMO HTML (Use the following code into your project)-->
+         <div class="profile-page">
+  <div class="content">
+    <div class="content__cover">
+      <div class="content__avatar d-flex justify-content-center">
+        <img src="{{ data1.Image.url }}" alt="" style="border-radius: 50%;">
+      </div>
+      <div class="content__bull"><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="content__actions">
+      </div>
+    <div class="content__title pt-5">
+      <h1>{{ data1.first_name }}</h1><span>{{ data1.address }}</span>
+    </div>
+    <div class="content__description">
+      <p> Email- {{data1.email}}</p>
+      <p> phone Number - {{data1.phone_number}}</p>
+
+    </div>
+    <ul class="content__list">
+      <li>
+        <span>certificate</span>
+        <img src="{{ data1.certificate.url }}" alt="" >
+      </li>
+      
+     
+    </ul>
+    <div class="content__button">
+       
+  </div>
+  <div class="bg">
+    
+  </div>
+  
+ 
+</div>
+         <!-- END EDMO HTML (Happy Coding!)-->
+      </main>
+      
+      <!-- Script JS -->
+      <script src="{% static 'admin/user_view/js/script.js' %}"></script>
+      <!--$%analytics%$-->
+   </body>
+   {% endblock %}
+</html>

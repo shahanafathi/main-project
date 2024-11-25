@@ -1,158 +1,205 @@
-{% extends 'pharmacy/homep.html' %}
-{% block content %}
-{% load static %}
-<div class="profile-container">
-    <div class="profile-header">
-        <img src="{{profile.image.url}}" alt="Profile Image" class="profile-img">
-        <h2>{{ data.first_name }}</h2>
-    </div>
-  
-    <!-- <form method="POST" action=""> -->
-        {% csrf_token %}
-        <div class="profile-details">
-            <div class="profile-column">
-                <label for="first_name">Name</label>
-                <input type="text" id="first_name" name="first_name" value="{{ data.first_name }}" required>
-  
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ data.email }}" required>
-  
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" value="{{ data.address }}">
-  
-               
-            </div>
-  
-            <div class="profile-column">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="{{ data.username }}" readonly>
-               
-                <label for="phone_number">file</label>
-                <img src="" alt="Profile Image" class="profile-img">
-
-                <label for="phone_number">Phone Number</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ data.phone_number }}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+<div class="col-xl-6 col-md-12">
+        <div class="card user-card-full">
+            <div class="row m-l-0 m-r-0">
+                <div class="col-sm-4 bg-c-lite-green user-profile">
+                    <div class="card-block text-center text-white">
+                        <div class="m-b-25">
+                            <img src="{{data.Image.url}}" class="img-radius" alt="User-Profile-Image" height="100px" width="120px" style="border-radius: 50%;">
+                        </div>
+                        <h6 class="f-w-600">{{ data.first_name }}</h6>
+                        <p>{{ data.place }}</p>
+                        <a href="{% url 'edit_pharm' %}" class="text-white"> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="card-block">
+                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Email</p>
+                                <h6 class="text-muted f-w-400">{{ data.email }}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Place</p>
+                                <h6 class="text-muted f-w-400">{{ data.address }}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Phone</p>
+                                <h6 class="text-muted f-w-400">{{ data.phone_number }}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600"></p>
+                                <h6 class="text-muted f-w-400"></h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600"></p>
+                                <h6 class="text-muted f-w-400">{{ data. }}</h6>
+                            </div>
+                        </div>
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Username</p>
+                                <h6 class="text-muted f-w-400">{{ data.username }}</h6>
+                            </div>
+                            <div class="m-b-25">
+                                <img src="{{data.Image.url}}" class="img-radius" alt="User-Profile-Image" height="100px" width="120px" style="border-radius: 50%;">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
         </div>
-  
-        <div class="edit-profile">
-                 <a href="{% url 'edit_pharm' %}"><svg xmlns="http://www.w3.org/2000/svg" height="25" width="25"  viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#000000" d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z"/></svg></a>
-          </div>
-  
-  </div>
-  
-  <style>
-    /* General Container Styling */
-    .profile-container {
-        background-color: #1e3d73;
-        color: white;
-        width: 600px;
-        padding: 20px;
-        border-radius: 15px;
-        margin: 40px auto;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-  
-    /* Header Image and Name */
-    .profile-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-  
-    .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 15px;
-    }
-  
-    h2 {
-        font-size: 24px;
-        color: #fff;
-        margin-bottom: 10px;
-    }
-  
-    /* Profile Details */
-    .profile-details {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 0;
-    }
-  
-    .profile-column {
-        text-align: left;
-        width: 45%;
-        margin-right: 20px;
-    }
-  
-    label {
-        display: block;
-        font-weight: bold;
-        color: #d3e0f2;
-        margin-bottom: 5px;
-        font-size: 14px;
-    }
-  
-    input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: none;
-        background-color: #3a507f;
-        color: white;
-        font-size: 14px;
-    }
-  
-    input:focus {
-        outline: none;
-        border: 2px solid #29a19c;
-        background-color: #3a507f;
-    }
-  
-    /* Edit Button */
-    .edit-profile {
-        margin-top: 20px;
-        text-align:end;
-    }
-  
-    .edit-btn {
-        background-color: #29a19c;
-        border: none;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 25px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    }
-  
-    .edit-btn:hover {
-        background-color: #1f827a;
-    }
-  
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-        .profile-container {
-            width: 90%;
-            padding: 20px;
-        }
-  
-        .profile-details {
-            flex-direction: column;
-            align-items: center;
-        }
-  
-        .profile-column {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    }
-  </style>
-  {% endblock %}
+    </div>
+        </div>
+        
+        </div>
+    </div>
+
+
+<style>
+    body {
+    background-color: #f9f9fa
+}
+
+.padding {
+    padding: 3rem !important
+}
+
+.user-card-full {
+    overflow: hidden;
+}
+
+.card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+    border: none;
+    margin-bottom: 30px;
+}
+
+.m-r-0 {
+    margin-right: 0px;
+}
+
+.m-l-0 {
+    margin-left: 0px;
+}
+
+.user-card-full .user-profile {
+    border-radius: 5px 0 0 5px;
+}
+
+.bg-c-lite-green {
+        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+    background: linear-gradient(to right, #ee5a6f, #f29263);
+}
+
+.user-profile {
+    padding: 20px 0;
+}
+
+.card-block {
+    padding: 1.25rem;
+}
+
+.m-b-25 {
+    margin-bottom: 25px;
+}
+
+.img-radius {
+    border-radius: 5px;
+}
+
+
+ 
+h6 {
+    font-size: 14px;
+}
+
+.card .card-block p {
+    line-height: 25px;
+}
+
+@media only screen and (min-width: 1400px){
+p {
+    font-size: 14px;
+}
+}
+
+.card-block {
+    padding: 1.25rem;
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.card .card-block p {
+    line-height: 25px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.text-muted {
+    color: #919aa3 !important;
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.f-w-600 {
+    font-weight: 600;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.user-card-full .social-link li {
+    display: inline-block;
+}
+
+.user-card-full .social-link li a {
+    font-size: 20px;
+    margin: 0 10px 0 0;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+</style>

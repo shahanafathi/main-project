@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="profile-container">
+    <h1 class="profile-header">Medicine Profile</h1> 
+    <div class="profile-image">
+        <img src="{{medicine.Image.url}}" alt="Medicine Image">
+    </div>
+    <div class="profile-section">
+        <label for="name"><b>Name</b></label>
+        <p>{{ medicine.name }}</p>
+    </div>
+
+    <div class="profile-section">
+        <label for="price"><b>Price</b></label>
+        <p>{{ medicine.price }}</p>
+    </div>
+
+    <div class="profile-section">
+        <label for="description"><b>Description</b></label>
+        <p>{{ medicine.description }}</p>
+    </div>
+
+    <div class="profile-section">
+        <label for="manufacturer"><b>Manufacturer</b></label>
+        <p>{{ medicine.manufacturer }}</p>
+    </div>
+
+    <div class="profile-section">
+        <label for="quantity"><b>Quantity</b></label>
+        <p>{{ medicines.quantity }}</p>
+    </div>
+
+ 
+   
+</div>
+<style>
+   
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    width: 60%;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    overflow: hidden;
+}
+
+.profile-header {
+    text-align: center;
+    font-size: 2rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.profile-section {
+    margin-bottom: 20px;
+}
+
+.profile-section label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.profile-section p {
+    font-size: 1rem;
+    color: #333;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.profile-image {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+    .profile-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .profile-header {
+        font-size: 1.5rem;
+    }
+
+    .profile-section label, .profile-section p {
+        font-size: 1rem;
+    }
+}
+
+</style>
+
+
+</body>
+</html>

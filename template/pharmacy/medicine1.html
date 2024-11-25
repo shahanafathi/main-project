@@ -1,0 +1,127 @@
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
+
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="{% static 'pharmacy/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'pharmacy/css/style.css' %}">
+	
+		<div class="wrapper">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="{% static 'pharmacy/images/—Pngtree—drug capsule pill from prescription_15366552.png' %}" alt="" height="600">
+				</div>
+				<form action="{% url 'add_medicine' %}" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3>ADD medicine</h3>
+					<div class="form-group">
+						<input type="text" name="medicineName" placeholder="medicineName" class="form-control">
+						<input type="number"  name="strength" placeholder="Strength" class="form-control" >
+					
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description" placeholder="Description" cols="44" rows="4" class="form-control" required></textarea>
+						
+					</div>
+					<div class="form-group">
+						<input type="number" id="pricePerUnit" name="Price" class="form-control" pattern="^[0-9]{10}\.[0-9]{2}$"  placeholder="Price"required>
+						<input type="number" id="pricePerUnit" name="Price per Unit" class="form-control" pattern="^[0-9]+/perunit$" placeholder="PricePerUnit" required>
+					</div>
+					
+					<div class="form-wrapper">
+						<select name="category" id="Category" placeholder="Category" class="form-control">
+							{% for i in datas %}
+							<option value="{{ i.id }}">{{ i.category_name }}</option>
+						{% endfor %}
+
+						</select>
+						<i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+					</div>
+					<div class="form-wrapper">
+						<label for="Expiry Date">Expiry Date</label>
+						<input type="date" id="expiryDate" name="expiryDate" placeholder="Expiry Date" class="form-control" required>
+
+					</div>
+					<div class="form-wrapper">
+						<input type="text" id="manufacturer" name="manufacturer"  placeholder="Manufacturer" class="form-control" value="{{var1.first_name}}" readonly
+						required>
+					</div>
+					<div class="form-wrapper">
+						<input type="number" id="quantityInStock" name="quantity"class="form-control"  placeholder="Quantity" required>
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+						<label  for="Image"><b>Image</b></label><br>
+                        <input type="file" name="Image" accept="" required onchange="validateImageSize()">
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+                        <label for="Image"><b>Image1</b></label><br>
+                        <input type="file" name="Image1" accept="" required onchange="validateImageSize()">
+					</div>
+					<div class="form-group">
+						<label for="Image" ><b>Image2</b></label><br>
+                        <input type="file" name="Image2" accept="" required onchange="validateImageSize()">
+
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+						<label for="Image"><b>Image3</b></label>
+                        <input type="file" name="Image3" accept="" required onchange="validateImageSize()">
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description1" placeholder="Description1" cols="44" rows="4"  class="form-control" required></textarea>
+						
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description2" placeholder="Description2" cols="44" rows="4"  class="form-control" required></textarea>
+						
+					</div>
+					<button type="submit">Add Medicine</button>
+				</form>
+			</div>
+		</div>
+		<!-- <style>
+			body{
+				background-image: url("{% static 'pharmacy/images/—Pngtree—drug capsule pill from prescription_15366552.png' %}");
+
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size:contain;
+			
+			}
+		</style> -->
+		<style>
+			label{
+				display: block;
+				margin-right: 10px;
+			}
+			input[type="file"] {
+			 margin-right: 5px;
+			
+			}
+
+		</style>
+		<script>
+			// Get the current year
+			const currentYear = new Date().getFullYear();
+			
+			// Set the minimum date to January 1 of the current year
+			document.getElementById("expiryDate").min = `${currentYear}-01-01`;
+		  
+
+			//for photo 
+			function validateImageSize() {
+                const imageInput = document.getElementById("image");
+                const file = imageInput.files[0];
+                
+                // Maximum file size in bytes (e.g., 2MB = 2 * 1024 * 1024)
+                const maxSize = 2 * 1024 * 1024;
+        
+                if (file && file.size > maxSize) {
+                    alert("Profile image must be smaller than 2 MB.");
+                    imageInput.value = ""; // Clear the selected file
+                }
+            }
+		  </script>
+		
+		{% endblock %}

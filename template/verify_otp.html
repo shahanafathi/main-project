@@ -1,0 +1,77 @@
+{% extends "home1.html" %}   
+  {% load static %}
+    {% block content %}
+
+<form action="{% url 'verify_otp' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="otpold" value="{{ otp }}" hidden>
+    <input type="text" name="email" value="{{ email }}" hidden>
+    <label for="otp">Enter OTP:</label>
+    <input type="text" name="otp" required>
+    <button type="submit">Verify OTP</button>
+</form>
+<style>
+    /* Centering the form container */
+form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide the CSRF token input */
+input[name="csrfmiddlewaretoken"] {
+    display: none;
+}
+
+/* Style for the email field */
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+/* Label styling */
+form label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Focus state for input fields */
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #000000;
+    outline: none;
+}
+
+/* Style for the submit button */
+form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #000000;
+}
+
+</style>
+{% endblock %}

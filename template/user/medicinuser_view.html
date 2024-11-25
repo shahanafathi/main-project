@@ -1,9 +1,9 @@
 {% extends 'user/medicine_pharmacy.html' %}
 {% block content %}
 <div class="profile-container">
-    <h1 class="profile-header">Medicine Profile</h1> 
+    <h1 class="profile-header">{{medicine.name}}</h1> 
     <div class="profile-image">
-        <img src="{{medicines.Image.url}}" alt="Medicine Image">
+        <img src="{{medicine.Image.url}}" alt="Medicine Image">
     </div>
     <div class="profile-section">
         <label for="name"><b>Name</b></label>
@@ -27,7 +27,7 @@
 
     <div class="profile-section">
         <label for="quantity"><b>Quantity</b></label>
-        <p>{{ medicines.quantity }}</p>
+        <p>{{ medicine.quantity }}</p>
     </div>
 
     <div class="profile-section">
@@ -35,14 +35,14 @@
         <p>{{ medicine.expiry_date }}</p>
     </div>
 
-    <div class="profile-section">
+    <!-- <div class="profile-section">
         <label for="status"><b>Status</b></label>
         <p>{{ medicine.status }}</p>
-    </div>
+    </div> -->
 
     <div class="profile-section">
         <label for="strength"><b>Strength</b></label>
-        <p>{{ medicines.strength }}</p>
+        <p>{{ medicine.strength }}</p>
     </div>
 
    

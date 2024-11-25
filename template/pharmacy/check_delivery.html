@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Deliveries</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deliveries for Pharmacy</h1>
+
+    <!-- Check if there are any deliveries -->
+    {% if delivery %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Delivery ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through the delivery queryset -->
+                {% for i in delivery %}
+                <tr>
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.username }}</td>
+                    <td>{{ i.email }}</td>
+                    <td>{{ i.phone_number }}</td> <!-- Adjust if phone_number exists in your CustomeUser model -->
+                    <td>{{ i.delivery_status }}</td> <!-- Assuming you have delivery_status in your CustomeUser model -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No deliveries found for this pharmacy.</p>
+    {% endif %}
+
+    <a href="{% url 'pharmacy_vieworder' %}">Back to Dashboard</a> <!-- Adjust as per your navigation -->
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% extends 'company/company.html' %}
+{% block content %}
+{% load static %}
+<h1>Order History</h1>
+
+ 
+    <table>
+        <thead>
+            <tr>
+                <th>Slno:</th>
+                <th>Company Name</th>
+                <th>Pharmacy Name</th>
+                <th>Medicine Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in cmpny_histry %}
+
+            <tr>
+                <td>{{ forloop.counter}}</td>
+                <td> {{i.company_id.name}}</td>
+                <td>{{ i.pharmancy_id.first_name }}</td>
+                <td>{{ i.order_id.medicine_id.name }}</td>
+                <td>{{ i.order_id.quantity }}</td>
+                <td>{{ i.order_id.total_amount }}</td>
+                <td>{{ i.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+           
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4a4a4;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .no-orders {
+            text-align: center;
+            margin: 20px;
+            font-size: 1.2em;
+            color: #777;
+        }
+    </style>
+    {% endblock %}

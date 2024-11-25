@@ -1,3 +1,6 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,183 +8,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            max-width: 800px;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        h3 {
-            color: #555;
-            margin-bottom: 15px;
-        }
-        
-        
-        .order-history-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        .order-history-table th, .order-history-table td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        
-        .order-history-table th {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        
-        .order-history-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-       
-        .btn-small {
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .btn-small:hover {
-            background-color: #0056b3;
-        }
-        
-        
-        .confirmed-orders {
-            border-left: 5px solid #28a745;
-            margin-bottom: 20px;
-        }
-        
-        .confirmed-orders .order-history-table th {
-            background-color: #e6f7e6;
-            color: #155724;
-        }
-        
-        .confirmed-orders .order-history-table tr:nth-child(even) {
-            background-color: #f0fdf0;
-        }
-        
-       
-        .pending-orders {
-            border-left: 5px solid #ffc107;
-            margin-bottom: 20px;
-        }
-        
-        .pending-orders .order-history-table th {
-            background-color: #fff8e1;
-            color: #856404;
-        }
-        
-        .pending-orders .order-history-table tr:nth-child(even) {
-            background-color: #fffbea;
-        }
-        
-        
-        .empty-message {
-            color: #777;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        
-       
-        .btn-primary {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #218838;
-        }
+     
     </style>
 </head>
 <body>
-    {% if confirmed_orders %}
-    <h3>Confirmed Orders</h3>
-    <table class="order-history-table">
-        <thead>
-            <tr>
-                <th>Order Number</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Total Amount</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in confirmed_orders %}
-                <tr>
-                    <td>{{ order.order_number }}</td>
-                    <td>{{ order.order_date|date:"F j, Y" }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>₹{{ order.total_amount }}</td>
-                    <td><a href="{% url 'order_detail' order.id %}" class="btn btn-small">View Details</a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>You have no confirmed orders.</p>
-{% endif %}
+       <h3>Confirmed Orders</h3>
+       <div class="row">
+        <div class="col-3-md">
+            <form action="{% url 'filteration' %}" method="post">
+                {% for i in category %}
+                {% csrf_token %}
+                <input type="checkbox" name="categories" value="{{ i.category_name }}" id="category_{{ forloop.counter }}">
+                <label for="category_{{ forloop.counter }}">{{ i.category_name }}</label><br>
+                {% endfor %}
+                <input type="submit">
+            </form>
+        </div>
+        <div class="col-9-md">
+       <table class="order-history-table">
+         
+           <tbody>
+               {% for order in order_items %}
+                   <tr>
+                       
+                       <td><img src="{{order.medicine_id.Image.url}}" width="90" height="110" alt="" srcset=""></td>
+                       <td>{{ order.medicine_id.name }}</td>
+                       <td>{{ order.order_date|date:"F j, Y" }}</td>
+                       <td>{{ order.medicine_id.pharmacy_id.first_name }}</td>
+                       <td>₹{{ order.total_amount }}</td>
+                       <td><div style="display: flex;justify-content: end ; margin-top:20px">
+                        <a href="{% url 'remove_orderview' id=order.id %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 448 512">
+                                <path fill="#f10404" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                            </svg>
+                        </a>
+                    </div></td>
+                    <td></td>
+                   </tr>
+                   </tbody>
+      
+               {% endfor %}
+            </table>
+        </div>
+            </div>
+        
+              <div class="pagination mt-3 d-flex justify-content-center mb-4">
+                <ul class="pagination">
+                    {% if order_items.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ order_items.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">&laquo;</span>
+                        </li>
+                    {% endif %}
+            
+                    {% for num in order_items.paginator.page_range %}
+                        {% if order_items.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > order_items.number|add:"-3" and num < order_items.number|add:"3" %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+            
+                    {% if order_items.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ order_items.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">&raquo;</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+       
+        margin: 0;
+        padding: 0;
+    }
+    
+   
+    
+    /* Table Styles */
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        border-width:3px #060707;
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    thead {
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+    }
+    
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+    
+    th {
+        font-size: 1.2em;
+    }
+    
+    tr {
+        height: 50px;
+        margin-bottom: 20px;
+        border: 1px solid rgb(234, 232, 232);
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 5px;
+    }
+    a{
+        text-decoration: none;
+    }
+    
+    
+    
+    .remove-link {
+        background-color: #110b0b;
+    }
+    
+    .remove-link:hover {
+        background-color: #150606;
+    }
+    
+    /* Message Styles */
+    
+    .pagination .page-link {
+        border-radius: 50%;
+        color: #000000;
+        margin-left:5px;
+        font-weight: bold;
+    }
+    
+    .pagination .page-link:hover {
+        background-color: #f0f0f0;
+        margin-left:5px;
+    }
+    
+    .pagination .active .page-link {
+        background-color: #000000;
+        color: white;
+        border-radius: 50%;
+        border: none;
+        margin-left:5px;
+        margin-right: 5px;
 
-{% if pending_orders %}
-    <h3>Pending Orders</h3>
-    <table class="order-history-table">
-        <thead>
-            <tr>
-                <th>Order Number</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in pending_orders %}
-                <tr>
-                    <td>{{ order.order_number }}</td>
-                    <td>{{ order.order_date|date:"F j, Y" }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>₹{{ order.total_amount }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>You have no pending orders.</p>
-{% endif %}
+    }
+    
+    .pagination .disabled .page-link {
+        color: #ccc;
+        margin-left:5px;
+    }
+    
+</style>
 
 </body>
 </html>
+{% endblock %}

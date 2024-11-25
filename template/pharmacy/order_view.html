@@ -1,0 +1,96 @@
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .cart {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        h4 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #070e29;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        button:hover {
+            background-color: #0e1920;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="cart">
+            <table>
+                <tr>
+                    <th>NAME</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                </tr>
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ quantity }}</td>
+                    <td>{{ product.price }}</td>
+                </tr>
+            </table>
+            <h4>Total Price: {{ var }}</h4>
+            <button type="submit">
+                <a href="{% url 'pharmacy_pharmacy' id=product.id price=var q=quantity %}">Payment</a>
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}

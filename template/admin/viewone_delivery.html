@@ -1,0 +1,53 @@
+
+{% extends 'admin/home.html' %}
+{% block content %}
+{% load static %}
+    
+    <div>
+      <!--$%adsense%$-->
+      <main class="cd__main">
+         <!-- Start DEMO HTML (Use the following code into your project)-->
+         <div class="profile-page">
+  <div class="content">
+    <div >
+      <div class="" style="display: flex;">
+        <img src="{{ delivarys1.image.url }}" alt="" style="border-radius: 50%;">
+      </div>
+      <div class="content__bull"><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+   
+    <div class="content__title">
+      <h1>{{ delivarys1.name }}</h1><span>{{ delivarys1.address }}</span>
+    </div>
+    <div class="content__description">
+      <p>PhoneNumber - {{delivarys1.phonenumber}}</p>
+      <p>Email - {{delivarys1.email}}</p>
+    </div>
+    <ul class="content__list">
+        
+      <li><span style="font-size: 20px;">DOB</span>{{ delivarys1.dob }}</li>
+      <li><span style="font-size: 20px;">AGE</span>{{ delivarys1.age}}</li>
+    </ul>
+    
+  <div class="bg">
+   
+  </div>
+ 
+  
+</div>
+         <!-- END EDMO HTML (Happy Coding!)-->
+      </main>
+    
+      <!-- Script JS -->
+      <script src="{% static 'admin/user_view/js/script.js' %}"></script>
+      <!--$%analytics%$-->
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="{% static 'admin/user_view/css/style.css' %}">
+        <!-- Demo CSS (No need to include it into your project) -->
+        <link rel="stylesheet" href="{% static 'admin/user_view/css/demo.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+      </div>
+      
+
+      {% endblock %} 

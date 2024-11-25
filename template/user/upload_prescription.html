@@ -1,4 +1,4 @@
-{% extends 'user/userhome.html' %}
+{% extends 'user/medicine_pharmacy.html' %}
 {% block content %}
     <div class="container">
         <form method="POST" action="{% url 'upload_prescription' id=pharmacy.id  %}" enctype="multipart/form-data">

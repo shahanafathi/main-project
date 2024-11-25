@@ -1,0 +1,143 @@
+{% extends 'company/company_home.html' %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <h1>Add New Medicine</h1>
+        <form action="{% url 'edit_Product' id=datas.id %}" method="post">
+            {% csrf_token %}
+            <label for="product_name">Medicine Name</label>
+            <input type="text" id="product_name" name="product_name" value="{{datas.name}}" required>
+            
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" maxlength="50"  required>{{datas.description}}</textarea>
+            
+           
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity"value="{{datas.quantity}}" required>
+            
+            <label for="pricePerUnit">Price</label>
+            <input type="number" id="pricePerUnit" name="price" value="{{datas.price}}" required>
+            
+          
+            <label for="Image">Image</label><br>
+            <input type="file" name="Image"  value="{{datas.Image}}">
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-image: url("{% static 'company/from-different-pills.jpg' %}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size:cover;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 40px auto;
+            background: #ffffff3e;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        /* Form Title */
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            border-color: transparent;
+            border-bottom-color: #090a0a;
+            font-size: 16px;
+            background-color: #fff9f96b;
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        input[type="file"] {
+            padding: 5px;
+        }
+        
+        /* Button Styles */
+        button[type="submit"] {
+            padding: 12px 20px;
+            background-color: #090a0a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0a0b0c;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+        
+            h1 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px;
+            }
+        
+            button[type="submit"] {
+                width: 100%;
+            }
+        }
+        
+    </style>
+    {% endblock %}

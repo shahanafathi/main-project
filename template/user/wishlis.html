@@ -1,0 +1,49 @@
+{% block content %}
+<div class="product-list">
+    {% for product in products %}
+    <div class="product-item">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <!-- Heart icon for wishlist -->
+        <span class="wishlist-icon" data-product-id="{{ product.id }}">
+            <i class="fa fa-heart{% if product in wishlist_items %} active{% endif %}"></i>
+        </span>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".wishlist-icon").click(function(){
+            var icon = $(this).find("i");
+            var productId = $(this).data("product-id");
+            
+            $.ajax({
+                url: "{% url 'toggle_wishlist' %}",  // URL for the wishlist view
+                type: "POST",
+                data: {
+                    'product_id': productId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === "added") {
+                        icon.addClass("active");
+                    } else if (response.status === "removed") {
+                        icon.removeClass("active");
+                    }
+                }
+            });
+        });
+    });
+</script>
+<style>
+    .fa-heart {
+        color: grey;
+        cursor: pointer;
+    }
+    .fa-heart.active {
+        color: red;
+    }
+</style>
+{% endblock %}

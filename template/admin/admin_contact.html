@@ -1,0 +1,54 @@
+{% extends 'admin/home.html' %}
+{% block content %}
+{% load static %}
+   
+   <div class="container">
+    <table>
+        {% for i in data %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.name }}</td> 
+            <td>{{ i.email}}</td><br>
+            <td>{{ i.message}}</td>
+        
+        </tr>
+        {% endfor %}
+     
+
+</table>
+
+
+   </div>
+   <style>
+   .container{
+    border-top: 2px;
+    border-bottom: 2px;
+    border-color:black;
+    background-color: rgb(255, 255, 255);
+    }
+    table {
+            margin-top:20px;
+            width: 80%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            height: 110px;
+            box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;   
+            color: #000;
+            font-weight: bolder;
+    }
+    tr {
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    table tr:hover {
+        background-color: #e2e6ea;
+    }
+    
+    
+    td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+    </style>
+    {% endblock %}

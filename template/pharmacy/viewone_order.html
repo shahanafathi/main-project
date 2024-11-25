@@ -1,70 +1,106 @@
-<!-- order_details.html -->
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        .order-info {
-            margin: 20px 0;
-        }
-        .medicine-list {
-            margin-top: 30px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Order Details</h1> -->
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
 
-    <!-- Order Information -->
-    <!-- <div class="order-info">
-        <h2>Order ID: {{ order.id }}</h2>
-        <p><strong>Order Date:</strong> {{ order.order_date }}</p>
-        <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
-        <p><strong>Status:</strong> {{ order.status }}</p>
-    </div> -->
+<h1>Order Details</h1>
 
-    <!-- Medicine List -->
-    <!-- <div class="medicine-list">
-        <h2>Medicines in this Order</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Medicine Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for med in data1 %}
-                <tr>
-                    <td>{{ med.name }}</td>
-                    <td>{{ med.quantity }}</td>
-                    <td>${{ med.price }}</td>
-                    <td>${{ med.quantity|multiply:med.price }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+    <div class="card d-flex">
+        <div class="card-image">
+            <img src="{{ data.medicine_id.Image.url }}" alt="Medicine Image">
+        </div>
+        <div class="card-content">
+            <h2></h2>
+            <h3>{{ data.dataicine_id.name }}</h3>
+            <p>{{ data.quantity }}</p>
+            <p>&#8377 {{ data.medicine_id.price }}</p>
+            <p>Total Amount: &#8377  {{ data.total_amount }}</p>
+            {% if data.user_id.delivery_address %}
+            <p>{{ data.user_id.delivery_address }}</p>
+            {% else %}
+            <p>{{ data.user_id.address }}</p>
+            {% endif %}
+        </div>
     </div>
+  
+</div>
 
-</body>
-</html> -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin: 20px 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        width:250px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 1.2em;
+        color: #555;
+        margin: 10px 0;
+    }
+
+    .card h3 {
+        font-size: 1.1em;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .card p {
+        font-size: 0.95em;
+        color: #777;
+        margin: 5px 0;
+    }
+
+    button[type="submit"] {
+        padding: 10px 16px;
+        background-color: #060707;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+
+    button:hover {
+        background-color: #0f0f0f;
+    }
+</style>
+
+{% endblock %}

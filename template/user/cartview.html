@@ -1,43 +1,163 @@
-{% extends 'user/medicine_pharmacy.html' %}
+{% extends 'user/userhome.html' %}
 {% block content %}
 {% load static %}
-<h1>My Cart</h1>
-    {% if cart_items %}
-    <!-- Start of the form to update quantity and place an order -->
-    <form action="{% url 'order_item' %}" method="post">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+       
+        margin: 0;
+        padding: 0;
+    }
+    
+    
+    /* Table Styles */
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        border-width:3px #060707;
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    thead {
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+    }
+    
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+    
+    th {
+        font-size: 1.2em;
+    }
+    
+    tr {
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    a{
+        text-decoration: none;
+    }
+    
+    
+    input[type="number"] {
+        width: 50px;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    button[type="submit"] {
+        padding: 8px 16px;
+        background-color: #060707;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        width: 150px;
+        height: 50px;
+        cursor: pointer;
+        display: block; 
+        margin-left: auto; 
+        margin-right: 25px; 
+        margin-top: 20px;
+        text-decoration: none;
+    }
+    
+    /* Button Styles */
+    button {
+        padding: 8px 16px;
+        background-color: #0e1a27;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    
+    button:hover {
+        background-color: #0f0f0f;
+    }
+    
+    .remove-link {
+        background-color: #110b0b;
+    }
+    
+    .remove-link:hover {
+        background-color: #150606;
+    }
+    
+    /* Message Styles */
+    h2 {
+      color: #1e362a;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      
+     
+     
+      
+    }
+    
+    p {
+      color: #1e362a;
+      font-size: large;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+        color: #555;
+    }
+    
+    .divmain{
+    
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width:300px;
+        padding: 40px;
+        margin-right:105px;
+        margin-bottom: 20px;
+
+    }
+    
+</style>
+<h1>Cart</h1>
+    
+{% if cart_items %}
+    <form class=" form ml-5" action="{% url 'order_item' %}" method="post">
         {% csrf_token %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
-                <tr>
-                    <td>{{ item.medicine_id.name }}</td>
-                    <td>
-                        <!-- Quantity input, with the item's ID as part of the name to identify it in the backend -->
-                        <input type="number" name="quantity_{{ item.id }}" min="1" max="{{ item.medicine_id.quantity }}" value="{{ item.quantity }}">
-                    </td>
-                    <td>{{ item.medicine_id.price }}</td>
-                    <td>
-                        <!-- Remove button -->
+        <div style="display:flex;flex-wrap: wrap;">
+            {% for item in cart_items %}
+            <div class="divmain ">
+                <div>
+                    <img src="{{item.medicine_id.Image.url}}" alt="" style="width: 100%; height:100%">
+                </div>
+                <div style="padding: 20px;">
+                    <h1 style="text-align:center;margin-right:0px;overflow: hidden;-webkit-box-orient: vertical;display: -webkit-box;-webkit-line-clamp: 1;">{{ item.medicine_id.name }}</h1>
+                    <h3 style="text-align:center">&#8377 {{ item.medicine_id.price }}</h3>
+                    <div>
+                        <input class="w-100" type="number" placeholder="qty" name="quantity_{{ item.id }}" min="1" max="{{ item.medicine_id.quantity }}" value="{{ item.quantity }}">
+                    </div>
+                    <div style="display: flex;justify-content: end ; margin-top:20px">
                         <a href="{% url 'remove_cart' id=item.id %}">
-                            <button type="button">Remove</button>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 448 512">
+                                <path fill="#f10404" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                            </svg>
                         </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
         <br>
-        <!-- Submit button for placing the order -->
-        <button type="submit" class="remove-link">Place Order</button>
+        <button type="submit" class="btnn">Place Order</button>
+       
     </form>
+    <hr>
+
+
 {% else %}
     <p>Your cart is empty.</p>
 {% endif %}
@@ -45,103 +165,29 @@
 <div>
     <p>{{ message }}</p>
 </div>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-}
+<div class="container" >
+ <h1>Wishlist</h1>
+    {% if wishlists %}
+    <table>
+        <tbody>
+            {% for i in wishlists %}
+                <tr>
+                    <td>
+                        <img src="{{i.medicine_id.Image.url}}" alt="" style="width:112px; ">
+                    </td>
+                    <td> {{ i.medicine_id.name }}</td>
+                    <td>{{ i.medicine_id.quantity }}</td> 
+                    <td>&#8377 {{ i.medicine_id.price }}</td> 
+                    <td style="display: flex;justify-content:end;margin-top:10px;">
+                        <a  href="{% url 'wishlist_to_cart' id=i.medicine_id.id %}"><button type="submit" class="btn btn-primary">Add to Cart</button></a>
 
-h1 {
-    text-align: center;
-    color: #333;
-    margin: 20px 0;
-}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-/* Table Styles */
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-thead {
-    background-color: #98c2ef;
-    color: white;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: center;
-}
-
-th {
-    font-size: 1.2em;
-}
-
-tr {
-    border-bottom: 1px solid #ddd;
-}
-
-tr:hover {
-    background-color: #98c2ef;
-}
-
-input[type="number"] {
-    width: 50px;
-    padding: 5px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-/* Button Styles */
-button {
-    padding: 8px 16px;
-    background-color: #0e1a27;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0f0f0f;
-}
-
-.remove-link {
-    background-color: #110b0b;
-}
-
-.remove-link:hover {
-    background-color: #150606;
-}
-
-/* Message Styles */
-h1 {
-  color: #1e362a;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-  align-items: center;
-
-}
-
-p {
-  color: #1e362a;
-  font-size: large;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-    color: #555;
-}
-
-</style>
+{% endif %}
+</div>
 
 {% endblock %}

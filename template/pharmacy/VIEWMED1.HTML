@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Product Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include the CSS -->
+</head>
+<body>
+    <header>
+        
+        <div class="navbar">
+            <img src="{% static 'pharmacy/logo.png' %}" alt="Pharmacy Logo" class="logo">
+            <div class="navbar-right">
+                <input type="text" class="search-bar" placeholder="Search for Medicine and Healthcare...">
+                <button class="search-btn">Search</button>
+                <a href="#" class="login-link">Hello, Log in</a>
+                <a href="#" class="offers-link">Offers</a>
+                <a href="#"class="cart-link">Cart</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="product-container">
+        <div class="product-image-section">
+            <img src="{{ medicines.Image.url }}" alt="Medicine Image" class="product-image">
+            <div class="thumbnail-gallery">
+                <!-- Add thumbnails below the main image -->
+                <img src="{{ medicines.Image.url }}" alt="Thumbnail 1" class="thumbnail">
+                <img src="{{ medicines.Image.url }}" alt="Thumbnail 2" class="thumbnail">
+                <img src="{{ medicines.Image.url }}" alt="Thumbnail 3" class="thumbnail">
+            </div>
+        </div>
+
+        <div class="product-details-section">
+            <h1 class="product-title">{{ medicines.name }} - Helps Maintains Healthy Sugar Levels</h1>
+            <p class="store-link"><a href="#">Visit EVERHERB Store</a></p>
+            <p class="rating">⭐⭐⭐⭐ <span class="ratings-count">(1734 ratings)</span></p>
+
+            <div class="price-section">
+                <span class="price">₹{{ medicines.price }}</span>
+                <span class="mrp">MRP ₹399</span>
+                <span class="discount">46% OFF</span>
+            </div>
+
+            <p class="delivery-info">Delivery by Today, 6:00 pm - 10:00 pm</p>
+
+            <div class="variant-section">
+                <p class="variant-title">Select Available Variant</p>
+                <div class="variant-options">
+                    <button class="variant-btn">Aloe Vera</button>
+                    <button class="variant-btn">Amla</button>
+                    <button class="variant-btn active">Karela Jamun</button>
+                    <button class="variant-btn">Mixed Herbs</button>
+                    <button class="variant-btn">Tulsi Giloy</button>
+                </div>
+            </div>
+
+            <button class="add-to-cart-btn">Add to Cart</button>
+            <button class="view-cart-btn">View Cart</button>
+
+            <div class="offers-section">
+                <h4>Offers Just for you</h4>
+                <ul>
+                    <li>Get extra 10% Off on Everherb, Liveasy or PharmEasy products</li>
+                    <li>Get up to ₹250 cashback using CRED pay UPI</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+  /* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    height: 40px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-link, .offers-link, .cart-link {
+    margin-left: 20px;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.login-link:hover, .offers-link:hover, .cart-link:hover {
+    text-decoration: underline;
+}
+
+/* Product Page Styling */
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background-color: white;
+}
+
+.product-image-section {
+    flex: 0.4;
+}
+
+.product-image {
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.thumbnail-gallery {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.product-details-section {
+    flex: 0.6;
+    padding-left: 40px;
+}
+
+.product-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.store-link a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+.rating {
+    font-size: 18px;
+    color: #f39c12;
+}
+
+.price-section {
+    font-size: 24px;
+    color: #e74c3c;
+    margin: 10px 0;
+}
+
+.mrp {
+    text-decoration: line-through;
+    margin-left: 20px;
+    color: #7f8c8d;
+}
+
+.discount {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+.delivery-info {
+    color: #2ecc71;
+    margin: 20px 0;
+}
+
+.variant-section {
+    margin: 20px 0;
+}
+
+.variant-title {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.variant-options {
+    display: flex;
+    gap: 10px;
+}
+
+.variant-btn {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.variant-btn.active {
+    background-color: #3498db;
+    color: white;
+    border: none;
+}
+
+.add-to-cart-btn, .view-cart-btn {
+    width: 150px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-cart-btn {
+    background-color: #95a5a6;
+}
+
+.offers-section {
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.offers-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.offers-section ul li {
+    padding: 5px 0;
+}
+ 
+</style>
+</html>

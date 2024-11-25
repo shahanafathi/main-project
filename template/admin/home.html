@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    {% csrf_token%}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Focus - Bootstrap Admin Dashboard </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'admin/images/favicon.png' %}">
+    <link href="{% static 'admin/vendor/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/vendor/chartist/css/chartist.min.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="index.html" class="brand-logo">
+                <img class="logo-abbr" src="{% static 'img/pngtree.png' %}" alt="">
+                <h3 class="nm text-white">CureNest</h3>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+       
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first">Main Menu</li>
+                    <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    </li> -->
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    </li>
+
+                    <li class="nav-label">Modules</li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-app-store"></i><span class="nav-text">Users</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'admin_custumer' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                            class="nav-text">List</span></a></li>
+                            <li><a href="{% url 'admin_view_custmer' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                            class="nav-text">Action</span></a></li>
+                            
+                        </ul>
+
+                    </li>
+                    
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-app-store"></i><span class="nav-text">Pharmacy</span></a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'admin_pharmacy' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                        class="nav-text">List</span></a></li>
+                        <li><a href="{% url 'admin_view_pharmacy' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                        class="nav-text">Action</span></a></li> 
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                class="icon icon-app-store"></i><span class="nav-text">Delivery</span></a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'admin_delivery' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                        class="nav-text">List</span></a></li>
+                        <li><a href="{% url 'admin_delivery_view' %}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
+                        class="nav-text">Action</span></a></li> 
+                </ul>
+    </li>
+    
+                    
+                    <li class="nav-label">prdts</li>
+                    <li><a class="has-arrow" href="{% url 'admin_product' %}" aria-expanded="false"><i
+                        class="icon icon-plug"></i><span class="nav-text">Product</span></a>
+                <!-- <ul aria-expanded="false">
+                    <li><a href="./uc-select2.html">Select 2</a></li>
+                    <li><a href="./uc-nestable.html">Nestedable</a></li>
+                    <li><a href="./uc-noui-slider.html">Noui Slider</a></li>
+                    <li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
+                    <li><a href="./uc-toastr.html">Toastr</a></li>
+                    <li><a href="./map-jqvmap.html">Jqv Map</a></li>
+                </ul> -->
+            </li>
+            <li><a class="has-arrow" href="{% url 'admin_contact' %}" aria-expanded="false"><i
+                class="icon icon-plug"></i><span class="nav-text">Messages</span></a>
+            </li>
+                      
+
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-plug"></i><span class="nav-text">Category</span></a>
+                        <ul aria-expanded="false">
+                            <form action="{% url 'admin_category_search'  %}" method="post">
+                                {% csrf_token %}
+                                {% for i in catogory %}
+                                <li><button class="btn" type="submit" name="category" value="{{ i.category_name }}" style="padding-left: 50px;">{{ i.category_name }}</button></li>
+                                {% endfor %}
+                            </form>
+                            <li><a href="{% url 'admin_category_list' %}">Add</a></li>
+                        </ul>
+                        
+                   
+                    </li>
+                   
+                        <!-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="icon icon-plug"></i><span class="nav-text">strength</span></a>
+                            <ul aria-expanded="false">
+                                <form action="">
+                                {% for i in strengths %}
+                                <li><button class="btn" type="submit" name="category" value="{{ i.strength }}" style="padding-left: 50px;">{{ i.strength }}</button></li>
+                                {% endfor %}
+                                </form>
+                               
+                            </ul>
+                        </li> -->
+                    
+                   
+                    <li class="nav-label">Extra</li>
+                    <li><a  href="{% url 'Logout' %}" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                      </svg><span class="nav-text" style="padding-left: 10px;">LOGOUT</span></a>
+                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            {% block content %}
+            <div class="container-fluid">
+                <div class="row page-titles mx-0">
+                    <div class="col-sm-6 p-md-0">
+                        <div class="welcome-text">
+                            <h4>Hi, welcome back!</h4>
+                            <p class="mb-0">Your business dashboard template</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Layout</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Blank</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="stat-widget-one card-body">
+                                <div class="stat-icon d-inline-block">
+                                    <i class="ti-money text-success border-success"></i>
+                                </div>
+                                <div class="stat-content d-inline-block">
+                                    <div class="stat-text">Pharmacy</div>
+                                    <div class="stat-digit">{{ pharmacy }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="stat-widget-one card-body">
+                                <div class="stat-icon d-inline-block">
+                                    <i class="ti-user text-primary border-primary"></i>
+                                </div>
+                                <div class="stat-content d-inline-block">
+                                    <div class="stat-text">Customer</div>
+                                    <div class="stat-digit">{{ user }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="stat-widget-one card-body">
+                                <div class="stat-icon d-inline-block">
+                                    <i class="ti-layout-grid2 text-pink border-pink"></i>
+                                </div>
+                                <div class="stat-content d-inline-block">
+                                    <div class="stat-text">Delivery</div>
+                                    <div class="stat-digit">{{ delivery }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="stat-widget-one card-body">
+                                <div class="stat-icon d-inline-block">
+                                    <i class="ti-link text-danger border-danger"></i>
+                                </div>
+                                <div class="stat-content d-inline-block">
+                                    <div class="stat-text">Products</div>
+                                    <div class="stat-digit">{{ medicines }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="year-calendar"></div>
+                            </div>
+                        </div>
+                        <!-- /# card -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+{% endblock %}
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static 'admin/vendor/global/global.min.js' %}"></script>
+    <script src="{% static 'admin/js/quixnav-init.js' %}"></script>
+    <script src="{% static 'admin/js/custom.min.js' %}"></script>
+
+    <script src="{% static 'admin/vendor/chartist/js/chartist.min.js' %}"></script>
+
+    <script src="{% static 'admin/vendor/moment/moment.min.js' %}"></script>
+    <script src="{% static 'admin/vendor/pg-calendar/js/pignose.calendar.min.js' %}"></script>
+
+
+    <script src="{% static 'admin/js/dashboard/dashboard-2.js' %}"></script>
+    <!-- Circle progress -->
+
+</body>
+
+</html>

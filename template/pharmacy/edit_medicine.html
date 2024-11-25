@@ -1,85 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Medicine</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        form {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        label {
-            margin-bottom: 5px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Add New Medicine</h1>
-        <form action="{% url 'edit_medicine' id=datas.id %}" method="post">
-            {% csrf_token %}
-            <label for="medicineName">Medicine Name</label>
-            <input type="text" id="medicineName" name="medicineName" value="{{datas.name}}" required>
-            
-            <label for="description">Description</label>
-            <textarea id="description" name="description" rows="4" value="{{datas.description}}" required></textarea>
-            
-            <label for="strength">Strength</label>
-            <input type="text" id="strength" name="strength"value="{{datas.strength}}" required>   
-            
-            <label for="quantityInStock">Quantity</label>
-            <input type="number" id="quantityInStock" name="quantity"value="{{datas.quantity}}" required>
-            
-            <label for="pricePerUnit">Price per Unit</label>
-            <input type="number" id="pricePerUnit" name="pricePerUnit" value="{{datas.price}}" required>
-            
-            <label for="expiryDate">Expiry Date</label>
-            <input type="date" id="expiryDate" name="expiryDate" value="{{datas.expiry_date}}" required>
-            
-            <label for="manufacturer">Manufacturer</label>
-            <input type="text" id="manufacturer" name="manufacturer" value="{{datas.manufacturer}}" required>
-            
-            <label for="Image">Image</label><br>
-            <input type="file" name="Image"  value="{{datas.Image}}">
+{% extends 'pharmacy/homep.html' %}
+{% block content %}
+{% load static %}
 
-            <button type="submit">Update</button>
-        </form>
-    </div>
-</body>
-</html>
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="{% static 'pharmacy/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'pharmacy/css/style.css' %}">
+	
+		<div class="wrapper">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="{% static 'pharmacy/images/—Pngtree—drug capsule pill from prescription_15366552.png' %}" alt="" height="600">
+				</div>
+				<form action="{% url 'edit_medicine' id=datas.id %}" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3>Edit medicine</h3>
+					<div class="form-group">
+                        
+						<input type="text" name="medicineName" placeholder="medicineName"  value="{{datas.name}}" class="form-control">
+						<input type="number"  name="strength" placeholder="Strength" value="{{datas.strength}}" class="form-control" >
+					
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description" placeholder="Description" cols="44" rows="4" class="form-control" required>{{datas.description}}</textarea>
+						
+					</div>
+					<div class="form-group">
+						<input type="number" id="pricePerUnit" name="Price" class="form-control" pattern="^[0-9]{10}\.[0-9]{2}$" value="{{datas.price}}"  placeholder="Price"required>
+						<input type="number" id="pricePerUnit" name="Price per Unit" class="form-control" pattern="^[0-9]+/perunit$"  value="{{datas.per_price}}" placeholder="PricePerUnit" required>
+					</div>
+					
+					<div class="form-wrapper">
+						<select name="category" id="Category" placeholder="Category" class="form-control">
+							{% for i in data %}
+							<option value="{{ i.id }}">{{ i.category_name }}</option>
+						{% endfor %}
+
+						</select>
+						<i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+					</div>
+					<div class="form-wrapper">
+						<input type="date" id="expiryDate" name="expiryDate" value="{{datas.expiry_date|date:'Y-m-d' }}" placeholder="Expiry Date" class="form-control" required>
+
+					</div>
+					<div class="form-wrapper">
+						<input type="text" id="manufacturer" name="manufacturer"  placeholder="Manufacturer" class="form-control" value="{{var1.first_name}}" readonly
+						required>
+					</div>
+					<div class="form-wrapper">
+						<input type="number" id="quantityInStock" name="quantity"class="form-control"  value="{{datas.quantity}}"  placeholder="Quantity" required>
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+						<label  for="Image"><b>Image</b></label><br>
+                        <input type="file" name="Image" accept=""  value="{{datas.Image}}"required onchange="validateImageSize()">
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+                        <label for="Image"><b>Image1</b></label><br>
+                        <input type="file" name="Image1" accept="" value="{{datas.Image1}}" required onchange="validateImageSize()">
+					</div>
+					<div class="form-group">
+						<label for="Image" ><b>Image2</b></label><br>
+                        <input type="file" name="Image2" accept="" value="{{datas.Image2}}" required onchange="validateImageSize()">
+
+					</div>
+					<div class="form-group" style="margin-bottom:20px;">
+						<label for="Image"><b>Image3</b></label>
+                        <input type="file" name="Image3" accept="" value="{{datas.Image3}}" required onchange="validateImageSize()">
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description1" placeholder="Description1" cols="44" rows="4" class="form-control" required>{{datas.description1}}</textarea>
+						
+					</div>
+					<div class="form-wrapper">
+						<textarea id="description" name="description2" placeholder="Description2" cols="44" rows="4" class="form-control" required>{{datas.description2}}</textarea>
+						
+					</div>
+					<button type="submit">Add Medicine</button>
+				</form>
+			</div>
+		</div>
+		<!-- <style>
+			body{
+				background-image: url("{% static 'pharmacy/images/—Pngtree—drug capsule pill from prescription_15366552.png' %}");
+
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size:contain;
+			
+			}
+		</style> -->
+		<style>
+			label{
+				display: block;
+				margin-right: 10px;
+			}
+			input[type="file"] {
+			 margin-right: 5px;
+			
+			}
+
+		</style>
+		<script>
+			// Get the current year
+			const currentYear = new Date().getFullYear();
+			
+			// Set the minimum date to January 1 of the current year
+			document.getElementById("expiryDate").min = `${currentYear}-01-01`;
+		  
+
+			//for photo 
+			function validateImageSize() {
+                const imageInput = document.getElementById("image");
+                const file = imageInput.files[0];
+                
+                // Maximum file size in bytes (e.g., 2MB = 2 * 1024 * 1024)
+                const maxSize = 2 * 1024 * 1024;
+        
+                if (file && file.size > maxSize) {
+                    alert("Profile image must be smaller than 2 MB.");
+                    imageInput.value = ""; // Clear the selected file
+                }
+            }
+		  </script>
+		
+		{% endblock %}

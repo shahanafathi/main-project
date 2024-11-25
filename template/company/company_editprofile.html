@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+{% extends 'company/company_home.html' %}
+{% block content %}
+{% load static %}
+
     <form action="{% url 'company_edit'  %}" method="POST" enctype="multipart/form-data"> 
         {% csrf_token %}
         <h3>Edit Profile</h3>
-        <div class="row d-flex align-items-center ">
+        <div class="co d-flex align-items-center ">
             <div class=" col-sm-6  " style=" padding-right:1px;padding-left:0px;">
                   <label for="name"><b>Name</b></label><br>
                   <input type="text" placeholder="Name" name="Name" value="{{datas.first_name}}"  ><br>
@@ -19,18 +14,17 @@
                   <input type="email" placeholder="Email" name="Email" value="{{ datas.email }}"><br>
 
                   <label for="Address"><b>Address</b></label><br>
-                  <textarea id="Address" name="Address" rows="3" cols="18" >{{datas.Address}}</textarea><br>
+                  <textarea id="Address" name="Address" rows="3" cols="18" >{{datas.address}}</textarea><br>
 
                 <label for="UserName"><b>UserName</b></label><br>
                 <input type="text" placeholder="UserName" name="UserName" value="{{datas.username}}" ><br>
                
-               
+                <label for="Image">Profile</label>
+                <input type="file" name="Image" accept="image/*">
                 
-                <label for="DOB"><b>DOB</b></label><br>
-                <input type="date" placeholder="DOB" name="DOB" value="{{datas.DOB|date:'Y-m-d'}}"><br>
-
+             
                 <label for="Phone number"><b>Phone number</b></label><br>
-                <input type="tel" placeholder="Phone number"  name='Phonenumber' value="{{datas.Phonenumber}}"><br>
+                <input type="tel" placeholder="Phone number"  name='Phonenumber' value="{{datas.phone_number}}"><br>
                 
               </div>
               <div>
@@ -38,6 +32,47 @@
               </div>
       </div>
          </form>  
+         <style>
+          .row {
+            background-color: #1e3d73;  /* Dark blue background */
+            color: white;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px auto;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);  /* Slightly stronger shadow for depth */
+            position: relative;  /* Allows positioning of additional elements if needed */
+        }
+        
+        /* Add a subtle hover effect */
+        .profile-container:hover {
+            box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        /* Optional: Add an inner border effect for extra style */
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #29a19c, #1e3d73);  /* Gradient border effect */
+            z-index: -1;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .profile-container {
+                width: 90%;
+                padding: 20px;
+                margin: 20px auto;
+            }
+        }
+        
+         </style>
        
-</body>
-</html>
+{% endblock %}

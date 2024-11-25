@@ -1,32 +1,34 @@
-{% extends "home.html" %}
-<!DOCTYPE html>
-<html lang="en">
-  {% load static %}
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <title>Document</title>
-  
-</head>
-<body>    
+{% extends "home1.html" %}   
   {% load static %}
     {% block content %}
     <div class="container">
       <h1>Login</h1>
       <form action="{% url 'Login' %}" method="POST" >
           {% csrf_token %}
-          <label for="username">Username</label><br>
-          <input type="text" name="username" required><br>
+          <label for="Email">Email</label><br>
+          <input type="email" name="email" required><br>
 
           <label for="password">Password</label><br>
           <input type="password" name="password" required><br>
 
-          <button type="submit">Login</button>
+          <button class="btnn" type="submit">Login</button>
       </form>
-      <!-- <p>Dont have an account?  <a href="{% url 'user_register' %}">Register</a></p>   -->
-      <p>Dont have an account? </p>  
+      <a class="text-white fw-bold " href="{% url 'password_reset' %}">forgot password</a>
+      <p class="text-dark">Dont have an account? 
+
+<!--      
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Register
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'user_register' %}">Customer</a></li>
+            <li><a class="dropdown-item" href="{% url 'pharm_register' %}">Pharmacy</a></li>
+            <li><a class="dropdown-item" href="{% url 'delivery_Register' %}">Delivery </a></li>
+            <li><a class="dropdown-item" href="{% url 'company_Register' %}">Company</a></li>
+   
+          </ul>
+        </li> -->
+        </p>  
 
     <p>{{ message }}</p>
   </div>
@@ -48,44 +50,21 @@
         text-align:center;
         padding-top:50px;
         font-size:larger;
-        background-image: url("{% static 'img/image.png' %}");
+        background-image: url("{% static 'img/medicine-capsules-global-health-with-geometric-pattern-digital-remix.jpg' %}");
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size:cover;
-        
       }
-     
-      p{
-        color: #02101c;
+      a{
+        text-decoration: none;
       }
-      ul{ 
-        display: flex;
-        margin-left:850px; 
-        font-size: medium;
-        color: white;
+      a:hover{
+        text-decoration: none;
       }
-      li{
-        
-        margin-right:50px; 
-        list-style-type: none;
-        color: white;
-        padding: 5px;
-        
-      }
-  
-      h1{
-      color:#1e362a;
-      margin-top:20px;
-      margin-bottom:20px;
-      text-align: center;
-     }
-      input[type="text"]{
+      input[type="email"]{
       padding: 10px;
       width: 50%; 
-      background-color: white;
-      border-top-color:white ;
-      border-left-color: white;
-      border-right-color:white ;
+      border: none;
       border-radius: 5px;
     
      }
@@ -93,59 +72,108 @@
       border-radius: 20px ;
       padding-top: 500px;
     }
-    h3 {
-      
-      font-weight: bolder;
-      margin-left:30px;
-      margin-top:100px;
-    }
+    
     input[type="password"]{
       
       width: 50%;
       padding: 10px; 
       background-color: rgb(255, 255, 255);
-      border-top-color:white ;
-      border-left-color: white;
-      border-right-color:white ;
+      border: none;
+      border-radius: 5px;
       
     }
-    a{
-        text-decoration: none; 
-        color: white;
-        font-weight:bold;
-    }
+ 
    
     label{
       margin-top: 10px;
       margin-bottom:5px;
       font-weight:bolder;
   }
-    p{
-      color:#1e362a;
-      font-size:large;
-      font-weight: bold;
-      margin-bottom:20px;
-      text-align: center;
-    }
-    button {
-      padding: auto;
-      width: 100px; 
-      text-align: center;
-      color: #f5f3f3;
-      justify-content: center;
-      align-content:center;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      border-bottom:2px;
-      text-align: center;
-      background-color: #02101c;
-      margin-top:20px;
-    }
   
+  .btnn{
+      
+    padding: auto;
+    width: 100px; 
+    text-align: center;
+    color: #f5f3f3;
+    justify-content: center;
+    align-content:center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    border-bottom:2px;
+    text-align: center;
+    background-color: #02101c;
+    margin-top:20px;
+
+    
+  }
+    
     </style>
+  
     {% endblock %}
   
 
+
+<!-- 
+   <!DOCTYPE html>
+<html lang="en">
+	{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'admin/index.css' %}">
+    <script src="{% static 'admin/index.js' }"></script>
+</head>
+<body>
+<div class="container" id="container">
+	
+	<div class="form-container sign-in-container">
+		<form action="{% url 'admin_login' %}" method="POST">
+			{% csrf_token %}
+			<h1>Sign in</h1>
+ 
+			
+			<span>or use your account</span>
+			<!-- <input type="email" placeholder="Email" /> -->
+			<input type="text" placeholder="username" name="username"/>
+			<input type="password" placeholder="password" name="password" />
+			<a href="{% url 'password_reset' %}">Forgot your password?</a>
+			<button>Sign In</button>
+		</form>
+		{% if message %}
+		{{ message }}
+		{% endif %}
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1 class=" h1 d-flex">
+					<img src="{% static 'img/pngtree.png' %}" height="40" width="40" alt="" srcset="">
+					CureNest
+				</h1>
+				<h6>User-Friendly Interface: A clean and organized interface allows users to navigate easily, explore categories, and find products quickly, whether they're searching by symptoms, categories, or brands.</h6>
+				<!-- <p>Powered by :</p> -->
+				<p><strong><svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" style="margin-right:0px;" viewBox="0 0 512 512"><path fill="#ffffff" d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"/></svg> CureNest@gmail.com </p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" style="margin-right:0px;" viewBox="0 0 512 512"><path fill="#ffffff" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>+1 234 567 890</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<p>
+		Created with <i class="fa fa-heart"></i> by
+		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+		- Read how I created this and how you can join the challenge
+		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+	</p>
+</footer>
 </body>
-</html>
+</html> -->

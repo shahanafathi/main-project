@@ -1,0 +1,27 @@
+{% extends 'company/company_home.html' %}
+{% block content %}
+{% load static %}
+    
+<div class="products-container">
+    <img src="{{products.Image.url}}" alt="medicine image">
+    <div class="products-info">
+        <label for="name"><b>Name</b></label>
+        <p>{{ products.name }}</p>
+
+        <label for="price"><b>Price</b></label>
+        <p>{{ products.price }}</p>
+
+        <label for="description"><b>Description</b></label>
+        <p>{{ products.description }}</p>
+
+        
+        <label for="quantity"><b>Quantity</b></label>
+        <p>{{ products.quantity }}</p>
+
+    </div>
+
+   
+        <a href=""><button class="btn">back to form</button></a>
+    
+</div>
+{% endblock %}

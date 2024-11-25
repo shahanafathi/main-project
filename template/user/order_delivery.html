@@ -1,0 +1,102 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
+{% load static %}
+<h1>Order History</h1>
+
+ 
+    <table>
+        <tbody>
+            {% for item in order_status %}
+
+            <tr>
+                <td style="margin-right:10px;"><img src="{{item.order_id.medicine_id.Image.url}}" width="150" height="150">
+                </td>
+                <td>{{ item.pharmancy_id.first_name }}</td>
+                <td>{{ item.order_id.medicine_id.name }}</td>
+                <td>{{ item.order_id.quantity }}qty</td>
+                <td>&#8377  {{ item.order_id.total_amount }}</td>
+                <td>{{ item.status }}</td>
+ 
+            </tr>
+    
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+    <div class="pagination mt-3 d-flex justify-content-center mb-4">
+        <ul class="pagination">
+            {% if order_status.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ order_status.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            {% endif %}
+    
+            {% for num in order_status.paginator.page_range %}
+                {% if order_status.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > order_status.number|add:"-3" and num < order_status.number|add:"3" %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+    
+            {% if order_status.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ order_status.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    
+   
+    <style>
+        
+        .pagination .page-link {
+            border-radius: 50%;
+            color: #000000;
+            margin-left:5px;
+            font-weight: bold;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: #f0f0f0;
+            margin-left:5px;
+        }
+        
+        .pagination .active .page-link {
+            background-color: #000000;
+            color: white;
+            border-radius: 50%;
+            border: none;
+            margin-left:5px;
+            margin-right: 5px;
+    
+        }
+        
+        .pagination .disabled .page-link {
+            color: #ccc;
+            margin-left:5px;
+        }
+        
+        
+
+        
+
+        
+
+       
+        
+    </style>
+    {% endblock %}

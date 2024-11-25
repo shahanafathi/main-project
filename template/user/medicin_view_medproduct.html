@@ -1,0 +1,187 @@
+{% extends 'user/userhome.html' %}
+{% block content %}
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .image-section, .details-section {
+            padding: 20px;
+        }
+        .image-section img {
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        .thumbnail {
+            width: 50px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .details-section {
+            max-width: 600px;
+            padding-left: 20px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .rating, .price, .delivery-info {
+            margin: 10px 0;
+        }
+        .rating span {
+            color: gold;
+            font-size: 20px;
+        }
+        .price .original-price {
+            text-decoration: line-through;
+            color: grey;
+            margin-right: 10px;
+        }
+        .price .discount-price {
+            color: #E53935;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .variant-section {
+            margin: 20px 0;
+        }
+        .variant {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            display: inline-block;
+        }
+        .actions {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .add-to-cart-btn, .view-cart-btn {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .add-to-cart-btn {
+            background-color: #00897B;
+            color: white;
+        }
+        .view-cart-btn {
+            background-color: #ddd;
+            color: #333;
+        }
+        .middle{
+
+            background-color:white;
+
+        }
+
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Image Section -->
+    <div class="image-section">
+        <img id="bigImage" src="{{ medicine.Image.url }}" alt="Product Image">
+        <div>
+            <img src="{{ medicine.Image.url }}" width="40" height="50" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image1.url }}" width="40" height="50" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image2.url }}" width="40" height="50" class="thumbnail" onclick="changeImage(this)">
+            <img src="{{ medicine.Image3.url }}" width="40" height="50" class="thumbnail" onclick="changeImage(this)">
+        </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details-section">
+        <div class="product-title">{{ medicine.name }}  - {{ medicine.strength }}<br>{{ medicine.description }}</div>
+      
+        
+
+        <!-- Price Section -->
+        <div class="price">
+            <span class="discount-price">{{medicine.price}}</span>
+        </div>
+
+        <!-- Delivery Info -->
+        <div class="delivery-info">
+            Delivery by <strong>Today, 6:00 pm - 10:00 pm</strong>
+        </div>
+
+        
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <a href="{% url 'add_to_cart' id=medicine.id %}"> <button class="btn bg-dark text-white mr-5">Add To Cart</button></a>
+            <a href="{% url 'add_to_cart' id=medicine.id %}"> <button class="btn bg-dark text-white">Buy Now</button></a>
+        </div>
+    </div>
+    <div>
+        <p>
+          <h2>{{ medicine.name }}</h2>
+          <strong>{{ medicine.description1 }}</strong>
+        </p>
+      </div>
+      
+      <div class="imgg d-flex">
+        <img src="{% static 'pharmacy/freepik__upload__14154.jpeg' %}" width="50%" height="450" alt="" srcset="">
+        <p>The Medcare Services and Investment co. was established and opening since December 2014, with headquarter located in no. 2, block 22A, Le Hong Phong St, Ngo Quyen dist., Hai Phong, Vietnam. With the vision of long term strategy and the passion to bring forth quality medical service, professionally delivered to community since the first opening date. The MedCare has planned to deploy many projects. The first milestone reach by us was marked with the project as the first international pediatric clinic following JCI standard from United States. Starting at Haiphong port city, after five months of construction,<br>The Medcare Services and Investment co. was established and opening since December 2014, with headquarter located in no. 2, block 22A, Le Hong Phong St, Ngo Quyen dist., Hai Phong, Vietnam. With the vision of long term strategy and the passion to bring forth quality medical service, professionally delivered to community since the first opening date. The MedCare has planned to deploy many projects. The first milestone reach by us was marked with the project as the first international pediatric clinic following JCI standard from United States. Starting at Haiphong port city, after five months of construction</p>
+      </div>
+      <!-- <div class="">
+        <img src="" width="160" height="180" alt="" srcset="">
+        <p>The Medcare Services and Investment co. was established and opening since December 2014, with headquarter located in no. 2, block 22A, Le Hong Phong St, Ngo Quyen dist., Hai Phong, Vietnam. With the vision of long term strategy and the passion to bring forth quality medical service, professionally delivered to community since the first opening date. The MedCare has planned to deploy many projects. The first milestone reach by us was marked with the project as the first international pediatric clinic following JCI standard from United States. Starting at Haiphong port city, after five months of construction,</p> -->
+      <!-- </div>  -->
+      
+      <div class="middle mt-5 bg-white text-dark w-100 h-50">
+          <h1 class="" style="text-align: center;margin-top:25px;">Save Big on Your Medication Needs!</h1>
+          <div class="d-flex justify-content-center mt-5" style="display: flex;">
+              <h5 class="h5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left:70px;" width="80" height="90" fill="currentColor" class="bi bi-capsule-pill" viewBox="0 0 16 16">
+                  <path d="M11.02 5.364a3 3 0 0 0-4.242-4.243L1.121 6.778a3 3 0 1 0 4.243 4.243l5.657-5.657Zm-6.413-.657 2.878-2.879a2 2 0 1 1 2.829 2.829L7.435 7.536zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 1.042a3 3 0 0 0 0 5.917zm1 5.917a3 3 0 0 0 0-5.917z"/>
+                </svg><br> 100 % Genuine Medicines</h5>
+              <h5 class="h5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left:70px;" width="80" height="90" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
+                  <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1zM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"/>
+                  <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1zm2 14h2v-3H7zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1zm0-14H6v1h4zm2 7v7h3V8zm-8 7V8H1v7z"/>
+                </svg><br> Trusted Pharmacies</h5>
+              <h5  class="h5 mr-3"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left:70px;" width="80" height="90" fill="currentColor" class="bi bi-scooter" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M9 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-.39l1.4 7a2.5 2.5 0 1 1-.98.195l-.189-.938-2.43 3.527A.5.5 0 0 1 9.5 13H4.95a2.5 2.5 0 1 1 0-1h4.287l2.831-4.11L11.09 3H9.5a.5.5 0 0 1-.5-.5M3.915 12a1.5 1.5 0 1 0 0 1H2.5a.5.5 0 0 1 0-1zm8.817-.789A1.499 1.499 0 0 0 13.5 14a1.5 1.5 0 0 0 .213-2.985l.277 1.387a.5.5 0 0 1-.98.196z"/>
+                </svg><br> Delivery to your doorstep</h5>
+              <h5  class="h5 ml-5"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left:30px;" width="80" height="90" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                  <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+                </svg><br> Store Pick up</h5>
+            </div>
+          </div>
+      
+            <div>
+              <img src="" alt="" srcset="">
+          </div>
+          <!-- <div>
+            <p>
+              <strong>{{ medicines.description2 }}</strong>
+            </p>
+          </div> -->
+          
+</div>
+
+</div>
+<script>
+    function changeImage(thumbnail) {
+        document.getElementById("bigImage").src = thumbnail.src;
+    }
+</script>
+{% endblock %}

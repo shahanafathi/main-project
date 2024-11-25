@@ -1,0 +1,97 @@
+{% extends 'admin/home.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Cards</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .medicine {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+            gap: 15px; /* Spacing between cards */
+        }
+
+        .card {
+            height: 100%; /* Ensure all cards are equal height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            height: 200px; /* Fixed image height */
+            object-fit: cover; /* Crop image if necessary */
+        }
+
+        .card-body {
+            text-align: center; /* Center-align content */
+        }
+
+        button {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+    .medicine {
+        grid-template-columns: repeat(3, 1fr); /* 3 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .medicine {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row on small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .medicine {
+        grid-template-columns: 1fr; /* 1 card per row on extra small screens */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <div class="medicine">
+            {% for medicine in medicines %}
+            <div class="card">
+                <img src="{{ medicine.Image.url }}" class="card-img-top" alt="data">
+                <div class="card-body">
+                    <a href="{% url 'medicine_view' id=medicine.id %}">
+                        <h3 class="card-title">Name: {{ medicine.name }}</h3>
+                    </a>
+                    <p class="card-text">&#8377  {{ medicine.price }}</p>
+                    <p class="card-text">Quantity: {{ medicine.quantity }}</p>
+                    <p class="card-text">Category: {{ medicine.category_name }}</p>
+                    <div>
+                        <a href="{% url 'add_to_cart' id=medicine.id %}">
+                            <button type="submit" class="btn btn-dark">Add to Cart</button>
+                        </a>
+                        <!-- <a href="{% url 'add_to_wishlist' id=medicine.id %}">
+                            <button type="submit" class="btn btn-secondary">Wishlist</button>
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS (Optional, for interactive features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
